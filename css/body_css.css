@@ -1,0 +1,20 @@
+body {
+	margin: 0;
+  	font-family: Arial, Helvetica, sans-serif;
+  	background-color: #f0f0ff;
+}
+
+.navbar-header {
+  color: maroon;
+}
+
+.title_brand_nav {
+	font: Helvetica;
+	color: maroon;
+}
+
+.title_brand {
+	font: Helvetica;
+	color: maroon;
+	font-size: 30px;
+}
