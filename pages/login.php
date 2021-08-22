@@ -13,6 +13,7 @@
 		<script src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 
 		<link rel="stylesheet" type="text/css" href="../css/body_css.css">
+		<link rel="stylesheet" type="text/css" href="../css/footer_css.css">
 		
 	</head>
 	<body class="bg-light">
@@ -37,40 +38,26 @@
 		<div class="container-fluid text-center">    
 		  	<div class="row content">
 
-		  		<!-- LEFT SIDE NAVIGATION -->
-			    <div class="col-sm-2 sidenav">
-			      	<p><a href="#">Link</a></p>
-			      	<p><a href="#">Link</a></p>
-			      	<p><a href="#">Link</a></p>
-			    </div>
-
 			    <!-- MIDDLE CONTENT -->
 			    <div class="col-sm-8 center-div"> 
 			    	
 			      	<div class=""> 
 						<h1> Division Digital Research Library </h1>
 			      	</div>
-
-			      	<br>
-						
-			    </div>
-
-			    <!-- RIGHT SIDE NAVIGATION -->
-			    <div class="col-sm-2 sidenav">
-			    	<div class="well">
-			        	<p>ADS</p>
-			      	</div>
-			      	<div class="well">
-			        	<p>ADS</p>
-			      	</div>
+						<form>
+							<label for="uname"> Username: </label>
+							<input type="text" id="uname" name="uname" placeholder="Enter Username"/> <br/>
+							<label for="psw"> Password: </label>
+							<input type="password" id="pwd" name="pwd" placehlder="Enter Password"/> <br/>
+							<button type="submit">Login</button> </br>
+						</form>
 			    </div>
 		  </div>
 		</div>
 
-
 		<!-- Footer -->
 		<footer class="container-fluid text-center mt-auto">
-  			<p>all rights reserved.</p>
+			<p>All rights reserved &copy; 2021</p>
 		</footer>
 
 	</body>
