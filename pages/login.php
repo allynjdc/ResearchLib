@@ -50,7 +50,7 @@
 				<div class=""> 
 					<h1> Division Digital Research Library </h1>
 				</div>
-				<form id="login" action="profile.php" method="post">
+				<form id="login" action="home.php" method="post">
 					<div class="input-group">
 						<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 						<input type="text" id="uname" name="uname" placeholder="Enter Username" class="form-control"/>
