@@ -66,12 +66,12 @@
 		<!-- MAIN TEMPLATE FOR THE CONTENT -->
 		<div class="container-fluid text-center">    
 		  	<div class="row content">
-			    <div class="col-sm-2 sidenav">
+			    <div class="col-sm-3 sidenav">
 			      	<!-- <p><a href="#">Link</a></p>
 			      	<p><a href="#">Link</a></p>
 			      	<p><a href="#">Link</a></p> -->
 			    </div>
-			    <div class="col-sm-8 center-div"> 
+			    <div class="col-sm-6 center-div"> 
 			    	<br> <br>
 			      	<img class="img-responsive center-block" src="../images/research icon.png" alt="Division Digital Research Library" width="445" height="330"> 
 
@@ -96,7 +96,7 @@
 						
 			    </div>
 
-			    <div class="col-sm-2 sidenav">
+			    <div class="col-sm-3 sidenav">
 			    	<!-- <div class="well">
 			        	<p>ADS</p>
 			      	</div>
