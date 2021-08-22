@@ -71,7 +71,7 @@
 
 		<!-- Footer -->
 		<footer class="container-fluid text-center mt-auto">
-  			<p>all rights reserved.</p>
+  			<p>All rights reserved &copy; 2021</p>
 		</footer>
 
 	</body>

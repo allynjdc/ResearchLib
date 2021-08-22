@@ -59,7 +59,7 @@
 						<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
 						<input type="password" id="pwd" name="pwd" placeholder="Enter Password" class="form-control"/>
 					</div>
-					<button class="btn-primary" type="submit" >Login</button> </br>
+					<button class="btn-primary" type="submit" >Login</button>
 				</form>
 			</div>
 		</div>

@@ -49,43 +49,16 @@
 
 			    <!-- MIDDLE CONTENT -->
 			    <div class="col-sm-12 center-div"> 
-                    <h3> User Profile </h3>
-                    <div class=col-sm-12>
-                        <img src="../images/default_profile_picture.jpg" width="150" height="150"/>
-                    </div>
-                    <form class="form-horizontal" action="">
-                        <div class="form-group">
-                            <label class="control-label col-sm-4" for="name">Name:</label>
-                            <div class="col-sm-4">
-                            <input type="text" class="form-control" id="name" placeholder="Name" value="Juan Dela Cruz">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-4" for="designation">Designation:</label>
-                            <div class="col-sm-4">
-                            <input type="text" class="form-control" id="designation" placeholder="Designation" value="Master Teacher">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-4" for="office">Office:</label>
-                            <div class="col-sm-4">
-                            <input type="text" class="form-control" id="office" placeholder="Office name" value="Tagum National Trade School (TNTS)">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-sm-4" for="email">Email:</label>
-                            <div class="col-sm-4">
-                            <input type="text" class="form-control" id="email" placeholder="account@gmail.com" value="juandelacruz@gmail.com">
-                            </div>
-                        </div>
+                    <h3> Reset Password </h3>
+                    <form class="form-horizontal" action="login.php">
                         <div class="form-group">
                             <label class="control-label col-sm-4" for="username">Username:</label>
                             <div class="col-sm-4">
-                            <input type="text" class="form-control" id="username" placeholder="Username" value="MyUser">
+                            <input type="text" class="form-control" id="username" placeholder="Enter username">
                             </div>
                         </div>
+                        <button class="btn-primary" type="submit" >Reset Password</button>
                     </form>
-
 			    </div>
 		  </div>
 		</div>
