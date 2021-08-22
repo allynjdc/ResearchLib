@@ -18,3 +18,11 @@ body {
 	color: maroon;
 	font-size: 30px;
 }
+
+.center_content {
+	background-color: white;
+}
+
+.author_name {
+	color: maroon;
+}
