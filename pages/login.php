@@ -14,14 +14,23 @@
 
 		<link rel="stylesheet" type="text/css" href="../css/body_css.css">
 		<link rel="stylesheet" type="text/css" href="../css/footer_css.css">
-		
+		<style>
+			/*ToDo: Move this to css file */
+			form {
+				width: 25%;
+				margin-left: auto;
+				margin-top: auto;
+				margin-right: auto;
+				margin-bottom: auto;
+			}
+		</style>
 	</head>
 	<body class="bg-light">
 		<!-- Navigation -->
 		<nav class="navbar navbar-default"> <!-- navbar-inverse -->
 		  	<div class="container-fluid col-md-10 col-md-offset-1">
 			    <div class="navbar-header">
-			      	<a class="navbar-brand " href="#">
+			      	<a class="navbar-brand " href="index.php">
 			      		<p class="title_brand_nav"> Division Digital Research Library </p>
 			      	</a>
 			    </div>
@@ -33,26 +42,26 @@
 		  	</div>
 		</nav>
 
-
-		<!-- MAIN TEMPLATE FOR THE CONTENT -->
 		<div class="container-fluid text-center">    
-		  	<div class="row content">
-
-			    <!-- MIDDLE CONTENT -->
-			    <div class="col-sm-8 center-div"> 
-			    	
-			      	<div class=""> 
-						<h1> Division Digital Research Library </h1>
-			      	</div>
-						<form>
-							<label for="uname"> Username: </label>
-							<input type="text" id="uname" name="uname" placeholder="Enter Username"/> <br/>
-							<label for="psw"> Password: </label>
-							<input type="password" id="pwd" name="pwd" placehlder="Enter Password"/> <br/>
-							<button type="submit">Login</button> </br>
-						</form>
-			    </div>
-		  </div>
+		  	
+			<!-- MIDDLE CONTENT -->
+			<div class="col-sm-12 center-div mx-auto my-container"> 
+				
+				<div class=""> 
+					<h1> Division Digital Research Library </h1>
+				</div>
+				<form id="login" action="profile.php" method="post">
+					<div class="input-group">
+						<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+						<input type="text" id="uname" name="uname" placeholder="Enter Username" class="form-control"/>
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+						<input type="password" id="pwd" name="pwd" placeholder="Enter Password" class="form-control"/>
+					</div>
+					<button class="btn-primary" type="submit" >Login</button> </br>
+				</form>
+			</div>
 		</div>
 
 		<!-- Footer -->
