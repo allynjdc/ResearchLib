@@ -13,6 +13,7 @@
 		<script src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 
 		<link rel="stylesheet" type="text/css" href="../css/body_css.css">
+		<link rel="stylesheet" type="text/css" href="../css/footer_css.css">
 		
 	</head>
 	<body class="bg-light">
