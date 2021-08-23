@@ -57,14 +57,52 @@
                 -->
 
 			    <!-- MIDDLE CONTENT -->
-			    <div class="col-sm-8 center-div"> 
+			    <div class="col-sm-12 center-div"> 
 			    	
-			      	<div class=""> 
-                        <br/>
-						<h3> Upload Research </h3>
-                        <br/>
-
-			      	</div>
+                <div class="col-sm-6 col-sm-offset-3" style="background-color: white">
+                    	<br>
+                    	<h3> Upload Research </h3>
+                    	<br>
+                    	<form>
+						    <div class="input-group">
+						      	<span class="input-group-addon">Title</span>
+						      	<input id="Memo_code" type="text" class="form-control" name="research_title" placeholder="Research Title">
+						    </div>
+						    <br>
+						    <div class="input-group" >
+						      	<span class="input-group-addon">Researchers</span>
+						      	<input id="title" type="text" class="form-control" name="researcher_name" placeholder="Juan Dela Cruz">
+						    </div>
+                            <br/>
+                            <div class="input-group">
+						      	<span class="input-group-addon">School</span>
+						      	<input id="title" type="text" class="form-control" name="school_name" placeholder="Tagum National Trade School">
+						    </div>
+						    <br>
+						    <div class="input-group">
+						      	<span class="input-group-addon">Research Category</span>
+                                <select name="research_category" id="research_category" class="form-control">
+                                    <option value="1"> National </option>
+                                    <option value="2"> Regional </option>
+                                    <option value="3"> Schools Division </option>
+                                    <option value="4"> District </option>
+                                    <option value="5"> School </option>
+                                </select>
+						    </div>
+                            <br/>
+                            <div class="input-group">
+						      	<span class="input-group-addon">Research Type</span>
+                                <select name="research_type" id="research_type" class="form-control">
+                                    <option value="1"> Action Research </option>
+                                    <option value="2"> Basic Research </option>
+                                </select>
+                            </div>
+                            </br>
+						    <p><b> Note: Form not yet complete </b><p>
+						    <button class="btn-success" type="submit" >Upload Research</button>
+	  					</form>
+                    </div>
+	                    
 						
 			    </div>
 
