@@ -84,6 +84,7 @@
                             <input type="text" class="form-control" id="username" placeholder="Username" value="MyUser">
                             </div>
                         </div>
+                        <button class="btn-primary" type="submit" >Update Profile</button>
                     </form>
 
 			    </div>
