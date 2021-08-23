@@ -14,6 +14,7 @@
 
 		<link rel="stylesheet" type="text/css" href="../css/body_css.css">
 		<link rel="stylesheet" type="text/css" href="../css/footer_css.css">
+		<link rel="stylesheet" type="text/css" href="../css/nav_css.css">
 		
 	</head>
 	<body class="bg-light">
@@ -26,12 +27,18 @@
 			      		<p class="title_brand_nav"> Division Digital Research Library </p>
 			      	</a>
 			    </div>
-			    
 			    <ul class="nav navbar-nav navbar-right">
 			    	<li><a href="#">Memorandums</a></li>
 			    	<li><a href="#">Journals & Books</a></li>
-			      	<!-- <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Log in</a></li> -->
-			      	<li><a href="login.php">Log in</a></li>
+                    <li><a href="#">Help</a></li>
+			      	<li class="dropdown">
+                        <a href="#" class="dropbtn">MyUser </a>
+                        <div class="dropdown-content">
+                            <a href="user_profile.php">View Profile</a>
+                            <a href="#">Edit Profile</a>
+                            <a href="index.php">Log out</a>
+                        </div>
+                    </li>
 			    </ul>
 		  	</div>
 		</nav>
