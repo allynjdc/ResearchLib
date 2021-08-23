@@ -55,7 +55,7 @@
 			    </ul> -->
 			    <ul class="nav navbar-nav navbar-right">
 			    	<li><a href="#">Memorandums</a></li>
-			    	<li><a href="#">Journals & Books</a></li>
+			    	<li><a href="#">Journals</a></li>
 			      	<!-- <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Log in</a></li> -->
 			      	<li><a href="login.php">Log in</a></li>
 			    </ul>

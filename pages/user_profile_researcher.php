@@ -29,7 +29,7 @@
 			    </div>
 			    <ul class="nav navbar-nav navbar-right">
 			    	<li><a href="#">Memorandums</a></li>
-			    	<li><a href="#">Journals & Books</a></li>
+			    	<li><a href="#">Journals</a></li>
                     <li><a href="#">Help</a></li>
 			      	<li class="dropdown">
                         <a href="#" class="dropbtn">MyUser </a>
