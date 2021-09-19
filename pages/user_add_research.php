@@ -82,23 +82,70 @@
 						    <div class="input-group">
 						      	<span class="input-group-addon">Research Category</span>
                                 <select name="research_category" id="research_category" class="form-control">
-                                    <option value="1"> National </option>
-                                    <option value="2"> Regional </option>
-                                    <option value="3"> Schools Division </option>
-                                    <option value="4"> District </option>
-                                    <option value="5"> School </option>
+                                    <option value="National"> National </option>
+                                    <option value="Regional"> Regional </option>
+                                    <option value="Schools Division"> Schools Division </option>
+                                    <option value="District"> District </option>
+                                    <option value="School"> School </option>
                                 </select>
 						    </div>
                             <br/>
                             <div class="input-group">
 						      	<span class="input-group-addon">Research Type</span>
                                 <select name="research_type" id="research_type" class="form-control">
-                                    <option value="1"> Action Research </option>
-                                    <option value="2"> Basic Research </option>
+                                    <option value="Action Research"> Action Research </option>
+                                    <option value="Basic Research"> Basic Research </option>
                                 </select>
                             </div>
                             </br>
-						    <p><b> Note: Form not yet complete </b><p>
+                            <div class="input-group">
+						      	<span class="input-group-addon">Research Agenda</span>
+                                <select name="research_agenda" id="research_agenda" class="form-control">
+                                    <option value="Teaching and Learning"> Teaching and Learning </option>
+                                    <option value="Child Protection"> Child Protection </option>
+                                    <option value="Human Resource Development"> Human Resource Development </option>
+                                    <option value="Governance"> Governance </option>
+                                    <option value="DRRM"> DRRM </option>
+                                    <option value="Gender Development"> Gender Development </option>
+                                    <option value="Inclusive Education"> Inclusive Education </option>
+                                    <option value="Others"> Others </option>
+                                </select>
+                            </div>
+                            </br>
+                            <div class="input-group" >
+						      	<span class="input-group-addon">Date Signed</span>
+						      	<input id="date_signed" type="date" class="form-control" name="date_signed" placeholder="">
+						    </div>
+                            <br/>
+                            <div class="input-group" >
+						      	<span class="input-group-addon">DOI</span>
+						      	<input id="research_doi" type="text" class="form-control" name="research_doi" placeholder="00.0000/0000000000000-0">
+						    </div>
+                            <br/>
+                            <div class="input-group" >
+						      	<span class="input-group-addon">Journal Title</span>
+						      	<input id="journal_title" type="text" class="form-control" name="journal_title" placeholder="Title of Journal">
+						    </div>
+                            <br/>
+                            <div class="input-group">
+						      	<span class="input-group-addon">Volume</span>
+						      	<input id="journ_vol" type="number" class="form-control" name="journ_vol" placeholder="1" min="1" max="50">
+						    </div>
+						    <br>
+						    <div class="input-group">
+						      	<span class="input-group-addon">Issue</span>
+						      	<input id="journ_issue" type="number" class="form-control" name="journ_issue" placeholder="1" min="1" max="50">
+						    </div>
+						    <br>
+                            <div class="input-group" >
+						      	<span class="input-group-addon">Pages</span>
+						      	<input id="journal_title" type="text" class="form-control" name="journal_title" placeholder="xx-xx">
+						    </div>
+                            <br/>
+
+						    	<p class="text-justify">Insert the Research File:</p>
+						      	<input id="journ_photo" type="file" class="" name="journ_photo" accept="image/*, .pdf, .doc, .txt">
+						    <br>
 						    <button class="btn-success" type="submit" >Upload Research</button>
 	  					</form>
                     </div>
