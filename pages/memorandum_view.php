@@ -30,7 +30,7 @@
 			    
 			    <ul class="nav navbar-nav navbar-right">
 			    	<li><a href="memorandum.php">Memorandums</a></li>
-			    	<li><a href="journals.php">Journals</a></li>
+			    	<li><a href="journal.php">Journals</a></li>
 			      	<!-- <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Log in</a></li> -->
 			      	<li><a href="login.php">Log in</a></li>
 			    </ul>

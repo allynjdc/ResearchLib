@@ -26,3 +26,17 @@ body {
 .author_name {
 	color: maroon;
 }
+
+.dev_team {
+	line-height: 50px;
+	height: 50px; 
+	display: flex; 
+	align-items: center;
+}
+
+.dev_team span {
+	font-size: 10px;
+	line-height: 1.2; 
+	display: inline-block; 
+	vertical-align: middle;
+}
