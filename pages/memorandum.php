@@ -29,8 +29,8 @@
 			    </div>
 			    
 			    <ul class="nav navbar-nav navbar-right">
-			    	<li><a href="#">Memorandums</a></li>
-			    	<li><a href="#">Journals</a></li>
+			    	<li><a href="memorandum.php">Memorandums</a></li>
+			    	<li><a href="journals.php">Journals</a></li>
 			      	<!-- <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Log in</a></li> -->
 			      	<li><a href="login.php">Log in</a></li>
 			    </ul>
@@ -52,7 +52,7 @@
 			    	<br>
 			    	<div class="" style="padding:2%; border: solid #e3dede 1px; border-radius:1%;">
 			    		<!-- <div class="col-sm-offset-1 col-sm-10"> -->
-			    			<p class="h4 text-justify"><b><a>MAY 11, 2021 DM 284, S. 2021 - VIRTUAL TRAINING ON ADVANCING RESEARCH THROUGH 6D SCHEME FOR SECOND BATCH </b></a></p>
+			    			<p class="h4 text-justify"><b><a href="memorandum_view.php">MAY 11, 2021 DM 284, S. 2021 - VIRTUAL TRAINING ON ADVANCING RESEARCH THROUGH 6D SCHEME FOR SECOND BATCH </b></a></p>
 						
 							<p class="h5 text-justify">
 								Virtual Training on Advancing Research Through 6D Scheme for Second Batch
@@ -65,7 +65,7 @@
 					<br>
 					<div class="" style="padding:2%; border: solid #e3dede 1px; border-radius:1%;">
 			    		<!-- <div class="col-sm-offset-1 col-sm-10"> -->
-			    			<p class="h4 text-justify"><b><a>MAY 11, 2021 DM 284, S. 2021 - VIRTUAL TRAINING ON ADVANCING RESEARCH THROUGH 6D SCHEME FOR SECOND BATCH </b></a></p>
+			    			<p class="h4 text-justify"><b><a href="memorandum_view.php">MAY 11, 2021 DM 284, S. 2021 - VIRTUAL TRAINING ON ADVANCING RESEARCH THROUGH 6D SCHEME FOR SECOND BATCH </b></a></p>
 						
 							<p class="h5 text-justify">
 								Virtual Training on Advancing Research Through 6D Scheme for Second Batch
@@ -78,7 +78,7 @@
 					<br>
 					<div class="" style="padding:2%; border: solid #e3dede 1px; border-radius:1%;">
 			    		<!-- <div class="col-sm-offset-1 col-sm-10"> -->
-			    			<p class="h4 text-justify"><b><a>MAY 11, 2021 DM 284, S. 2021 - VIRTUAL TRAINING ON ADVANCING RESEARCH THROUGH 6D SCHEME FOR SECOND BATCH </b></a></p>
+			    			<p class="h4 text-justify"><b><a href="memorandum_view.php">MAY 11, 2021 DM 284, S. 2021 - VIRTUAL TRAINING ON ADVANCING RESEARCH THROUGH 6D SCHEME FOR SECOND BATCH </b></a></p>
 						
 							<p class="h5 text-justify">
 								Virtual Training on Advancing Research Through 6D Scheme for Second Batch
@@ -91,7 +91,7 @@
 					<br>
 					<div class="" style="padding:2%; border: solid #e3dede 1px; border-radius:1%;">
 			    		<!-- <div class="col-sm-offset-1 col-sm-10"> -->
-			    			<p class="h4 text-justify"><b><a>MAY 11, 2021 DM 284, S. 2021 - VIRTUAL TRAINING ON ADVANCING RESEARCH THROUGH 6D SCHEME FOR SECOND BATCH </b></a></p>
+			    			<p class="h4 text-justify"><b><a href="memorandum_view.php">MAY 11, 2021 DM 284, S. 2021 - VIRTUAL TRAINING ON ADVANCING RESEARCH THROUGH 6D SCHEME FOR SECOND BATCH </b></a></p>
 						
 							<p class="h5 text-justify">
 								Virtual Training on Advancing Research Through 6D Scheme for Second Batch
@@ -104,7 +104,7 @@
 					<br>
 					<div class="" style="padding:2%; border: solid #e3dede 1px; border-radius:1%;">
 			    		<!-- <div class="col-sm-offset-1 col-sm-10"> -->
-			    			<p class="h4 text-justify"><b><a>MAY 11, 2021 DM 284, S. 2021 - VIRTUAL TRAINING ON ADVANCING RESEARCH THROUGH 6D SCHEME FOR SECOND BATCH </b></a></p>
+			    			<p class="h4 text-justify"><b><a href="memorandum_view.php">MAY 11, 2021 DM 284, S. 2021 - VIRTUAL TRAINING ON ADVANCING RESEARCH THROUGH 6D SCHEME FOR SECOND BATCH </b></a></p>
 						
 							<p class="h5 text-justify">
 								Virtual Training on Advancing Research Through 6D Scheme for Second Batch
@@ -117,7 +117,7 @@
 					<br>
 					<div class="" style="padding:2%; border: solid #e3dede 1px; border-radius:1%;">
 			    		<!-- <div class="col-sm-offset-1 col-sm-10"> -->
-			    			<p class="h4 text-justify"><b><a>MAY 11, 2021 DM 284, S. 2021 - VIRTUAL TRAINING ON ADVANCING RESEARCH THROUGH 6D SCHEME FOR SECOND BATCH </b></a></p>
+			    			<p class="h4 text-justify"><b><a href="memorandum_view.php">MAY 11, 2021 DM 284, S. 2021 - VIRTUAL TRAINING ON ADVANCING RESEARCH THROUGH 6D SCHEME FOR SECOND BATCH </b></a></p>
 						
 							<p class="h5 text-justify">
 								Virtual Training on Advancing Research Through 6D Scheme for Second Batch
@@ -130,7 +130,7 @@
 					<br>
 					<div class="" style="padding:2%; border: solid #e3dede 1px; border-radius:1%;">
 			    		<!-- <div class="col-sm-offset-1 col-sm-10"> -->
-			    			<p class="h4 text-justify"><b><a>MAY 11, 2021 DM 284, S. 2021 - VIRTUAL TRAINING ON ADVANCING RESEARCH THROUGH 6D SCHEME FOR SECOND BATCH </b></a></p>
+			    			<p class="h4 text-justify"><b><a href="memorandum_view.php">MAY 11, 2021 DM 284, S. 2021 - VIRTUAL TRAINING ON ADVANCING RESEARCH THROUGH 6D SCHEME FOR SECOND BATCH </b></a></p>
 						
 							<p class="h5 text-justify">
 								Virtual Training on Advancing Research Through 6D Scheme for Second Batch

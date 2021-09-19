@@ -54,8 +54,8 @@
 			      	<li><a href="#">Page 2</a></li>
 			    </ul> -->
 			    <ul class="nav navbar-nav navbar-right">
-			    	<li><a href="#">Memorandums</a></li>
-			    	<li><a href="#">Journals</a></li>
+			    	<li><a href="memorandum.php">Memorandums</a></li>
+			    	<li><a href="journals.php">Journals</a></li>
 			      	<!-- <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Log in</a></li> -->
 			      	<li><a href="login.php">Log in</a></li>
 			    </ul>
@@ -85,10 +85,10 @@
 			      	
 					<div class="col-md-6 col-md-offset-3 form-row align-items-center">
 						<form action="/action_page.php">
-    						<div class="input-group">
-     							<input type="text" class="form-control" placeholder="Search" name="search">
-      							<div class="input-group-btn">
-       								<button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search">&nbsp;</i></button>
+    						<div class="input-group" >
+     							<input type="text" class="form-control" placeholder="Search" name="search" style="height: 40px;">
+      							<div class="input-group-btn" >
+       								<button class="btn btn-default" type="submit" style="height: 40px;"><i class="glyphicon glyphicon-search">&nbsp;</i></button>
       							</div>
     						</div>
  						</form>

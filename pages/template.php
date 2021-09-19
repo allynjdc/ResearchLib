@@ -26,9 +26,9 @@
 			      	</a>
 			    </div>
 			    <ul class="nav navbar-nav navbar-right">
-			    	<li><a href="#">Memorandums</a></li>
-			    	<li><a href="#">Journals</a></li>
-			      	<li><a href="#">Log in</a></li>
+			    	<li><a href="memorandum.php">Memorandums</a></li>
+			    	<li><a href="journals.php">Journals</a></li>
+			      	<li><a href="login.php">Log in</a></li>
 			    </ul>
 		  	</div>
 		</nav>

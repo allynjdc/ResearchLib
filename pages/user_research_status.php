@@ -29,10 +29,17 @@
 			    </div>
 			    
 			    <ul class="nav navbar-nav navbar-right">
-			    	<li><a href="#">Memorandums</a></li>
-			    	<li><a href="#">Journals</a></li>
-			      	<!-- <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Log in</a></li> -->
-			      	<li><a href="login.php">Log in</a></li>
+			    	<li><a href="memorandum.php">Memorandums</a></li>
+			    	<li><a href="journals.php">Journals</a></li>
+                    <li><a href="help.php">Help</a></li>
+			      	<li class="dropdown">
+                        <a href="#" class="dropbtn">MyUser </a>
+                        <div class="dropdown-content">
+                            <a href="user_profile.php">View Profile</a>
+                            <a href="#">Edit Profile</a>
+                            <a href="index.php">Log out</a>
+                        </div>
+                    </li>
 			    </ul>
 		  	</div>
 		</nav>

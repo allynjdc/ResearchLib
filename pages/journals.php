@@ -29,8 +29,8 @@
 			    </div>
 			    
 			    <ul class="nav navbar-nav navbar-right">
-			    	<li><a href="#">Memorandums</a></li>
-			    	<li><a href="#">Journals</a></li>
+			    	<li><a href="memorandum.php">Memorandums</a></li>
+			    	<li><a href="journals.php">Journals</a></li>
 			      	<!-- <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Log in</a></li> -->
 			      	<li><a href="login.php">Log in</a></li>
 			    </ul>
@@ -55,7 +55,7 @@
 							<img class="" src="../images/science-diliman.png" alt="science-diliman" width="75px" height="110px">
 						</div>
 						<div class="col-sm-10">
-							<p class="h4 text-justify"><b><a>SCIENCE DILIMAN: A PHILIPPINE JOURNAL OF PURE AND APPLIED SCIENCES
+							<p class="h4 text-justify"><b><a href="journals_view.php">SCIENCE DILIMAN: A PHILIPPINE JOURNAL OF PURE AND APPLIED SCIENCES
 			    			</a></b></p>
 						
 							<p class="text-justify">
@@ -72,7 +72,7 @@
 							<img class="" src="../images/science-diliman.png" alt="science-diliman" width="75px" height="110px">
 						</div>
 						<div class="col-sm-10">
-							<p class="h4 text-justify"><b><a>SCIENCE DILIMAN: A PHILIPPINE JOURNAL OF PURE AND APPLIED SCIENCES
+							<p class="h4 text-justify"><b><a href="journals_view.php">SCIENCE DILIMAN: A PHILIPPINE JOURNAL OF PURE AND APPLIED SCIENCES
 			    			</a></b></p>
 						
 							<p class="text-justify">
@@ -89,7 +89,7 @@
 							<img class="" src="../images/science-diliman.png" alt="science-diliman" width="75px" height="110px">
 						</div>
 						<div class="col-sm-10">
-							<p class="h4 text-justify"><b><a>SCIENCE DILIMAN: A PHILIPPINE JOURNAL OF PURE AND APPLIED SCIENCES
+							<p class="h4 text-justify"><b><a href="journals_view.php">SCIENCE DILIMAN: A PHILIPPINE JOURNAL OF PURE AND APPLIED SCIENCES
 			    			</a></b></p>
 						
 							<p class="text-justify">
@@ -106,7 +106,7 @@
 							<img class="" src="../images/science-diliman.png" alt="science-diliman" width="75px" height="110px">
 						</div>
 						<div class="col-sm-10">
-							<p class="h4 text-justify"><b><a>SCIENCE DILIMAN: A PHILIPPINE JOURNAL OF PURE AND APPLIED SCIENCES
+							<p class="h4 text-justify"><b><a href="journals_view.php">SCIENCE DILIMAN: A PHILIPPINE JOURNAL OF PURE AND APPLIED SCIENCES
 			    			</a></b></p>
 						
 							<p class="text-justify">
@@ -123,7 +123,7 @@
 							<img class="" src="../images/science-diliman.png" alt="science-diliman" width="75px" height="110px">
 						</div>
 						<div class="col-sm-10">
-							<p class="h4 text-justify"><b><a>SCIENCE DILIMAN: A PHILIPPINE JOURNAL OF PURE AND APPLIED SCIENCES
+							<p class="h4 text-justify"><b><a href="journals_view.php">SCIENCE DILIMAN: A PHILIPPINE JOURNAL OF PURE AND APPLIED SCIENCES
 			    			</a></b></p>
 						
 							<p class="text-justify">
@@ -140,7 +140,7 @@
 							<img class="" src="../images/science-diliman.png" alt="science-diliman" width="75px" height="110px">
 						</div>
 						<div class="col-sm-10">
-							<p class="h4 text-justify"><b><a>SCIENCE DILIMAN: A PHILIPPINE JOURNAL OF PURE AND APPLIED SCIENCES
+							<p class="h4 text-justify"><b><a href="journals_view.php">SCIENCE DILIMAN: A PHILIPPINE JOURNAL OF PURE AND APPLIED SCIENCES
 			    			</a></b></p>
 						
 							<p class="text-justify">
