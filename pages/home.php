@@ -1,3 +1,7 @@
+<?php
+include '../database/db_config.php';
+?>
+
 <DOCTYPE! html>
 <html>
 	<head>
@@ -51,6 +55,31 @@
 			    <div class="col-sm-12 center-div"> 
                     <h3> This is home page. </h3>
 			    </div>
+				<?php
+				$query = "SELECT * FROM temp_table";
+				if ($result = $db->query($query)) {
+					// Fetch associative array
+				?>
+					<table style="border:1px solid black;">
+						<tr>
+							<th> index </th>
+							<th> Name </th>
+						</tr>
+				<?php
+					while ($row = $result->fetch_assoc()) {
+				?>
+						<tr>
+							<td><?= $row["id"] ?> </td>
+							<td><?= $row["name"] ?></td>
+						</tr>
+				<?php
+					}
+				?>
+					</table>
+				<?php
+				}
+				mysqli_close($db);
+				?>
 		  </div>
 		</div>
 
