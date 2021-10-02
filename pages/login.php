@@ -53,7 +53,7 @@
 				</div>
 				</br>
 				</br>
-				<form id="login" action="home.php" method="post">
+				<form id="login" method="post">
 					<div class="input-group">
 						<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 						<input type="text" id="uname" name="uname" placeholder="Enter Username" class="form-control"/>
@@ -64,8 +64,9 @@
 						<input type="password" id="pwd" name="pwd" placeholder="Enter Password" class="form-control"/>
 					</div>
 					</br>
-					<button class="btn-primary" type="submit" >Login</button>
+					<button class="btn-primary" type="button" onclick="authAccount()">Login</button>
 				</form>
+				<p id="status_msg" style="color: red"></p>
 			</div>
 		</div>
 
@@ -75,4 +76,23 @@
 		</footer>
 
 	</body>
+	<script>
+	function authAccount() {
+		document.getElementById('status_msg').innerHTML = ""; // Reset status message
+	
+		var username = document.getElementById('uname').value;
+		var password = document.getElementById('pwd').value;
+		var data = { 'uname': username, 'pwd': password };
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function() {
+			if ((this.readyState == 4) && (this.status == 200)) {
+				if (this.responseText == "OK") window.location="home.php";
+				else document.getElementById('status_msg').innerHTML = "Incorrect username or password. Please try again.";
+			}
+		};
+		xmlhttp.open("POST", "../database/authenticate.php", true);
+		xmlhttp.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+		xmlhttp.send(JSON.stringify(data));
+	}
+	</script>
 </html>
