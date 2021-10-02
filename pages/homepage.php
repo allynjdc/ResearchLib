@@ -49,36 +49,58 @@
 		  	<div class="row content">
 
 			    <!-- MIDDLE CONTENT -->
-			    <div class="col-sm-12 center-div"> 
-                    
-                    <div class="col-sm-6 col-sm-offset-3" style="background-color: white">
-                    	<br>
-                    	<h3> Upload Memorandum </h3>
-                    	<br>
-                    	<form>
-						    <div class="input-group">
-						      	<span class="input-group-addon">Memorandum Code</span>
-						      	<input id="Memo_code" type="text" class="form-control" name="Memo_code" placeholder="DM 000, s. 2021">
-						    </div>
-						    <br>
-						    <div class="input-group">
-						      	<span class="input-group-addon">Subject</span>
-						      	<input id="title" type="text" class="form-control" name="title" placeholder="Memorandum Title">
-						    </div>
-						    <br>
-						    <div class="input-group">
-						      	<span class="input-group-addon">Date Signed</span>
-						      	<input id="signed_date" type="date" class="form-control" name="signed_date" placeholder="Additional Info" min="2001-01-01" max="2099-12-31">
-						    </div>
-						    <br>
-						       	<p class="text-justify">Insert the File:</p>
-						      	<input id="memo" type="file" class="" name="memo" accept="image/*, .pdf, .doc, .txt">
-						    <br>
-						    <button class="btn-success" type="submit" >Upload</button>
-	  					</form>
+			    <div class="col-sm-12 "> 
+			    	
+                    <!-- <h3> This is home page. </h3> -->
+                    <div class="col-sm-6 col-md-offset-3 " style="background-color: white;"> 
+                    	<div class="form-row" >
+	                    	<br>
+	                    	<!-- <div>
+	                    		<img class="" src="../images/research icon.png" alt="Division Digital Research Library" width="250" height="200">
+	                    	</div>
+	                    	<br> -->
+
+							<form action="/action_page.php">
+	    						<div class="input-group" >
+	     							<input type="text" class="form-control" placeholder="Search" name="search" style="height: 40px;">
+	      							<div class="input-group-btn" >
+	       								<button class="btn btn-default" type="submit" style="height: 40px;"><i class="glyphicon glyphicon-search">&nbsp;</i></button>
+	      							</div>
+	    						</div>
+	 						</form>
+						</div>
+						<br><br><br>
+						<div class="center-div">
+							<a class="col-sm-3 center-div" href="user_list.php">
+								<img src="../images/icon_user.png"  width="120" height="120">
+								<br><br> USERS
+							</a>
+		                    <a class="col-sm-3 center-div" href="researcher_list.php">
+		                    	<img src="../images/icon_researcher.png" width="120" height="120">
+		                    	<br><br> RESEARCHERS
+		                    </a>
+						</div>
+		                <br><br><br><br><br><br><br><br><br><br>
+						<div class="center-div">
+							<a class="col-sm-3 center-div" href="user_research_status.php">
+								<img src="../images/icon_researches.png" width="120" height="120">
+		                    	<br><br> RESEARCHES
+							</a>
+		                    <a class="col-sm-3 center-div" href="user_profile.php">
+		                    	<img src="../images/icon_journal.png" width="120" height="120">
+		                    	<br><br> JOURNAL
+		                    </a>
+		                    <a class="col-sm-3 center-div" href="user_profile.php">
+		                    	<img src="../images/icon_memo.png" width="120" height="120">
+		                    	<br><br> MEMORANDUMS
+		                    </a>
+						</div>
+						<br><br><br><br><br><br><br><br><br><br><br>
+
                     </div>
-	                    
+                    
 			    </div>
+				
 		  </div>
 		</div>
 

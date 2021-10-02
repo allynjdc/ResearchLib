@@ -1,6 +1,7 @@
 <DOCTYPE! html>
 <html>
 	<head>
+		<title> Research eLibrary </title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" type="text/css" href="../bootstrap-3.3.7-dist/css/bootstrap.css">
@@ -22,7 +23,7 @@
 		<nav class="navbar navbar-default"> <!-- navbar-inverse -->
 		  	<div class="container-fluid col-md-10 col-md-offset-1">
 			    <div class="navbar-header">
-			      	<a class="navbar-brand " href="#">
+			      	<a class="navbar-brand " href="homepage.php">
 			      		<p class="title_brand_nav"> Division Digital Research Library </p>
 			      	</a>
 			    </div>
@@ -33,8 +34,8 @@
 			      	<li class="dropdown">
                         <a href="#" class="dropbtn">MyUser </a>
                         <div class="dropdown-content">
-                            <a href="user_profile.php">View Profile</a>
-                            <a href="#">Edit Profile</a>
+                            <a href="user_profile_view.php">View Profile</a>
+                            <a href="user_profile_update.php">Edit Profile</a>
                             <a href="index.php">Log out</a>
                         </div>
                     </li>

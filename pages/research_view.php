@@ -23,7 +23,7 @@
 		<nav class="navbar navbar-default"> <!-- navbar-inverse -->
 		  	<div class="container-fluid col-md-10 col-md-offset-1">
 			    <div class="navbar-header">
-			      	<a class="navbar-brand " href="#">
+			      	<a class="navbar-brand " href="index.php">
 			      		<p class="title_brand_nav"> Division Digital Research Library </p>
 			      	</a>
 			    </div>
