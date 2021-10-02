@@ -1,6 +1,8 @@
 <?php
 include 'db_config.php';
 
+session_start();
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $in = file_get_contents('php://input');
@@ -11,7 +13,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $query = "SELECT * FROM user WHERE username='$username' AND password=MD5('$password')";
     $result = $db->query($query);
     $count = mysqli_num_rows($result);
-    if ($count == 1) echo "OK";
-    else echo "NOK";
+    if ($count == 1) {
+        $_SESSION['user'] = $username;
+        echo "OK";
+    } else {
+        echo "NOK";
+    }
 }
 ?>

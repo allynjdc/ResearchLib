@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <DOCTYPE! html>
 <html>
 	<head>
@@ -15,6 +19,7 @@
 
 		<link rel="stylesheet" type="text/css" href="../css/body_css.css">
 		<link rel="stylesheet" type="text/css" href="../css/footer_css.css">
+		<link rel="stylesheet" type="text/css" href="../css/nav_css.css">
 		
 	</head>
 	<body class="bg-light">
@@ -56,8 +61,20 @@
 			    <ul class="nav navbar-nav navbar-right">
 			    	<li><a href="memorandum.php">Memorandums</a></li>
 			    	<li><a href="journals.php">Journals</a></li>
-			      	<!-- <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Log in</a></li> -->
-			      	<li><a href="login.php">Log in</a></li>
+			      	<?php
+						if (!isset($_SESSION['user'])) {
+							echo "<li><a href=\"login.php\">Login in</a></li>";
+						} else {
+							echo "<li class=\"dropdown\">
+									<a href=\"#\" class=\"dropbtn\">" . $_SESSION['user'] . "</a>
+									<div class=\"dropdown-content\">
+										<a href=\"user_profile_view.php\">View Profile</a>
+										<a href=\"user_profile_update.php\">Edit Profile</a>
+										<a href=\"logout.php\">Log out</a>
+									</div>
+								</li>";
+						}
+					?>
 			    </ul>
 		  	</div>
 		</nav>

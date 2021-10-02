@@ -1,3 +1,13 @@
+<?php
+
+session_start();
+
+if (isset($_SESSION['user'])) {
+	header("Location:homepage.php"); // If ther user is already logged-in, redirect to the home page
+}
+
+?>
+
 <DOCTYPE! html>
 <html>
 	<head>
@@ -38,7 +48,7 @@
 			    <ul class="nav navbar-nav navbar-right">
 			    	<li><a href="memorandum.php">Memorandums</a></li>
 			    	<li><a href="journals.php">Journals</a></li>
-			      <!-- <li><a href="#">Log in</a></li> -->
+			      	<li><a href="login.php">Log in</a></li>
 			    </ul>
 		  	</div>
 		</nav>
@@ -86,7 +96,7 @@
 		var xmlhttp = new XMLHttpRequest();
 		xmlhttp.onreadystatechange = function() {
 			if ((this.readyState == 4) && (this.status == 200)) {
-				if (this.responseText == "OK") window.location="home.php";
+				if (this.responseText == "OK") window.location="homepage.php";
 				else document.getElementById('status_msg').innerHTML = "Incorrect username or password. Please try again.";
 			}
 		};

@@ -1,3 +1,11 @@
+<?php
+session_start();
+
+if (!$_SESSION['user']) {
+	header("Location:index.php");   // Redirect to index page. User cannot view this page if he/she is not yet logged in.
+}
+?>
+
 <DOCTYPE! html>
 <html>
 	<head>
@@ -32,11 +40,11 @@
 			    	<li><a href="journals.php">Journals</a></li>
                     <li><a href="help.php">Help</a></li>
 			      	<li class="dropdown">
-                        <a href="#" class="dropbtn">MyUser </a>
+                        <a href="#" class="dropbtn"><?= $_SESSION['user'] ?></a>
                         <div class="dropdown-content">
                             <a href="user_profile_view.php">View Profile</a>
                             <a href="user_profile_update.php">Edit Profile</a>
-                            <a href="index.php">Log out</a>
+                            <a href="logout.php">Log out</a>
                         </div>
                     </li>
 			    </ul>
