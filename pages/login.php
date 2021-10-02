@@ -52,7 +52,7 @@
 				</div>
 				</br>
 				</br>
-				<form id="login" methon="post">
+				<form id="login" method="post">
 					<div class="input-group">
 						<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 						<input type="text" id="uname" name="uname" placeholder="Enter Username" class="form-control"/>
