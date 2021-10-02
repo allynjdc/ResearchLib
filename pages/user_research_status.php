@@ -6,13 +6,11 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link rel="stylesheet" type="text/css" href="../bootstrap-3.3.7-dist/css/bootstrap.css">
 		<link rel="stylesheet" type="text/css" href="../bootstrap-3.3.7-dist/css/bootstrap.min.css">
-
 		
 		<script src="../jquery.js"></script>
 		<script src="../script.js"></script>
 	  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="../bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-
 		<link rel="stylesheet" type="text/css" href="../css/body_css.css">
         <link rel="stylesheet" type="text/css" href="../css/footer_css.css">
         <link rel="stylesheet" type="text/css" href="../css/nav_css.css">
@@ -42,13 +40,10 @@
 			    </ul>
 		  	</div>
 		</nav>
-
 		<!-- MAIN TEMPLATE FOR THE CONTENT -->
 		<div class="container-fluid ">    
 		  	<div class="row content" style="background-color: white; ">
-
 		  		<br>
-
 			    <div class="col-sm-3 sidenav" >
 			    	<div class="col-sm-4" ></div>
 			    	<div class="col-sm-8 h6" style="background-color: white;">
@@ -88,7 +83,6 @@
 				      	
 			      	</div>
 			    </div>
-
 			    <div class="col-sm-6 center_content" style="background-color: white; ">
 			    	<div class="text-justify">
 						<a href="user_add_research.php">
@@ -98,7 +92,6 @@
 						</a>
 						<p></p>
 					</div>
-
 					<div>
 						<ul class="nav nav-tabs">
 						    <li class="active"><a data-toggle="tab" href="#conducted">Conducted</a></li>
@@ -106,7 +99,6 @@
 						    <li><a data-toggle="tab" href="#disseminated">Disseminated</a></li>
 						    <li><a data-toggle="tab" href="#used">Used</a></li>
   						</ul>
-
 						<div class="tab-content">
 						    <div id="conducted" class="tab-pane fade in active">
 						      	<h3 class="title_brand_nav">Research Conducted</h3>
@@ -115,31 +107,54 @@
 									<p class="h4 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </a></b></p>
 									<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
 									<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
-									<p></p>
-									<br>
+									<p class="text-right" style="">
+										<a href="user_update_research.php" style="color: green;">
+											update
+										</a> 
+										&nbsp;&nbsp;|&nbsp;&nbsp; 
+										<a href="" style="color: red;">remove</a>
+									</p>
+									<p>&nbsp;</p>
 								</div>
 								<div class="">
 									<p class="h4 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </a></b></p>
 									<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
 									<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
-									<p></p>
-									<br>
+									<p class="text-right" style="">
+										<a href="user_update_research.php" style="color: green;">
+											update
+										</a> 
+										&nbsp;&nbsp;|&nbsp;&nbsp; 
+										<a href="" style="color: red;">remove</a>
+									</p>
+									<p>&nbsp;</p>
 								</div>
 								<div class="">
 									<p class="h4 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </a></b></p>
 									<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
 									<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
-									<p></p>
-									<br>
+									<p class="text-right" style="">
+										<a href="user_update_research.php" style="color: green;">
+											update
+										</a> 
+										&nbsp;&nbsp;|&nbsp;&nbsp; 
+										<a href="" style="color: red;">remove</a>
+									</p>
+									<p>&nbsp;</p>
 								</div>
 								<div class="">
 									<p class="h4 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </a></b></p>
 									<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
 									<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
-									<p></p>
-									<br>
+									<p class="text-right" style="">
+										<a href="user_update_research.php" style="color: green;">
+											update
+										</a> 
+										&nbsp;&nbsp;|&nbsp;&nbsp; 
+										<a href="" style="color: red;">remove</a>
+									</p>
+									<p>&nbsp;</p>
 								</div>
-
 								<div class="text-right">
 									<ul class="pagination pagination-sm ">
 									    <li><a href="#">Previous</a></li>
@@ -152,7 +167,6 @@
 			  						</ul>
 								</div>
 						    </div>
-
 						    <div id="submitted" class="tab-pane fade">
 						      	<h3 class="title_brand_nav">Research Submitted</h3>
 						      	<br>
@@ -160,31 +174,54 @@
 									<p class="h4 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </a></b></p>
 									<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
 									<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
-									<p></p>
-									<br>
+									<p class="text-right" style="">
+										<a href="user_update_research.php" style="color: green;">
+											update
+										</a> 
+										&nbsp;&nbsp;|&nbsp;&nbsp; 
+										<a href="" style="color: red;">remove</a>
+									</p>
+									<p>&nbsp;</p>
 								</div>
 								<div class="">
 									<p class="h4 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </a></b></p>
 									<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
 									<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
-									<p></p>
-									<br>
+									<p class="text-right" style="">
+										<a href="user_update_research.php" style="color: green;">
+											update
+										</a> 
+										&nbsp;&nbsp;|&nbsp;&nbsp; 
+										<a href="" style="color: red;">remove</a>
+									</p>
+									<p>&nbsp;</p>
 								</div>
 								<div class="">
 									<p class="h4 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </a></b></p>
 									<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
 									<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
-									<p></p>
-									<br>
+									<p class="text-right" style="">
+										<a href="user_update_research.php" style="color: green;">
+											update
+										</a> 
+										&nbsp;&nbsp;|&nbsp;&nbsp; 
+										<a href="" style="color: red;">remove</a>
+									</p>
+									<p>&nbsp;</p>
 								</div>
 								<div class="">
 									<p class="h4 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </a></b></p>
 									<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
 									<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
-									<p></p>
-									<br>
+									<p class="text-right" style="">
+										<a href="user_update_research.php" style="color: green;">
+											update
+										</a> 
+										&nbsp;&nbsp;|&nbsp;&nbsp; 
+										<a href="" style="color: red;">remove</a>
+									</p>
+									<p>&nbsp;</p>
 								</div>
-
 								<div class="text-right">
 									<ul class="pagination pagination-sm ">
 									    <li><a href="#">Previous</a></li>
@@ -197,7 +234,6 @@
 			  						</ul>
 								</div>
 						    </div>
-
 						    <div id="disseminated" class="tab-pane fade">
 						      	<h3 class="title_brand_nav">Research Disseminated</h3>
 						      	<br>
@@ -205,31 +241,54 @@
 									<p class="h4 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </a></b></p>
 									<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
 									<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
-									<p></p>
-									<br>
+									<p class="text-right" style="">
+										<a href="user_update_research.php" style="color: green;">
+											update
+										</a> 
+										&nbsp;&nbsp;|&nbsp;&nbsp; 
+										<a href="" style="color: red;">remove</a>
+									</p>
+									<p>&nbsp;</p>
 								</div>
 								<div class="">
 									<p class="h4 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </a></b></p>
 									<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
 									<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
-									<p></p>
-									<br>
+									<p class="text-right" style="">
+										<a href="user_update_research.php" style="color: green;">
+											update
+										</a> 
+										&nbsp;&nbsp;|&nbsp;&nbsp; 
+										<a href="" style="color: red;">remove</a>
+									</p>
+									<p>&nbsp;</p>
 								</div>
 								<div class="">
 									<p class="h4 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </a></b></p>
 									<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
 									<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
-									<p></p>
-									<br>
+									<p class="text-right" style="">
+										<a href="user_update_research.php" style="color: green;">
+											update
+										</a> 
+										&nbsp;&nbsp;|&nbsp;&nbsp; 
+										<a href="" style="color: red;">remove</a>
+									</p>
+									<p>&nbsp;</p>
 								</div>
 								<div class="">
 									<p class="h4 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </a></b></p>
 									<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
 									<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
-									<p></p>
-									<br>
+									<p class="text-right" style="">
+										<a href="user_update_research.php" style="color: green;">
+											update
+										</a> 
+										&nbsp;&nbsp;|&nbsp;&nbsp; 
+										<a href="" style="color: red;">remove</a>
+									</p>
+									<p>&nbsp;</p>
 								</div>
-
 								<div class="text-right">
 									<ul class="pagination pagination-sm ">
 									    <li><a href="#">Previous</a></li>
@@ -242,7 +301,6 @@
 			  						</ul>
 								</div>
 						    </div>
-
 						    <div id="used" class="tab-pane fade">
 						      	<h3 class="title_brand_nav">Research Used</h3>
 						      	<br>
@@ -250,31 +308,52 @@
 									<p class="h4 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </a></b></p>
 									<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
 									<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
-									<p></p>
-									<br>
+									<p class="text-right" style="">
+										<a href="user_update_research.php" style="color: green;">
+											update
+										</a> 
+										&nbsp;&nbsp;|&nbsp;&nbsp; 
+										<a href="" style="color: red;">remove</a>
+									</p>
+									<p>&nbsp;</p>								</div>
+								<div class="">
+									<p class="h4 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </a></b></p>
+									<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
+									<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
+									<p class="text-right" style="">
+										<a href="user_update_research.php" style="color: green;">
+											update
+										</a> 
+										&nbsp;&nbsp;|&nbsp;&nbsp; 
+										<a href="" style="color: red;">remove</a>
+									</p>
+									<p>&nbsp;</p>								</div>
+								<div class="">
+									<p class="h4 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </a></b></p>
+									<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
+									<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
+									<p class="text-right" style="">
+										<a href="user_update_research.php" style="color: green;">
+											update
+										</a> 
+										&nbsp;&nbsp;|&nbsp;&nbsp; 
+										<a href="" style="color: red;">remove</a>
+									</p>
+									<p>&nbsp;</p>
 								</div>
 								<div class="">
 									<p class="h4 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </a></b></p>
 									<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
 									<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
-									<p></p>
-									<br>
+									<p class="text-right" style="">
+										<a href="user_update_research.php" style="color: green;">
+											update
+										</a> 
+										&nbsp;&nbsp;|&nbsp;&nbsp; 
+										<a href="" style="color: red;">remove</a>
+									</p>
+									<p>&nbsp;</p>
 								</div>
-								<div class="">
-									<p class="h4 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </a></b></p>
-									<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
-									<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
-									<p></p>
-									<br>
-								</div>
-								<div class="">
-									<p class="h4 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </a></b></p>
-									<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
-									<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
-									<p></p>
-									<br>
-								</div>
-
 								<div class="text-right">
 									<ul class="pagination pagination-sm ">
 									    <li><a href="#">Previous</a></li>
@@ -286,26 +365,21 @@
 									    <li><a href="#">Next</a></li>
 			  						</ul>
 								</div>
-
 						    </div>
 						</div>
 					</div>
-
 				</div>
 						
 				<div class="col-sm-3 sidenav" >
 			    	<div class="col-sm-8 h6" style="background-color: white;">
-
 			    	</div>
 			    	<div class="col-sm-4" ></div>
 			    </div>
 		  	</div>
 		</div>
-
 		<!-- Footer -->
 		<!-- <footer class="container-fluid text-center mt-auto">
   			<p>All rights reserved &copy; 2021</p>
 		</footer> -->
-
 	</body>
 </html>

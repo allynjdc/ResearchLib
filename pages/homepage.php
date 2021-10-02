@@ -86,11 +86,11 @@
 								<img src="../images/icon_researches.png" width="120" height="120">
 		                    	<br><br> RESEARCHES
 							</a>
-		                    <a class="col-sm-3 center-div" href="user_profile.php">
+		                    <a class="col-sm-3 center-div" href="user_journal_list.php">
 		                    	<img src="../images/icon_journal.png" width="120" height="120">
 		                    	<br><br> JOURNAL
 		                    </a>
-		                    <a class="col-sm-3 center-div" href="user_profile.php">
+		                    <a class="col-sm-3 center-div" href="user_memorandum_list.php">
 		                    	<img src="../images/icon_memo.png" width="120" height="120">
 		                    	<br><br> MEMORANDUMS
 		                    </a>

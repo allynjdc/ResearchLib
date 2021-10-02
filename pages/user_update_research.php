@@ -62,7 +62,7 @@
 			    	
                 <div class="col-sm-6 col-sm-offset-3" style="background-color: white">
                     	<br>
-                    	<h3> Upload Research </h3>
+                    	<h3> Update Research </h3>
                     	<br>
                     	<form>
 						    <div class="input-group">
@@ -157,7 +157,7 @@
 						    	<p class="text-justify">Insert the Research File:</p>
 						      	<input id="journ_photo" type="file" class="" name="journ_photo" accept="image/*, .pdf, .doc, .txt">
 						    <br>
-						    <button class="btn-success" type="submit" >Upload Research</button>
+						    <button class="btn-success" type="submit" >Update Research</button>
 	  					</form>
                     </div>
 	                    
