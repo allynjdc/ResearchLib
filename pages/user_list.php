@@ -179,37 +179,6 @@ if (!$_SESSION['user']) {
 							echo "<p> No users yet.</p>";
 						}
 						?>
-						<!--
-						<div class="col-sm-12 text-justify" >
-							<a href="">
-								<div class="col-sm-12">
-									<div class="col-sm-1" >
-										<img class="  img-circle " src="../images/calcaben.png" alt="Calcaben" width="70px" height="70px">
-									</div>
-									<div class="col-sm-7 " style=" ">
-										<p class="h4" style=""> 
-											ALLYN JOY D. CALCABEN
-										</p>
-										<p class="h6">
-											Special Science Teacher I 
-											<br>
-											Tagum National Trade Schoool 
-											<br>
-										</p>	
-									</div>
-									<div class="col-sm-4 text-right h5" style="">
-										<a href="#UpdateUserModal" data-toggle="modal" data-target="#UpdateUserModal" data-whatever="UpdateUser">update</a> 
-										&nbsp;&nbsp;|&nbsp;&nbsp; 
-										<a href="">reset password</a>
-										&nbsp;&nbsp;|&nbsp;&nbsp; 
-										<a href="">remove</a>
-									</div>
-								</div>
-							</a>
-							<p> &nbsp;</p>
-						</div>
-						-->
-
 					</div>
 			    </div>
 
