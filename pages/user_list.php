@@ -99,34 +99,43 @@ if (!$_SESSION['user']) {
 						        		<form>
 						          			<div class="form-group">
 						          				<label for="user_photo" class="col-form-label">Upload Image:</label>
-						          				<input id="user_photo" type="file" class="" name="user_photo" accept="image/*">
+						          				<input id="add-user-photo" type="file" class="" name="user_photo" accept="image/*">
 						          			</div>
 
 						          			<div class="form-group">
-						            			<label for="user-name" class="col-form-label">Name:</label>
-						            			<input type="text" class="form-control" id="user-name">
+						            			<label for="user-name" class="col-form-label">First Name:</label>
+						            			<input type="text" class="form-control" id="add-user-fname">
+						          			</div>
+											  <div class="form-group">
+						            			<label for="user-name" class="col-form-label">Middle Name:</label>
+						            			<input type="text" class="form-control" id="add-user-mname">
+						          			</div>
+											  <div class="form-group">
+						            			<label for="user-name" class="col-form-label">Last Name:</label>
+						            			<input type="text" class="form-control" id="add-user-lname">
 						          			</div>
 						          			<div class="form-group">
 									            <label for="user-designation" class="col-form-label">Designation:</label>
-									            <input type="text" class="form-control" id="user-designation">
+									            <input type="text" class="form-control" id="add-user-designation">
 						          			</div>
 						          			<div class="form-group">
 									            <label for="user-station" class="col-form-label">Office / School:</label>
-									            <input type="text" class="form-control" id="user-station">
+									            <input type="text" class="form-control" id="add-user-office">
 						          			</div>
 						          			<div class="form-group">
 									            <label for="user-email" class="col-form-label">Email:</label>
-									            <input type="email" class="form-control" id="user-email">
+									            <input type="email" class="form-control" id="add-user-email">
 						          			</div>
 						          			<div class="form-group">
 									            <label for="user-username" class="col-form-label">Username:</label>
-									            <input type="text" class="form-control" id="user-username">
+									            <input type="text" class="form-control" id="add-user-username">
 						          			</div>
 						        		</form>
 						      		</div>
 						      		<div class="modal-footer">
+										<p id="add_user_status_msg"></p>
 								        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-								        <button type="button" class="btn btn-primary">Add User</button>
+								        <button type="button" class="btn btn-primary" onclick="addUser()">Add User</button>
 						      		</div>
 						    	</div>
 						  	</div>
@@ -135,7 +144,7 @@ if (!$_SESSION['user']) {
 						<br>
 						<!-- For Fetching ---> 
 						<?php
-						$query = "SELECT * FROM user";
+						$query = "SELECT * FROM user ORDER BY first_name";
 						if ($result = $db->query($query)) {
 							$profileDir = "../images/profile_pictures/";
 							$defaultImg = "default_profile_picture.jpg";
@@ -190,118 +199,6 @@ if (!$_SESSION['user']) {
 									</div>
 									<div class="col-sm-4 text-right h5" style="">
 										<a href="#UpdateUserModal" data-toggle="modal" data-target="#UpdateUserModal" data-whatever="UpdateUser">update</a> 
-										&nbsp;&nbsp;|&nbsp;&nbsp; 
-										<a href="">reset password</a>
-										&nbsp;&nbsp;|&nbsp;&nbsp; 
-										<a href="">remove</a>
-									</div>
-								</div>
-							</a>
-							<p> &nbsp;</p>
-						</div>
-						<div class="col-sm-12 text-justify" >
-							<a href="">
-								<div class="col-sm-12">
-									<div class="col-sm-1" >
-										<img class="  img-circle " src="../images/calcaben.png" alt="Calcaben" width="70px" height="70px">
-									</div>
-									<div class="col-sm-7 " style=" ">
-										<p class="h4" style=""> 
-											ALLYN JOY D. CALCABEN
-										</p>
-										<p class="h6">
-											Special Science Teacher I 
-											<br>
-											Tagum National Trade Schoool 
-											<br>
-										</p>	
-									</div>
-									<div class="col-sm-4 text-right h5" style="">
-										<a href="">update</a> 
-										&nbsp;&nbsp;|&nbsp;&nbsp; 
-										<a href="">reset password</a>
-										&nbsp;&nbsp;|&nbsp;&nbsp; 
-										<a href="">remove</a>
-									</div>
-								</div>
-							</a>
-							<p> &nbsp;</p>
-						</div>
-						<div class="col-sm-12 text-justify" >
-							<a href="">
-								<div class="col-sm-12">
-									<div class="col-sm-1" >
-										<img class="  img-circle " src="../images/calcaben.png" alt="Calcaben" width="70px" height="70px">
-									</div>
-									<div class="col-sm-7 " style=" ">
-										<p class="h4" style=""> 
-											ALLYN JOY D. CALCABEN
-										</p>
-										<p class="h6">
-											Special Science Teacher I 
-											<br>
-											Tagum National Trade Schoool 
-											<br>
-										</p>	
-									</div>
-									<div class="col-sm-4 text-right h5" style="">
-										<a href="">update</a> 
-										&nbsp;&nbsp;|&nbsp;&nbsp; 
-										<a href="">reset password</a>
-										&nbsp;&nbsp;|&nbsp;&nbsp; 
-										<a href="">remove</a>
-									</div>
-								</div>
-							</a>
-							<p> &nbsp;</p>
-						</div>
-						<div class="col-sm-12 text-justify" >
-							<a href="">
-								<div class="col-sm-12">
-									<div class="col-sm-1" >
-										<img class="  img-circle " src="../images/calcaben.png" alt="Calcaben" width="70px" height="70px">
-									</div>
-									<div class="col-sm-7 " style=" ">
-										<p class="h4" style=""> 
-											ALLYN JOY D. CALCABEN
-										</p>
-										<p class="h6">
-											Special Science Teacher I 
-											<br>
-											Tagum National Trade Schoool 
-											<br>
-										</p>	
-									</div>
-									<div class="col-sm-4 text-right h5" style="">
-										<a href="">update</a> 
-										&nbsp;&nbsp;|&nbsp;&nbsp; 
-										<a href="">reset password</a>
-										&nbsp;&nbsp;|&nbsp;&nbsp; 
-										<a href="">remove</a>
-									</div>
-								</div>
-							</a>
-							<p> &nbsp;</p>
-						</div>
-						<div class="col-sm-12 text-justify" >
-							<a href="">
-								<div class="col-sm-12">
-									<div class="col-sm-1" >
-										<img class="  img-circle " src="../images/calcaben.png" alt="Calcaben" width="70px" height="70px">
-									</div>
-									<div class="col-sm-7 " style=" ">
-										<p class="h4" style=""> 
-											ALLYN JOY D. CALCABEN
-										</p>
-										<p class="h6">
-											Special Science Teacher I 
-											<br>
-											Tagum National Trade Schoool 
-											<br>
-										</p>	
-									</div>
-									<div class="col-sm-4 text-right h5" style="">
-										<a href="">update</a> 
 										&nbsp;&nbsp;|&nbsp;&nbsp; 
 										<a href="">reset password</a>
 										&nbsp;&nbsp;|&nbsp;&nbsp; 
@@ -382,4 +279,36 @@ if (!$_SESSION['user']) {
 		-->
 
 	</body>
+
+	<script>
+		function addUser() {
+			alert("Hello");
+			document.getElementById('add_user_status_msg').innerHTML = ""; // Reset status message
+		
+			var firstName = document.getElementById('add-user-fname').value;
+			var middleName = document.getElementById('add-user-mname').value;
+			var lastName = document.getElementById('add-user-lname').value;
+			var designation = document.getElementById('add-user-designation').value;
+			var office = document.getElementById('add-user-office').value;
+			var email = document.getElementById('add-user-email').value;
+			var username = document.getElementById('add-user-username').value;
+	
+			var data = {'fname': firstName, 'mname': middleName, 'lname': lastName, 'designation': designation, 'office': office, 'email': email , 'username': username };
+
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if ((this.readyState == 4) && (this.status == 200)) {
+					if (this.responseText == "OK") {
+						document.getElementById('AddUserModal').style.display = 'none';
+						location.reload();
+					} else {
+						document.getElementById('add_user_status_msg').innerHTML = "Unable to add new user. Please try again.";
+					}
+				}
+			};
+			xmlhttp.open("POST", "../database/add_user.php", true);
+			xmlhttp.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+			xmlhttp.send(JSON.stringify(data));
+		}
+	</script>
 </html>
