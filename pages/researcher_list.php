@@ -135,7 +135,7 @@ if (!$_SESSION['user']) {
 						<!-- For Fetching ---> 
 						<div class="col-sm-12 text-justify" >
 							<!-- style="border: solid #e8e4e3 0.5px; border-radius: 25px;"> -->
-							<a href=""> <!-- padulong sa profile page sa user --->
+							<a href="user_profile_researcher.php"> <!-- padulong sa profile page sa user --->
 								<div class="col-sm-12">
 									<div class="col-sm-1" >
 										<img class="  img-circle " src="../images/calcaben.png" alt="Calcaben" width="70px" height="70px">
@@ -162,7 +162,7 @@ if (!$_SESSION['user']) {
 						</div>
 						<div class="col-sm-12 text-justify" >
 							<!-- style="border: solid #e8e4e3 0.5px; border-radius: 25px;"> -->
-							<a href=""> <!-- padulong sa profile page sa user --->
+							<a href="user_profile_researcher.php"> <!-- padulong sa profile page sa user --->
 								<div class="col-sm-12">
 									<div class="col-sm-1" >
 										<img class="  img-circle " src="../images/calcaben.png" alt="Calcaben" width="70px" height="70px">
@@ -189,7 +189,7 @@ if (!$_SESSION['user']) {
 						</div>
 						<div class="col-sm-12 text-justify" >
 							<!-- style="border: solid #e8e4e3 0.5px; border-radius: 25px;"> -->
-							<a href=""> <!-- padulong sa profile page sa user --->
+							<a href="user_profile_researcher.php"> <!-- padulong sa profile page sa user --->
 								<div class="col-sm-12">
 									<div class="col-sm-1" >
 										<img class="  img-circle " src="../images/calcaben.png" alt="Calcaben" width="70px" height="70px">
@@ -216,7 +216,7 @@ if (!$_SESSION['user']) {
 						</div>
 						<div class="col-sm-12 text-justify" >
 							<!-- style="border: solid #e8e4e3 0.5px; border-radius: 25px;"> -->
-							<a href=""> <!-- padulong sa profile page sa user --->
+							<a href="user_profile_researcher.php"> <!-- padulong sa profile page sa user --->
 								<div class="col-sm-12">
 									<div class="col-sm-1" >
 										<img class="  img-circle " src="../images/calcaben.png" alt="Calcaben" width="70px" height="70px">
@@ -243,7 +243,7 @@ if (!$_SESSION['user']) {
 						</div>
 						<div class="col-sm-12 text-justify" >
 							<!-- style="border: solid #e8e4e3 0.5px; border-radius: 25px;"> -->
-							<a href=""> <!-- padulong sa profile page sa user --->
+							<a href="user_profile_researcher.php"> <!-- padulong sa profile page sa user --->
 								<div class="col-sm-12">
 									<div class="col-sm-1" >
 										<img class="  img-circle " src="../images/calcaben.png" alt="Calcaben" width="70px" height="70px">

@@ -279,6 +279,7 @@ if (!$_SESSION['user']) {
 		-->
 
 	</body>
+
 	<script>
 		async function uploadImage() {
 			let formData = new FormData();
@@ -326,5 +327,5 @@ if (!$_SESSION['user']) {
 			xmlhttp.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
 			xmlhttp.send(JSON.stringify(data));
 		}
-		</script>
+	</script>
 </html>
