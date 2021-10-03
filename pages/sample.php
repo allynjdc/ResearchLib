@@ -63,7 +63,7 @@ session_start();
 			    	<li><a href="journals.php">Journals</a></li>
 			      	<?php
 						if (!isset($_SESSION['user'])) {
-							echo "<li><a href=\"login.php\">Login</a></li>";
+							echo "<li><a href=\"login.php\">Login in</a></li>";
 						} else {
 							echo "<li class=\"dropdown\">
 									<a href=\"#\" class=\"dropbtn\">" . $_SESSION['user'] . "</a>
@@ -88,32 +88,33 @@ session_start();
 			      	<p><a href="#">Link</a></p>
 			      	<p><a href="#">Link</a></p> -->
 			    </div>
-			     <div class="col-sm-7 center-div"> 
-			      	<div class="col-md-12" style="height: 450px;"></div>
+			    <div class="col-sm-7 center-div"> 
+			      	<div class="col-md-12" style="height: 400px;"></div>
 			      	<!-- <div class="col-md-1"></div> -->
 			      	
 					<div class="col-md-9 col-md-offset-1 form-row align-items-center" style="left:55px;">
-						<form action="/action_page.php">
-    						<div class="input-group" >
-     							<input type="text" class="form-control" placeholder="Search" name="search" style="height: 40px;">
-      							<div class="input-group-btn" >
-       								<button class="btn btn-default" type="submit" style="height: 40px;"><i class="glyphicon glyphicon-search">&nbsp;</i></button>
-      							</div>
-    						</div>
- 						</form>
+						<form id="login" method="post">
+							<div class="input-group">
+								<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+								<input type="text" id="uname" name="uname" placeholder="Enter Username" class="form-control"/>
+							</div>
+							</br>
+							<div class="input-group">
+								<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+								<input type="password" id="pwd" name="pwd" placeholder="Enter Password" class="form-control"/>
+							</div>
+							</br>
+							<div class="col-md-12 input-group" >
+								<button class="btn-primary" style="cursor: pointer; width: 100%; border-radius: 5px;" type="button" onclick="authAccount()">Login</button>
+							</div>
+							
+							
+						</form>
 					</div>
 						
 			    </div>
 
-
-			    <div class=" sidenav">
-			    	<!-- <div class="well">
-			        	<p>ADS</p>
-			      	</div>
-			      	<div class="well">
-			        	<p>ADS</p>
-			      	</div> -->
-			    </div>
+			    
 		  </div>
 		</div>
 

@@ -4,18 +4,18 @@ body {
   	background-color: #f0f0ff;
 }
 
-.navbar-header {
-  color: maroon;
+.navbar-header, nav, .navbar {
+  color: black;
 }
 
 .title_brand_nav {
 	font: Helvetica;
-	color: maroon;
+	color: yellow;
 }
 
 .title_brand {
 	font: Helvetica;
-	color: maroon;
+	color: yellow;
 	font-size: 30px;
 }
 
@@ -24,7 +24,7 @@ body {
 }
 
 .author_name {
-	color: maroon;
+	color: #00017A;
 }
 
 .dev_team {
@@ -38,5 +38,5 @@ body {
 	font-size: 10px;
 	line-height: 1.2; 
 	display: inline-block; 
-	dvertical-align: middle;
+	vertical-align: middle;
 }
