@@ -15,9 +15,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $decoded['email'];
     $username = $decoded['username'];
     $password = "depedtagum"; // default password for new user
+    $filename = $decoded['filename'];
 
     $query = "INSERT INTO user (user_id, username, password, first_name, middle_name, last_name, email_address, designation, office, user_type, profile_picture)
-            VALUES (NULL, '$username', MD5('$password'), '$firstname', '$middlename', '$lastname', '$email', '$desination', '$office', '0', '')";
+            VALUES (NULL, '$username', MD5('$password'), '$firstname', '$middlename', '$lastname', '$email', '$desination', '$office', '0', '$filename')";
 
     if ($db->query($query) === TRUE) echo "OK";
     else echo "NOK";

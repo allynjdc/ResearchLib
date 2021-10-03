@@ -98,8 +98,8 @@ if (!$_SESSION['user']) {
 						      		<div class="modal-body">
 						        		<form>
 						          			<div class="form-group">
-						          				<label for="user_photo" class="col-form-label">Upload Image:</label>
-						          				<input id="add-user-photo" type="file" class="" name="user_photo" accept="image/*">
+						          				<label for="add-user-photo" class="col-form-label">Upload Image:</label>
+						          				<input id="add-user-photo" type="file" class="" name="add-user-photo" accept="image/*">
 						          			</div>
 
 						          			<div class="form-group">
@@ -157,7 +157,7 @@ if (!$_SESSION['user']) {
 									<a href=\"user_profile_view.php?userid=".$row['user_id']."\">
 										<div class=\"col-sm-12\">
 											<div class=\"col-sm-1\" >
-												<img class=\"  img-circle \" src=\"".$profileDir.$userImage."\" alt=\"profile picture\" width=\"70px\" height=\"70px\">
+												<img class=\"  img-circle \" src=\"".$profileDir.$userImage."\" onerror=\"this.src='".$profileDir.$defaultImg."'\" alt=\"profile\" width=\"70px\" height=\"70px\">
 											</div>
 											<div class=\"col-sm-7 \" style=\" \">
 												<p class=\"h4\" style=\"\">".$userFullname."</p>
@@ -280,10 +280,23 @@ if (!$_SESSION['user']) {
 
 	</body>
 	<script>
+		async function uploadImage() {
+			let formData = new FormData();
+			var file = document.getElementById('add-user-photo').files[0];
+			formData.append("file", file);
+			const response = await fetch('../database/upload_image.php', {
+								method: "POST",
+								body: formData
+							});
+			if (response.responseText != "OK") {
+				alert("Unable to upload the image. Reason: " + reponse.responseText);
+			}
+		}
+
 		function addUser() {
-			alert("Hello");
 			document.getElementById('add_user_status_msg').innerHTML = ""; // Reset status message
-		
+			var isUploadFile = (document.getElementById('add-user-photo').files.length != 0);
+
 			var firstName = document.getElementById('add-user-fname').value;
 			var middleName = document.getElementById('add-user-mname').value;
 			var lastName = document.getElementById('add-user-lname').value;
@@ -291,13 +304,17 @@ if (!$_SESSION['user']) {
 			var office = document.getElementById('add-user-office').value;
 			var email = document.getElementById('add-user-email').value;
 			var username = document.getElementById('add-user-username').value;
+			var filename =  isUploadFile ? document.getElementById('add-user-photo').files[0].name : "";
 	
-			var data = {'fname': firstName, 'mname': middleName, 'lname': lastName, 'designation': designation, 'office': office, 'email': email , 'username': username };
+			var data = {'fname': firstName, 'mname': middleName, 'lname': lastName, 'designation': designation, 'office': office, 'email': email , 'username': username, 'filename':filename};
 
 			var xmlhttp = new XMLHttpRequest();
 			xmlhttp.onreadystatechange = function() {
 				if ((this.readyState == 4) && (this.status == 200)) {
 					if (this.responseText == "OK") {
+						if (isUploadFile) {
+							uploadImage();
+						}
 						document.getElementById('AddUserModal').style.display = 'none';
 						location.reload();
 					} else {
