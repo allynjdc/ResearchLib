@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 26, 2021 at 02:56 PM
+-- Generation Time: Oct 03, 2021 at 11:14 AM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.9
 
@@ -74,15 +74,18 @@ CREATE TABLE `user` (
   `email_address` varchar(30) NOT NULL,
   `designation` varchar(30) NOT NULL,
   `office` varchar(50) NOT NULL,
-  `user_type` varchar(10) NOT NULL
+  `user_type` tinyint(255) NOT NULL COMMENT '1:admin, 0:normal user',
+  `profile_picture` varchar(32) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`user_id`, `username`, `password`, `first_name`, `middle_name`, `last_name`, `email_address`, `designation`, `office`, `user_type`) VALUES
-(1, 'ajcalcaben', '202cb962ac59075b964b07152d234b70', 'Allyn Joy', 'Diez', 'Calcaben', 'testing@gmail.com', 'Special Science Teacher 1', 'Tagum National Trade School', 'admin');
+INSERT INTO `user` (`user_id`, `username`, `password`, `first_name`, `middle_name`, `last_name`, `email_address`, `designation`, `office`, `user_type`, `profile_picture`) VALUES
+(1, 'ajcalcaben', 'a6f2df33c90bf193238b14f611e0e44f', 'Allyn Joy', 'Diez', 'Calcaben', 'testing@gmail.com', 'Special Science Teacher 1', 'Tagum National Trade School', 1, 'calcaben.png'),
+(2, 'jautor', 'a6f2df33c90bf193238b14f611e0e44f', 'Jemwel', 'Oghoc', 'Autor', 'theauthor@yahoo.com', 'unknown designation', 'unknown office', 1, 'autor.jpg'),
+(3, 'jdelacruz', 'ae2b1fca515949e5d54fb22b8ed95575', 'Juan', 'Two', 'Dela Cruz', 'jdelacruz@yahoo.com', 'Teacher I', 'Tagum National Trade School', 0, '');
 
 --
 -- Indexes for dumped tables
@@ -126,7 +129,7 @@ ALTER TABLE `temp_table`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `user_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

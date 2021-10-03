@@ -1,4 +1,6 @@
 <?php
+include "../database/db_config.php";
+
 session_start();
 
 if (!$_SESSION['user']) {
@@ -132,9 +134,45 @@ if (!$_SESSION['user']) {
 
 						<br>
 						<!-- For Fetching ---> 
+						<?php
+						$query = "SELECT * FROM user";
+						if ($result = $db->query($query)) {
+							$profileDir = "../images/profile_pictures/";
+							$defaultImg = "default_profile_picture.jpg";
+
+							while ($row = $result->fetch_assoc()) {
+								$userFullname = $row['first_name']." ".$row['middle_name'][0].". ".$row['last_name'];
+								$userImage = empty($row['profile_picture']) ? $defaultImg : $row['profile_picture'];
+
+								echo "<div class=\"col-sm-12 text-justify\" >
+									<a href=\"user_profile_view.php?userid=".$row['user_id']."\">
+										<div class=\"col-sm-12\">
+											<div class=\"col-sm-1\" >
+												<img class=\"  img-circle \" src=\"".$profileDir.$userImage."\" alt=\"profile picture\" width=\"70px\" height=\"70px\">
+											</div>
+											<div class=\"col-sm-7 \" style=\" \">
+												<p class=\"h4\" style=\"\">".$userFullname."</p>
+												<p class=\"h6\">".$row['designation']."<br>". $row['office']." <br> </p>	
+											</div>
+											<div class=\"col-sm-4 text-right h5\" style=\"\">
+												<a href=\"#UpdateUserModal\" data-toggle=\"modal\" data-target=\"#UpdateUserModal\" data-whatever=\"UpdateUser\">update</a> 
+												&nbsp;&nbsp;|&nbsp;&nbsp; 
+												<a href=\"\">reset password</a>
+												&nbsp;&nbsp;|&nbsp;&nbsp; 
+												<a href=\"\">remove</a>
+											</div>
+										</div>
+									</a>
+									<p> &nbsp;</p>
+								</div>";
+							}
+						} else {
+							echo "<p> No users yet.</p>";
+						}
+						?>
+						<!--
 						<div class="col-sm-12 text-justify" >
-							<!-- style="border: solid #e8e4e3 0.5px; border-radius: 25px;"> -->
-							<a href=""> <!-- padulong sa profile page sa user --->
+							<a href="">
 								<div class="col-sm-12">
 									<div class="col-sm-1" >
 										<img class="  img-circle " src="../images/calcaben.png" alt="Calcaben" width="70px" height="70px">
@@ -162,8 +200,7 @@ if (!$_SESSION['user']) {
 							<p> &nbsp;</p>
 						</div>
 						<div class="col-sm-12 text-justify" >
-							<!-- style="border: solid #e8e4e3 0.5px; border-radius: 25px;"> -->
-							<a href=""> <!-- padulong sa profile page sa user --->
+							<a href="">
 								<div class="col-sm-12">
 									<div class="col-sm-1" >
 										<img class="  img-circle " src="../images/calcaben.png" alt="Calcaben" width="70px" height="70px">
@@ -191,8 +228,7 @@ if (!$_SESSION['user']) {
 							<p> &nbsp;</p>
 						</div>
 						<div class="col-sm-12 text-justify" >
-							<!-- style="border: solid #e8e4e3 0.5px; border-radius: 25px;"> -->
-							<a href=""> <!-- padulong sa profile page sa user --->
+							<a href="">
 								<div class="col-sm-12">
 									<div class="col-sm-1" >
 										<img class="  img-circle " src="../images/calcaben.png" alt="Calcaben" width="70px" height="70px">
@@ -220,8 +256,7 @@ if (!$_SESSION['user']) {
 							<p> &nbsp;</p>
 						</div>
 						<div class="col-sm-12 text-justify" >
-							<!-- style="border: solid #e8e4e3 0.5px; border-radius: 25px;"> -->
-							<a href=""> <!-- padulong sa profile page sa user --->
+							<a href="">
 								<div class="col-sm-12">
 									<div class="col-sm-1" >
 										<img class="  img-circle " src="../images/calcaben.png" alt="Calcaben" width="70px" height="70px">
@@ -249,8 +284,7 @@ if (!$_SESSION['user']) {
 							<p> &nbsp;</p>
 						</div>
 						<div class="col-sm-12 text-justify" >
-							<!-- style="border: solid #e8e4e3 0.5px; border-radius: 25px;"> -->
-							<a href=""> <!-- padulong sa profile page sa user --->
+							<a href="">
 								<div class="col-sm-12">
 									<div class="col-sm-1" >
 										<img class="  img-circle " src="../images/calcaben.png" alt="Calcaben" width="70px" height="70px">
@@ -277,9 +311,8 @@ if (!$_SESSION['user']) {
 							</a>
 							<p> &nbsp;</p>
 						</div>
+						-->
 
-				      	
-				      
 					</div>
 			    </div>
 
@@ -342,9 +375,11 @@ if (!$_SESSION['user']) {
 
 
 		<!-- Footer -->
+		<!--
 		<footer class="container-fluid text-center mt-auto">
   			<p>All rights reserved &copy; 2021</p>
 		</footer>
+		-->
 
 	</body>
 </html>
