@@ -260,7 +260,9 @@ if (!$_SESSION['user']) {
 							});
 			if (response.responseText != "OK") {
 				alert("Unable to upload the image. Reason: " + reponse.responseText);
+				return false;
 			}
+			return true;
 		}
 
 		function addUser() {
@@ -274,7 +276,7 @@ if (!$_SESSION['user']) {
 			var office = document.getElementById('add-user-office').value;
 			var email = document.getElementById('add-user-email').value;
 			var username = document.getElementById('add-user-username').value;
-			var filename =  isUploadFile ? document.getElementById('add-user-photo').files[0].name : "";
+			var filename =  (isUploadFile && uploadImage())? document.getElementById('add-user-photo').files[0].name : "";
 	
 			var data = {'fname': firstName, 'mname': middleName, 'lname': lastName, 'designation': designation, 'office': office, 'email': email , 'username': username, 'filename':filename};
 
@@ -282,9 +284,6 @@ if (!$_SESSION['user']) {
 			xmlhttp.onreadystatechange = function() {
 				if ((this.readyState == 4) && (this.status == 200)) {
 					if (this.responseText == "OK") {
-						if (isUploadFile) {
-							uploadImage();
-						}
 						document.getElementById('AddUserModal').style.display = 'none';
 						location.reload();
 					} else {
