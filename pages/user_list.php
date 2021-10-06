@@ -258,6 +258,7 @@ if (!$_SESSION['user']) {
 								method: "POST",
 								body: formData
 							});
+			// ToDo: Make sure the filename of the image uploaded by user is unique.
 			if (response.responseText != "OK") {
 				alert("Unable to upload the image. Reason: " + reponse.responseText);
 				return false;
@@ -276,7 +277,8 @@ if (!$_SESSION['user']) {
 			var office = document.getElementById('add-user-office').value;
 			var email = document.getElementById('add-user-email').value;
 			var username = document.getElementById('add-user-username').value;
-			var filename =  (isUploadFile && uploadImage())? document.getElementById('add-user-photo').files[0].name : "";
+			// Filename is empty in case the user didn't upload any picture or when there's an error during file upload.
+			var filename =  (isUploadFile && uploadImage())? document.getElementById('add-user-photo').files[0].name : ""; 
 	
 			var data = {'fname': firstName, 'mname': middleName, 'lname': lastName, 'designation': designation, 'office': office, 'email': email , 'username': username, 'filename':filename};
 
