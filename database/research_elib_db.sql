@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 09, 2021 at 05:54 PM
+-- Generation Time: Oct 09, 2021 at 06:26 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.9
 
@@ -33,6 +33,7 @@ CREATE TABLE `memorandum` (
   `memo_title` varchar(32) NOT NULL,
   `memo_number` int(255) NOT NULL,
   `memo_series` int(255) NOT NULL,
+  `memo_datetime` datetime NOT NULL,
   `memo_filename` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -76,7 +77,8 @@ CREATE TABLE `research_journal` (
   `journal_publisher_name` varchar(32) NOT NULL,
   `journal_date_publish` date NOT NULL,
   `journal_editor_team` varchar(32) NOT NULL,
-  `journal_filename` varchar(32) NOT NULL
+  `journal_filename` varchar(32) NOT NULL,
+  `journal_user_id` int(255) NOT NULL COMMENT 'user who uploaded the journal'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -144,7 +146,8 @@ ALTER TABLE `research_creation`
 -- Indexes for table `research_journal`
 --
 ALTER TABLE `research_journal`
-  ADD PRIMARY KEY (`journal_id`);
+  ADD PRIMARY KEY (`journal_id`),
+  ADD KEY `journal_user_id_foreign_key` (`journal_user_id`);
 
 --
 -- Indexes for table `research_output`
@@ -191,7 +194,7 @@ ALTER TABLE `research_output`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(255) NOT NULL AUTO_INCREMENT;
+  MODIFY `user_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
@@ -215,6 +218,12 @@ ALTER TABLE `researcher`
 ALTER TABLE `research_creation`
   ADD CONSTRAINT `creation_resaerch_id_foreign_key` FOREIGN KEY (`creation_research_id`) REFERENCES `research_output` (`research_id`),
   ADD CONSTRAINT `creation_researcher_id_foreign_key` FOREIGN KEY (`creation_researcher_id`) REFERENCES `researcher` (`researcher_id`);
+
+--
+-- Constraints for table `research_journal`
+--
+ALTER TABLE `research_journal`
+  ADD CONSTRAINT `journal_user_id_foreign_key` FOREIGN KEY (`journal_user_id`) REFERENCES `user` (`user_id`);
 
 --
 -- Constraints for table `research_output`
