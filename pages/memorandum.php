@@ -19,6 +19,7 @@ session_start();
 
 		<link rel="stylesheet" type="text/css" href="../css/body_css.css">
 		<link rel="stylesheet" type="text/css" href="../css/footer_css.css">
+		<link rel="stylesheet" type="text/css" href="../css/nav_css.css">
 		
 	</head>
 	<body class="bg-light">
@@ -27,20 +28,23 @@ session_start();
 		<nav class="navbar navbar-default"> <!-- navbar-inverse -->
 		  	<div class="container-fluid col-md-10 col-md-offset-1">
 			    <div class="navbar-header">
-			      	<a class="navbar-brand " href="index.php">
-			      		<p class="title_brand_nav"> Division Digital Research Library </p>
+			      	<a class="navbar-brand nav_title_a" href="index.php">
+			      		<span><img src="../images/logo1.png" height="30px" width="50px"></span>
+			      		<!-- <p class="title_brand_nav text-center"> -->
+			      			<span class="title_brand_nav"> Division Digital Research Library </span>
+			      		<!-- </p> -->
 			      	</a>
 			    </div>
 			    
 			    <ul class="nav navbar-nav navbar-right">
-			    	<li><a href="memorandum.php">Memorandums</a></li>
-			    	<li><a href="journals.php">Journals</a></li>
+			    	<li class="title_brand"><a class="title_brand" href="memorandum.php">Memorandums</a></li>
+			    	<li class="title_brand"><a class="title_brand" href="journals.php">Journals</a></li>
 					<?php
 						if (!isset($_SESSION['user'])) {
-							echo "<li><a href=\"login.php\">Login in</a></li>";
+							echo "<li class=\"title_brand\"><a class=\"title_brand\" href=\"login.php\">Login in</a></li>";
 						} else {
-							echo "<li class=\"dropdown\">
-									<a href=\"#\" class=\"dropbtn\">" . $_SESSION['user'] . "</a>
+							echo "<li class=\" title_brand dropdown\">
+									<a href=\"#\" class=\"title_brand dropbtn\">" . $_SESSION['user'] . "</a>
 									<div class=\"dropdown-content\">
 										<a href=\"user_profile_view.php\">View Profile</a>
 										<a href=\"user_profile_update.php\">Edit Profile</a>
@@ -55,16 +59,16 @@ session_start();
 
 		<!-- MAIN TEMPLATE FOR THE CONTENT -->
 		<div class="container-fluid ">    
-		  	<div class="row content" style="background-color: white; ">
+		  	<div class="row content body_middle">
 
 			    <div class="col-sm-3 sidenav" >
 			    	<div class="col-sm-4" ></div>
-			    	<div class="col-sm-8 h6" style="background-color: white;">
+			    	<div class="col-sm-8 h6">
 			    					      	
 			      	</div>
 			    </div>
 
-			    <div class="col-sm-6 center_content" style="background-color: white; ">
+			    <div class="col-sm-6 center_content">
 			    	<br>
 			    	<div class="" style="padding:2%; border: solid #e3dede 1px; border-radius:1%;">
 			    		<!-- <div class="col-sm-offset-1 col-sm-10"> -->

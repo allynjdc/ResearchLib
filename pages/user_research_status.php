@@ -29,16 +29,18 @@ if (!$_SESSION['user']) {
 		<nav class="navbar navbar-default"> <!-- navbar-inverse -->
 		  	<div class="container-fluid col-md-10 col-md-offset-1">
 			    <div class="navbar-header">
-			      	<a class="navbar-brand " href="homepage.php">
-			      		<p class="title_brand_nav"> Division Digital Research Library </p>
+			      	<a class="navbar-brand nav_title_a" href="homepage.php">
+			      		<span><img src="../images/logo1.png" height="30px" width="50px"></span>
+			      		<!-- <p class="title_brand_nav text-center"> -->
+			      			<span class="title_brand_nav"> Division Digital Research Library </span>
+			      		<!-- </p> -->
 			      	</a>
 			    </div>
 			    <ul class="nav navbar-nav navbar-right">
-			    	<li><a href="memorandum.php">Memorandums</a></li>
-			    	<li><a href="journals.php">Journals</a></li>
-                    <li><a href="help.php">Help</a></li>
-			      	<li class="dropdown">
-                        <a href="#" class="dropbtn"><?= $_SESSION['user'] ?></a>
+			    	<li class="title_brand"><a class="title_brand" href="memorandum.php">Memorandums</a></li>
+			    	<li class="title_brand"><a class="title_brand" href="journals.php">Journals</a></li>
+                    <li class="dropdown title_brand">
+                        <a href="#" class="dropbtn title_brand"><?= $_SESSION['user'] ?></a>
                         <div class="dropdown-content">
                             <a href="user_profile_view.php">View Profile</a>
                             <a href="user_profile_update.php">Edit Profile</a>
@@ -50,11 +52,11 @@ if (!$_SESSION['user']) {
 		</nav>
 		<!-- MAIN TEMPLATE FOR THE CONTENT -->
 		<div class="container-fluid ">    
-		  	<div class="row content" style="background-color: white; ">
+		  	<div class="row content body_middle" >
 		  		<br>
 			    <div class="col-sm-3 sidenav" >
 			    	<div class="col-sm-4" ></div>
-			    	<div class="col-sm-8 h6" style="background-color: white;">
+			    	<div class="col-sm-8 h6">
 			    		<br>
 			    		<div>
 			    			<p><b>Year</b></p>
@@ -91,7 +93,7 @@ if (!$_SESSION['user']) {
 				      	
 			      	</div>
 			    </div>
-			    <div class="col-sm-6 center_content" style="background-color: white; ">
+			    <div class="col-sm-6 center_content">
 			    	<div class="text-justify">
 						<a href="user_add_research.php">
 							<button type="button" class="btn btn-primary" >

@@ -31,16 +31,19 @@ if (!$_SESSION['user']) {
 		<nav class="navbar navbar-default"> <!-- navbar-inverse -->
 		  	<div class="container-fluid col-md-10 col-md-offset-1">
 			    <div class="navbar-header">
-			      	<a class="navbar-brand " href="homepage.php">
-			      		<p class="title_brand_nav"> Division Digital Research Library </p>
+			      	<a class="navbar-brand nav_title_a" href="homepage.php">
+			      		<span><img src="../images/logo1.png" height="30px" width="50px"></span>
+			      		<!-- <p class="title_brand_nav text-center"> -->
+			      			<span class="title_brand_nav"> Division Digital Research Library </span>
+			      		<!-- </p> -->
 			      	</a>
 			    </div>
 			    <ul class="nav navbar-nav navbar-right">
-			    	<li><a href="memorandum.php">Memorandums</a></li>
-			    	<li><a href="journals.php">Journals</a></li>
-                    <li><a href="help.php">Help</a></li>
-			      	<li class="dropdown">
-                        <a href="#" class="dropbtn"><?= $_SESSION['user'] ?></a>
+			    	<li class="title_brand"><a class="title_brand" href="memorandum.php">Memorandums</a></li>
+			    	<li class="title_brand"><a class="title_brand" href="journals.php">Journals</a></li>
+                    <!-- <li class="title_brand"><a class="title_brand" href="help.php">Help</a></li> -->
+			      	<li class="title_brand" class="dropdown">
+                        <a class="title_brand" href="#" class="dropbtn"><?= $_SESSION['user'] ?></a>
                         <div class="dropdown-content">
                             <a href="user_profile_view.php">View Profile</a>
                             <a href="user_profile_update.php">Edit Profile</a>
@@ -60,7 +63,7 @@ if (!$_SESSION['user']) {
 			    <div class="col-sm-12 "> 
 			    	
                     <!-- <h3> This is home page. </h3> -->
-                    <div class="col-sm-6 col-md-offset-3 " style="background-color: white;"> 
+                    <div class="col-sm-6 col-md-offset-3 body_middle"> 
                     	<div class="form-row" >
 	                    	<br>
 	                    	<!-- <div>

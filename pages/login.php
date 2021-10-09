@@ -37,17 +37,20 @@ if (isset($_SESSION['user'])) {
 	</head>
 	<body class="bg-light" style="background-image: url('../images/bg.png'); background-position: center; background-repeat: no-repeat; background-size: cover;">
 		<!-- Navigation -->
-		<nav class="navbar navbar-default" style="background-color: #D5EBF6"> <!-- navbar-inverse -->
+		<nav class="navbar navbar-default" > <!-- navbar-inverse style="background-color: #D5EBF6"-->
 		  	<div class="container-fluid col-md-10 col-md-offset-1">
 			    <div class="navbar-header">
-			      	<a class="navbar-brand " href="index.php">
-			      		<p class="title_brand_nav"> Division Digital Research Library </p>
+			      	<a class="navbar-brand nav_title_a" href="index.php">
+			      		<span><img src="../images/logo1.png" height="30px" width="50px"></span>
+			      		<!-- <p class="title_brand_nav text-center"> -->
+			      			<span class="title_brand_nav"> Division Digital Research Library </span>
+			      		<!-- </p> -->
 			      	</a>
 			    </div>
-			    <ul class="nav navbar-nav navbar-right">
-			    	<li><a href="memorandum.php">Memorandums</a></li>
-			    	<li><a href="journals.php">Journals</a></li>
-			      	<li><a href="login.php">Log in</a></li>
+			     <ul class="nav title_brand navbar-nav navbar-right">
+			    	<li class="title_brand"><a class="title_brand"href="memorandum.php">Memorandums</a></li>
+			    	<li class="title_brand"><a class="title_brand" href="journals.php">Journals</a></li>
+			      	<li class="title_brand"><a class="title_brand" href="login.php">Log in</a></li>
 			    </ul>
 		  	</div>
 		</nav>

@@ -2,21 +2,35 @@ body {
 	margin: 0;
   	font-family: Arial, Helvetica, sans-serif;
   	background-color: #f0f0ff;
+  	background-image: url('../images/bg2.png'); 
+  	background-position: center; 
+  	background-repeat: no-repeat; 
+  	background-size: cover;
 }
 
 .navbar-header, nav, .navbar {
   color: black;
 }
 
-.title_brand_nav {
-	font: Helvetica;
-	color: yellow;
+.navbar {
+	background-color: #0a223c;
+	/*background-color: #daecff;*/
 }
 
-.title_brand {
+.nav_title_a {
+	margin-top: -5px;
+}
+
+.title_brand_nav, .nav {
 	font: Helvetica;
-	color: yellow;
-	font-size: 30px;
+	color: #f5c412;
+	/*color: #0b4d8f;*/
+}
+
+.title_brand, li.title_brand a.title_brand {
+	font: Helvetica;
+	color: #f5c412;
+	font-size: 18px;
 }
 
 .center-content {
@@ -39,4 +53,8 @@ body {
 	line-height: 1.2; 
 	display: inline-block; 
 	vertical-align: middle;
+}
+
+.body_middle {
+	background: rgba(255, 255, 255, 0.7)
 }

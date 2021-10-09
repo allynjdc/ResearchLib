@@ -43,8 +43,11 @@ session_start();
 		<nav class="navbar navbar-default" style="background-color: #D5EBF6"> <!-- navbar-inverse -->
 		  	<div class="container-fluid col-md-10 col-md-offset-1">
 			    <div class="navbar-header">
-			      	<a class="navbar-brand " href="index.php">
-			      		<p class="title_brand_nav"> Division Digital Research Library </p>
+			      	<a class="navbar-brand nav_title_a" href="index.php">
+			      		<span><img src="../images/logo1.png" height="30px" width="50px"></span>
+			      		<!-- <p class="title_brand_nav text-center"> -->
+			      			<span class="title_brand_nav"> Division Digital Research Library </span>
+			      		<!-- </p> -->
 			      	</a>
 			    </div>
 			    <!-- <ul class="nav navbar-nav">
@@ -59,14 +62,14 @@ session_start();
 			      	<li><a href="#">Page 2</a></li>
 			    </ul> -->
 			    <ul class="nav navbar-nav navbar-right">
-			    	<li><a href="memorandum.php">Memorandums</a></li>
-			    	<li><a href="journals.php">Journals</a></li>
-			      	<?php
+			    	<li class="title_brand"><a class="title_brand" href="memorandum.php">Memorandums</a></li>
+			    	<li class="title_brand"><a class="title_brand" href="journals.php">Journals</a></li>
+					<?php
 						if (!isset($_SESSION['user'])) {
-							echo "<li><a href=\"login.php\">Login in</a></li>";
+							echo "<li class=\"title_brand\"><a class=\"title_brand\" href=\"login.php\">Login in</a></li>";
 						} else {
-							echo "<li class=\"dropdown\">
-									<a href=\"#\" class=\"dropbtn\">" . $_SESSION['user'] . "</a>
+							echo "<li class=\" title_brand dropdown\">
+									<a href=\"#\" class=\"title_brand dropbtn\">" . $_SESSION['user'] . "</a>
 									<div class=\"dropdown-content\">
 										<a href=\"user_profile_view.php\">View Profile</a>
 										<a href=\"user_profile_update.php\">Edit Profile</a>
@@ -98,18 +101,18 @@ session_start();
 								<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 								<input type="text" id="uname" name="uname" placeholder="Enter Username" class="form-control"/>
 							</div>
-							</br>
+							<br>
 							<div class="input-group">
 								<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
 								<input type="password" id="pwd" name="pwd" placeholder="Enter Password" class="form-control"/>
 							</div>
-							</br>
+							<br>
 							<div class="col-md-12 input-group" >
 								<button class="btn-primary" style="cursor: pointer; width: 100%; border-radius: 5px;" type="button" onclick="authAccount()">Login</button>
-							</div>
-							
+							</div>						
 							
 						</form>
+						<p id="status_msg" style="color: red"></p>
 					</div>
 						
 			    </div>
