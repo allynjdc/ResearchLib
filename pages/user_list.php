@@ -153,7 +153,7 @@ if (!$_SESSION['user']) {
 
 							while ($row = $result->fetch_assoc()) {
 								$userFullname = $row['user_first_name']." ".$row['user_middle_name'][0].". ".$row['user_last_name'];
-								$userImage = empty($row['profile_picture']) ? $defaultImg : $row['profile_picture'];
+								$userImage = empty($row['user_profile_picture']) ? $defaultImg : $row['user_profile_picture'];
 
 								echo "<div class=\"col-sm-12 text-justify\" >
 									<a href=\"user_profile_view.php?userid=".$row['user_id']."\">
