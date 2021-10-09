@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $decoded['uname'];
     $newPassword = ($decoded['pwd'] == "default_user_143") ? "depedtagum" : $decoded['pwd'];
 
-    $query = "UPDATE user SET password=MD5('$newPassword') WHERE username='$username'";
+    $query = "UPDATE user SET user_password=MD5('$newPassword') WHERE user_username='$username'";
     if ($db->query($query) === TRUE) echo "OK";
     else echo "NOK";
 }

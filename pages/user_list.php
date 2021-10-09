@@ -146,13 +146,13 @@ if (!$_SESSION['user']) {
 						<br>
 						<!-- For Fetching ---> 
 						<?php
-						$query = "SELECT * FROM user ORDER BY first_name";
+						$query = "SELECT * FROM user ORDER BY user_first_name";
 						if ($result = $db->query($query)) {
 							$profileDir = "../images/profile_pictures/";
 							$defaultImg = "default_profile_picture.jpg";
 
 							while ($row = $result->fetch_assoc()) {
-								$userFullname = $row['first_name']." ".$row['middle_name'][0].". ".$row['last_name'];
+								$userFullname = $row['user_first_name']." ".$row['user_middle_name'][0].". ".$row['user_last_name'];
 								$userImage = empty($row['profile_picture']) ? $defaultImg : $row['profile_picture'];
 
 								echo "<div class=\"col-sm-12 text-justify\" >
@@ -163,7 +163,7 @@ if (!$_SESSION['user']) {
 											</div>
 											<div class=\"col-sm-7 \" style=\" \">
 												<p class=\"h4\" style=\"\">".$userFullname."</p>
-												<p class=\"h6\">".$row['designation']."<br>". $row['office']." <br> </p>	
+												<p class=\"h6\">".$row['user_designation']."<br>". $row['user_office']." <br> </p>	
 											</div>
 											<div class=\"col-sm-4 text-right h5\" style=\"\">
 												<a href=\"#UpdateUserModal\" data-toggle=\"modal\" data-target=\"#UpdateUserModal\" data-whatever=\"UpdateUser\">update</a> 

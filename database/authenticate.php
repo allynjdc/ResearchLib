@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $decoded['uname'];
     $password = $decoded['pwd'];
 
-    $query = "SELECT * FROM user WHERE username='$username' AND password=MD5('$password')";
+    $query = "SELECT * FROM user WHERE user_username='$username' AND user_password=MD5('$password')";
     $result = $db->query($query);
     $count = mysqli_num_rows($result);
     if ($count == 1) {
