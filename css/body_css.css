@@ -27,9 +27,21 @@ body {
 	/*color: #0b4d8f;*/
 }
 
-.title_brand, li.title_brand a.title_brand {
+.title_brand {
 	font: Helvetica;
 	color: #f5c412;
+	font-size: 18px;
+}
+
+li.title_brand a.title_brand:hover {
+	font: Helvetica;
+	color: #89c2ff;
+	font-size: 18px;
+}
+
+li.title_brand a.title_brand {
+	font: Helvetica;
+	color: #daecff;
 	font-size: 18px;
 }
 

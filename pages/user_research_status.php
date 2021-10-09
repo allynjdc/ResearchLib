@@ -26,7 +26,7 @@ if (!$_SESSION['user']) {
 	</head>
 	<body class="bg-light">
 		<!-- Navigation -->
-		<nav class="navbar navbar-default"> <!-- navbar-inverse -->
+		<nav class="navbar navbar-inverse" > <!-- navbar-default style="background-color: #D5EBF6"-->
 		  	<div class="container-fluid col-md-10 col-md-offset-1">
 			    <div class="navbar-header">
 			      	<a class="navbar-brand nav_title_a" href="homepage.php">

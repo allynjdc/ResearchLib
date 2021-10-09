@@ -37,7 +37,7 @@ if (isset($_SESSION['user'])) {
 	</head>
 	<body class="bg-light" style="background-image: url('../images/bg.png'); background-position: center; background-repeat: no-repeat; background-size: cover;">
 		<!-- Navigation -->
-		<nav class="navbar navbar-default" > <!-- navbar-inverse style="background-color: #D5EBF6"-->
+		<nav class="navbar navbar-inverse" > <!-- navbar-default style="background-color: #D5EBF6"-->
 		  	<div class="container-fluid col-md-10 col-md-offset-1">
 			    <div class="navbar-header">
 			      	<a class="navbar-brand nav_title_a" href="index.php">
