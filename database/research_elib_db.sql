@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 09, 2021 at 06:26 PM
+-- Generation Time: Oct 09, 2021 at 07:04 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.9
 
@@ -30,11 +30,14 @@ SET time_zone = "+00:00";
 CREATE TABLE `memorandum` (
   `memo_id` int(255) NOT NULL,
   `memo_user_id` int(255) NOT NULL,
-  `memo_title` varchar(32) NOT NULL,
   `memo_number` int(255) NOT NULL,
   `memo_series` int(255) NOT NULL,
-  `memo_datetime` datetime NOT NULL,
-  `memo_filename` int(255) NOT NULL
+  `memo_subject` varchar(32) NOT NULL,
+  `memo_date` date NOT NULL,
+  `memo_filename` varchar(50) NOT NULL,
+  `memo_filepath` varchar(50) NOT NULL,
+  `memo_posted_at` datetime NOT NULL,
+  `memo_updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -73,12 +76,19 @@ CREATE TABLE `research_creation` (
 
 CREATE TABLE `research_journal` (
   `journal_id` int(11) NOT NULL,
+  `journal_user_id` int(255) NOT NULL COMMENT 'user who uploaded the journal',
   `journal_title` varchar(64) NOT NULL,
+  `journal_description` varchar(100) NOT NULL,
+  `journal_volume` int(11) NOT NULL,
+  `journal_issue` int(11) NOT NULL,
+  `journal_issn` int(11) NOT NULL,
   `journal_publisher_name` varchar(32) NOT NULL,
   `journal_date_publish` date NOT NULL,
   `journal_editor_team` varchar(32) NOT NULL,
   `journal_filename` varchar(32) NOT NULL,
-  `journal_user_id` int(255) NOT NULL COMMENT 'user who uploaded the journal'
+  `journal_filepath` varchar(50) NOT NULL,
+  `journal_posted_at` datetime NOT NULL,
+  `journal_updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -93,7 +103,8 @@ CREATE TABLE `research_output` (
   `research_abstract` varchar(100) NOT NULL,
   `research_date_publish` date NOT NULL,
   `research_journal_id` int(11) NOT NULL,
-  `research_filename` varchar(32) NOT NULL
+  `research_filename` varchar(32) NOT NULL,
+  `research_filepath` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
