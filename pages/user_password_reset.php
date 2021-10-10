@@ -89,8 +89,8 @@ if (!$_SESSION['user']) {
         document.getElementById('reset_status_msg').innerHTML = ""; // Reset status message
     
         var username = document.getElementsByName('uname')[0].value;
-        var defaultPassword = "default_user_143";
-        var data = { 'uname': username, 'pwd': defaultPassword };
+        var password = ""; // Server will provide the password
+        var data = { 'uname': username, 'reset': '1', 'pwd': password };
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function() {
             if ((this.readyState == 4) && (this.status == 200)) {

@@ -12,12 +12,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $query = "SELECT * FROM user WHERE user_username='$username' AND user_password=MD5('$password')";
     $result = $db->query($query);
-    $count = mysqli_num_rows($result);
-    if ($count == 1) {
-        $_SESSION['user'] = $username;
-        echo "OK";
+    $data = [];
+    $row = $result->fetch_assoc();
+    if ($row) {
+        $_SESSION['user'] = $row['user_username'];
+        $_SESSION['userid'] = $row['user_id'];
+        $_SESSION['usertype'] = $row['user_type'];
+
+        $data['success'] = 1;
+        $data['pwdState'] = $row['user_pwd_state'];
+        $data['errMsg'] = '';
     } else {
-        echo "NOK";
+        $data['success'] = 0;
+        $data['pwdState'] = '';
+        $data['errMsg'] = 'Incorrect username or password. Please try again.';
     }
+    header('Content-type: application/json');
+    echo json_encode($data);
 }
 ?>

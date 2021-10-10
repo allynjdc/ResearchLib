@@ -6,9 +6,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $in = file_get_contents('php://input');
     $decoded = json_decode($in, true);
     $username = $decoded['uname'];
-    $newPassword = ($decoded['pwd'] == "default_user_143") ? "depedtagum" : $decoded['pwd'];
+    $IsPwdReset = ($decoded['reset'] == "1");
+    $newPassword = ($IsPwdReset ? "depedtagum" : $decoded['pwd']);
+    $pwdState = ($IsPwdReset ? "0" : "1");
 
-    $query = "UPDATE user SET user_password=MD5('$newPassword') WHERE user_username='$username'";
+    $query = "UPDATE user SET user_password=MD5('$newPassword'), user_pwd_state=$pwdState WHERE user_username='$username'";
     if ($db->query($query) === TRUE) echo "OK";
     else echo "NOK";
 }

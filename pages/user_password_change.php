@@ -61,23 +61,25 @@ if (!$_SESSION['user']) {
 			    <!-- MIDDLE CONTENT -->
 			    <div class="col-sm-12 center-div"> 
                     <h3> New Password </h3>
-                    <p> Hello <b>MyUser</b>!</p>
+                    <p> Hello <b><?= $_SESSION['user'] ?></b>!</p>
 
-                    <form class="form-horizontal" action="home.php">
+                    <form class="form-horizontal" method="post">
                         <div class="form-group">
                             <label class="control-label col-sm-4" for="newpwd">New Password:</label>
                             <div class="col-sm-4">
-                            <input type="password" class="form-control" id="newpwd" placeholder="Enter your new password">
+                            <input type="password" class="form-control" id="newpwd" name="newpwd" placeholder="Enter your new password">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-sm-4" for="confirmpwd">Confirm Password:</label>
                             <div class="col-sm-4">
-                            <input type="password" class="form-control" id="confirmpwd" placeholder="Enter your new password to confirm">
+                            <input type="password" class="form-control" onkeyup="validatePasswords()" id="confirmpwd" name="newpwd" placeholder="Enter your new password to confirm">
                             </div>
                         </div>
-                        <button class="btn-primary" type="submit" >Proceed to homepage</button>
+						<input type="hidden" id="uname" name="uname" value="<?= $_SESSION['user'] ?>" />
+                        <button class="btn-primary" type="button" onclick="updatePassword()">Proceed to homepage</button>
                     </form>
+					<p id="update_status_msg"></p>
 			    </div>
 		  </div>
 		</div>
@@ -87,7 +89,48 @@ if (!$_SESSION['user']) {
 		<footer class="container-fluid text-center mt-auto">
   			<p>All rights reserved &copy; 2021</p>
 		</footer>
-
 	</body>
+	<script>
+		function validatePasswords() {
+			var newPassword = document.getElementById('newpwd').value;
+			var confirmPassword = document.getElementById('confirmpwd').value;
+
+			if (newPassword === confirmPassword) {
+				document.getElementById('update_status_msg').innerHTML = "New Password and Confirm Password are now match.";
+				document.getElementById('update_status_msg').style.color = "green";
+				return true;
+			} else {
+				if ((newPassword != "") && (confirmPassword === "")) {
+					document.getElementById('update_status_msg').innerHTML = "";
+				} else {
+					document.getElementById('update_status_msg').innerHTML = "New Password and Confirm Password must be match.";
+					document.getElementById('update_status_msg').style.color = "red";
+				}
+				return false;
+			}
+		}
+		function updatePassword() {
+			document.getElementById('update_status_msg').innerHTML = ""; // Reset status message
+
+			if (!validatePasswords()) return; // Early exit when new and confirm passwords do not match.
+		
+			var username = document.getElementsByName('uname')[0].value;
+			var password = document.getElementById('newpwd').value;
+			var data = { 'uname': username, 'reset': '0', 'pwd': password };
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if ((this.readyState == 4) && (this.status == 200)) {
+					if (this.responseText == "OK") {
+						window.location="home.php";
+					} else {
+						document.getElementById('update_status_msg').innerHTML = "Unable to update password.";
+					}
+				}
+			};
+			xmlhttp.open("POST", "../database/password_update.php", true);
+			xmlhttp.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+			xmlhttp.send(JSON.stringify(data));
+		}
+    </script>
 </html>
 	

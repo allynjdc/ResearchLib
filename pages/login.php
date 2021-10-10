@@ -104,11 +104,24 @@ if (isset($_SESSION['user'])) {
 		var username = document.getElementById('uname').value;
 		var password = document.getElementById('pwd').value;
 		var data = { 'uname': username, 'pwd': password };
+
 		var xmlhttp = new XMLHttpRequest();
 		xmlhttp.onreadystatechange = function() {
 			if ((this.readyState == 4) && (this.status == 200)) {
-				if (this.responseText == "OK") window.location="homepage.php";
-				else document.getElementById('status_msg').innerHTML = "Incorrect username or password. Please try again.";
+				try {
+					var response = JSON.parse(this.responseText);
+					if (response.success == 1) {
+						// Make sure the user updates his/her password (if still using the default password)
+						if (response.pwdState == "0") window.location = "user_password_change.php"; 
+						else window.location = "homepage.php";
+					} else {
+						document.getElementById('pwd').value = ""; // Reset password entered by the user
+						document.getElementById('status_msg').innerHTML = response.errMsg;
+					}
+
+				} catch (error) {
+					throw Error;
+				}
 			}
 		};
 		xmlhttp.open("POST", "../database/authenticate.php", true);
