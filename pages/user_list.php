@@ -166,7 +166,7 @@ if (!$_SESSION['user']) {
 												<p class=\"h6\">".$row['user_designation']."<br>". $row['user_office']." <br> </p>	
 											</div>
 											<div class=\"col-sm-4 text-right h5\" style=\"\">
-												<a href=\"#UpdateUserModal\" data-toggle=\"modal\" data-target=\"#UpdateUserModal\" data-whatever=\"UpdateUser\">update</a> 
+												<a href=\"#UpdateUserModal\" data-toggle=\"modal\" data-target=\"#UpdateUserModal".$row['user_id']."\" data-whatever=\"UpdateUser\">update</a> 
 												&nbsp;&nbsp;|&nbsp;&nbsp; 
 												<a href=\"\">reset password</a>
 												&nbsp;&nbsp;|&nbsp;&nbsp; 
@@ -183,56 +183,73 @@ if (!$_SESSION['user']) {
 						?>
 					</div>
 			    </div>
+				<?php
+				$query = "SELECT * FROM user ORDER BY user_first_name";
+				if ($result = $db->query($query)) {
+					while ($row = $result->fetch_assoc()) { ?>
 
+						<!-- Modal For Update User -->
+						<div class="modal fade text-justify col-sm-12" id="UpdateUserModal<?=$row['user_id']?>" tabindex="-1" role="dialog" aria-labelledby="UpdateUserModalLabel" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title h3 col-sm-10" id="UpdateUserModalLabel">Update User</h5>
+										<button type="button col-sm-2 text-right" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<form>
+											<div class="form-group">
+												<label for="user_photo" class="col-form-label">Update Image:</label>
+												<input id="update-user-photo-<?=$row['user_id']?>" type="file" class="" name="user_photo" accept="image/*">
+											</div>
 
+											<div class="form-group">
+												<label for="user-name" class="col-form-label">First Name:</label>
+												<input type="text" class="form-control" id="update-user-fname-<?=$row['user_id']?>" value="<?=$row['user_first_name']?>">
+											</div>
+											<div class="form-group">
+												<label for="user-name" class="col-form-label">Middle Name:</label>
+												<input type="text" class="form-control" id="update-user-mname-<?=$row['user_id']?>" value="<?=$row['user_middle_name']?>">
+											</div>
+											<div class="form-group">
+												<label for="user-name" class="col-form-label">Last Name:</label>
+												<input type="text" class="form-control" id="update-user-lname-<?=$row['user_id']?>" value="<?=$row['user_last_name']?>">
+											</div>
+											<div class="form-group">
+												<label for="user-designation" class="col-form-label">Designation:</label>
+												<input type="text" class="form-control" id="update-user-designation-<?=$row['user_id']?>" value="<?=$row['user_designation']?>">
+											</div>
+											<div class="form-group">
+												<label for="user-station" class="col-form-label">Office / School:</label>
+												<input type="text" class="form-control" id="update-user-office-<?=$row['user_id']?>" value="<?=$row['user_office']?>">
+											</div>
+											<div class="form-group">
+												<label for="user-email" class="col-form-label">Email:</label>
+												<input type="email" class="form-control" id="update-user-email-<?=$row['user_id']?>" value="<?=$row['user_email_address']?>">
+											</div>
+											<div class="form-group">
+												<label for="user-username" class="col-form-label">Username:</label>
+												<input type="text" class="form-control" id="update-user-username-<?=$row['user_id']?>" value="<?=$row['user_username']?>">
+											</div>
+											<input type="hidden" id="update-user-old-photo-<?=$row['user_id']?>" value="<?=$row['user_profile_picture']?>">
+										</form>
+									</div>
+									<div class="modal-footer">
+										<p id="update_user_status_msg_<?=$row['user_id']?>"></p>
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+										<button type="button" class="btn btn-primary" onclick="updateUser(<?=$row['user_id']?>)">Update</button>
+									</div>
+								</div>
+							</div>
+						</div>
 
-			    <!-- Modal For Update User -->
-				<div class="modal fade text-justify col-sm-12" id="UpdateUserModal" tabindex="-1" role="dialog" aria-labelledby="UpdateUserModalLabel" aria-hidden="true">
-				    <div class="modal-dialog" role="document">
-				    	<div class="modal-content">
-				      		<div class="modal-header">
-				        		<h5 class="modal-title h3 col-sm-10" id="UpdateUserModalLabel">Update User</h5>
-				        		<button type="button col-sm-2 text-right" class="close" data-dismiss="modal" aria-label="Close">
-				          			<span aria-hidden="true">&times;</span>
-				        		</button>
-				      		</div>
-				      		<div class="modal-body">
-				        		<form>
-				          			<div class="form-group">
-				          				<label for="user_photo" class="col-form-label">Upload Image:</label>
-				          				<input id="user_photo" type="file" class="" name="user_photo" accept="image/*">
-				          			</div>
-
-				          			<div class="form-group">
-				            			<label for="user-name" class="col-form-label">Name:</label>
-				            			<input type="text" class="form-control" id="user-name">
-				          			</div>
-				          			<div class="form-group">
-							            <label for="user-designation" class="col-form-label">Designation:</label>
-							            <input type="text" class="form-control" id="user-designation">
-				          			</div>
-				          			<div class="form-group">
-							            <label for="user-station" class="col-form-label">Office / School:</label>
-							            <input type="text" class="form-control" id="user-station">
-				          			</div>
-				          			<div class="form-group">
-							            <label for="user-email" class="col-form-label">Email:</label>
-							            <input type="email" class="form-control" id="user-email">
-				          			</div>
-				          			<div class="form-group">
-							            <label for="user-username" class="col-form-label">Username:</label>
-							            <input type="text" class="form-control" id="user-username">
-				          			</div>
-				        		</form>
-				      		</div>
-				      		<div class="modal-footer">
-						        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-						        <button type="button" class="btn btn-primary">Add User</button>
-				      		</div>
-				    	</div>
-				  	</div>
-				</div>
-
+						<!-- Modal for Password reset -->
+				<?php
+					} // End of while loop
+				} // End of IF
+				?>
 
 			    <!-- RIGHT SIDE NAVIGATION -->
 			    <div class="col-sm-2 sidenav">
@@ -270,6 +287,7 @@ if (!$_SESSION['user']) {
 		}
 
 		function addUser() {
+
 			document.getElementById('add_user_status_msg').innerHTML = ""; // Reset status message
 			var isUploadFile = (document.getElementById('add-user-photo').files.length != 0);
 
@@ -296,7 +314,44 @@ if (!$_SESSION['user']) {
 					}
 				}
 			};
-			xmlhttp.open("POST", "../database/add_user.php", true);
+			xmlhttp.open("POST", "../database/update_user.php", true);
+			xmlhttp.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+			xmlhttp.send(JSON.stringify(data));
+		}
+
+		function updateUser(userId) {
+
+			console.log(userId);
+			document.getElementById('update_user_status_msg_' + userId).innerHTML = ""; // Reset status message
+			var isUploadFile = (document.getElementById('update-user-photo-' + userId).files.length != 0);
+
+			var firstName = document.getElementById('update-user-fname-' + userId).value;
+			var middleName = document.getElementById('update-user-mname-' + userId).value;
+			var lastName = document.getElementById('update-user-lname-' + userId).value;
+			var designation = document.getElementById('update-user-designation-' + userId).value;
+			var office = document.getElementById('update-user-office-' + userId).value;
+			var email = document.getElementById('update-user-email-' + userId).value;
+			var username = document.getElementById('update-user-username-' + userId).value;
+			// filename is the old filename in the case where the user don't want to update picture or when there's an error during file upload.
+			var oldFilename = document.getElementById('update-user-old-photo-' + userId).value;
+			var filename =  (isUploadFile && uploadImage()) ? document.getElementById('update-user-photo-' + userId).files[0].name : oldFilename; 
+	
+			var data = {'userid': userId, 'fname': firstName, 'mname': middleName, 'lname': lastName, 'designation': designation, 'office': office, 'email': email , 'username': username, 'filename':filename};
+			console.log(data);
+			var myModal = document.getElementById('UpdateUserModal' + userId);
+			console.log(myModal);
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if ((this.readyState == 4) && (this.status == 200)) {
+					if (this.responseText == "OK") {
+						document.getElementById('UpdateUserModal' + userId).style.display = 'none';
+						location.reload();
+					} else {
+						document.getElementById('update_user_status_msg_' + userId).innerHTML = "Unable to update user information. Please try again.";
+					}
+				}
+			};
+			xmlhttp.open("POST", "../database/update_user.php", true);
 			xmlhttp.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
 			xmlhttp.send(JSON.stringify(data));
 		}
