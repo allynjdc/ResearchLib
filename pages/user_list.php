@@ -262,6 +262,7 @@ if (!$_SESSION['user']) {
 							});
 			// ToDo: Make sure the filename of the image uploaded by user is unique.
 			if (response.statusText != "OK") {
+			//if (response.responseText != "OK") {
 				alert("Unable to upload the image. Reason: " + response.responseText);
 				return false;
 			}
