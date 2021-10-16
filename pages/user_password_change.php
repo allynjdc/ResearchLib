@@ -77,7 +77,7 @@ if (!$_SESSION['user']) {
                             </div>
                         </div>
 						<input type="hidden" id="uname" name="uname" value="<?= $_SESSION['user'] ?>" />
-                        <button class="btn-primary" type="button" onclick="updatePassword()">Proceed to homepage</button>
+                        <button class="btn-primary" type="button" onclick="updatePassword(<?= $_SESSION['userid'] ?>)">Proceed to homepage</button>
                     </form>
 					<p id="update_status_msg"></p>
 			    </div>
@@ -109,21 +109,22 @@ if (!$_SESSION['user']) {
 				return false;
 			}
 		}
-		function updatePassword() {
+		function updatePassword(userId) {
 			document.getElementById('update_status_msg').innerHTML = ""; // Reset status message
 
 			if (!validatePasswords()) return; // Early exit when new and confirm passwords do not match.
 		
-			var username = document.getElementsByName('uname')[0].value;
+			//var username = document.getElementsByName('uname')[0].value;
 			var password = document.getElementById('newpwd').value;
-			var data = { 'uname': username, 'reset': '0', 'pwd': password };
+			var data = { 'userid': userId, 'reset': '0', 'pwd': password };
 			var xmlhttp = new XMLHttpRequest();
 			xmlhttp.onreadystatechange = function() {
 				if ((this.readyState == 4) && (this.status == 200)) {
 					if (this.responseText == "OK") {
-						window.location="home.php";
+						window.location="homepage.php";
 					} else {
 						document.getElementById('update_status_msg').innerHTML = "Unable to update password.";
+						document.getElementById('update_status_msg').style.color = "red";
 					}
 				}
 			};

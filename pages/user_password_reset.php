@@ -95,7 +95,7 @@ if (!$_SESSION['user']) {
         xmlhttp.onreadystatechange = function() {
             if ((this.readyState == 4) && (this.status == 200)) {
                 if (this.responseText == "OK") {
-                    window.location="home.php";
+                    window.location="homepage.php";
                 } else {
                     document.getElementById('status_msg').innerHTML = "Unable to reset password. Make sure the username is correct.";
                 }

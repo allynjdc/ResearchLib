@@ -168,9 +168,9 @@ if (!$_SESSION['user']) {
 											<div class=\"col-sm-4 text-right h5\" style=\"\">
 												<a href=\"#UpdateUserModal\" data-toggle=\"modal\" data-target=\"#UpdateUserModal".$row['user_id']."\" data-whatever=\"UpdateUser\">update</a> 
 												&nbsp;&nbsp;|&nbsp;&nbsp; 
-												<a href=\"\">reset password</a>
+												<a href=\"#ResetUserModal\" data-toggle=\"modal\" data-target=\"#ResetUserModal".$row['user_id']."\" data-whatever=\"ResetUser\">reset password</a>
 												&nbsp;&nbsp;|&nbsp;&nbsp; 
-												<a href=\"\">remove</a>
+												<a href=\"#RemoveUserModal\" data-toggle=\"modal\" data-target=\"#RemoveUserModal".$row['user_id']."\" data-whatever=\"RemoveUser\">remove</a>
 											</div>
 										</div>
 									</a>
@@ -245,10 +245,54 @@ if (!$_SESSION['user']) {
 							</div>
 						</div>
 
-						<!-- Modal for Password reset -->
+						<!-- Modal(s) for Password Reset -->
+						<div class="modal fade text-justify col-sm-12" id="ResetUserModal<?=$row['user_id']?>" tabindex="-1" role="dialog" aria-labelledby="ResetUserModalLabel" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title h3 col-sm-10" id="ResetUserModalLabel">Password Reset</h5>
+										<button type="button col-sm-2 text-right" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<h4> Are you sure you want to reset password of user (<b><?= $row['user_first_name']." ".$row['user_last_name'] ?></b>)? <h4>
+									</div>
+									<div class="modal-footer">
+										<p id="reset_user_status_msg<?=$row['user_id']?>"></p>
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+										<button type="button" class="btn btn-danger" onclick="resetPassword(<?=$row['user_id']?>)">Reset</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+
+						<!-- Modal(s) for Remove User -->
+						<div class="modal fade text-justify col-sm-12" id="RemoveUserModal<?=$row['user_id']?>" tabindex="-1" role="dialog" aria-labelledby="RemoveUserModalLabel" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title h3 col-sm-10" id="RemoveUserModalLabel">Delete User</h5>
+										<button type="button col-sm-2 text-right" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<h4> Are you sure you want to delete the user (<b><?= $row['user_first_name']." ".$row['user_last_name'] ?></b>)? <h4>
+									</div>
+									<div class="modal-footer">
+										<p id="remove_user_status_msg_<?=$row['user_id']?>"></p>
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+										<button type="button" class="btn btn-danger" onclick="removeUser(<?=$row['user_id']?>)">Delete</button>
+									</div>
+								</div>
+							</div>
+						</div>
+
 				<?php
 					} // End of while loop
-				} // End of IF
+				} // End of IF condition
 				?>
 
 			    <!-- RIGHT SIDE NAVIGATION -->
@@ -310,11 +354,11 @@ if (!$_SESSION['user']) {
 						document.getElementById('AddUserModal').style.display = 'none';
 						location.reload();
 					} else {
-						document.getElementById('add_user_status_msg').innerHTML = "Unable to add new user. Please try again.";
+						document.getElementById('add_user_status_msg').innerHTML = "Unable to add new user. Please try again." + this.responseText;;
 					}
 				}
 			};
-			xmlhttp.open("POST", "../database/update_user.php", true);
+			xmlhttp.open("POST", "../database/add_user.php", true);
 			xmlhttp.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
 			xmlhttp.send(JSON.stringify(data));
 		}
@@ -337,9 +381,7 @@ if (!$_SESSION['user']) {
 			var filename =  (isUploadFile && uploadImage()) ? document.getElementById('update-user-photo-' + userId).files[0].name : oldFilename; 
 	
 			var data = {'userid': userId, 'fname': firstName, 'mname': middleName, 'lname': lastName, 'designation': designation, 'office': office, 'email': email , 'username': username, 'filename':filename};
-			console.log(data);
-			var myModal = document.getElementById('UpdateUserModal' + userId);
-			console.log(myModal);
+	
 			var xmlhttp = new XMLHttpRequest();
 			xmlhttp.onreadystatechange = function() {
 				if ((this.readyState == 4) && (this.status == 200)) {
@@ -347,11 +389,53 @@ if (!$_SESSION['user']) {
 						document.getElementById('UpdateUserModal' + userId).style.display = 'none';
 						location.reload();
 					} else {
-						document.getElementById('update_user_status_msg_' + userId).innerHTML = "Unable to update user information. Please try again.";
+						document.getElementById('update_user_status_msg_' + userId).innerHTML = "Unable to update user information. Please try again." + this.responseText;
 					}
 				}
 			};
 			xmlhttp.open("POST", "../database/update_user.php", true);
+			xmlhttp.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+			xmlhttp.send(JSON.stringify(data));
+		}
+
+		function resetPassword(userId) {
+
+			document.getElementById('reset_user_status_msg' + userId).innerHTML = ""; // Reset status message
+	
+			var password = ""; // Server will provide the password
+			var data = { 'userid': userId, 'reset': '1', 'pwd': password };
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if ((this.readyState == 4) && (this.status == 200)) {
+					if (this.responseText == "OK") {
+						location.reload();
+					} else {
+						document.getElementById('reset_status_msg').innerHTML = "Unable to reset password.";
+					}
+				}
+			};
+			xmlhttp.open("POST", "../database/password_update.php", true);
+			xmlhttp.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+			xmlhttp.send(JSON.stringify(data));
+		}
+
+		function removeUser(userId) {
+
+			document.getElementById('remove_user_status_msg_' + userId).innerHTML = "";
+	
+			var data = {'userid': userId };
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if ((this.readyState == 4) && (this.status == 200)) {
+					if (this.responseText == "OK") {
+						document.getElementById('RemoveUserModal' + userId).style.display = 'none';
+						location.reload();
+					} else {
+						document.getElementById('remove_user_status_msg_' + userId).innerHTML = "Unable to remove user." + this.responseText;
+					}
+				}
+			};
+			xmlhttp.open("POST", "../database/remove_user.php", true);
 			xmlhttp.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
 			xmlhttp.send(JSON.stringify(data));
 		}
