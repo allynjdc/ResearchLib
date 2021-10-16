@@ -86,14 +86,16 @@ if (!$_SESSION['user']) {
 					      		</div>
 					      		<div class="modal-body">
 					        		<form>
+									    <input id="Memo_user" type="hidden" value="<?= $_SESSION['userid'] ?>" name="Memo_user">
 									    <div class="input-group">
-									      	<span class="input-group-addon">Memorandum Code</span>
-									      	<input id="Memo_code" type="text" class="form-control" name="Memo_code" placeholder="DM 000, s. 2021">
+									      	<span class="input-group-addon">Memorandum number</span>
+									      	<input id="Memo_num" type="number" min="1" max="1000" class="form-control" name="Memo_num" placeholder="DM 000">
 									    </div>
 									    <br>
+									    <input id="Memo_series" type="hidden" min="2010" max="2100" class="form-control" name="Memo_series" value="<?= date("Y") ?>">
 									    <div class="input-group">
 									      	<span class="input-group-addon">Subject</span>
-									      	<input id="title" type="text" class="form-control" name="title" placeholder="Memorandum Title">
+									      	<input id="Memo_title" type="text" class="form-control" name="Memo_title" placeholder="Memorandum Title">
 									    </div>
 									    <br>
 									    <div class="input-group">
@@ -102,13 +104,14 @@ if (!$_SESSION['user']) {
 									    </div>
 									    <br>
 									       	<p class="text-justify">Insert the File:</p>
-									      	<input id="memo" type="file" class="" name="memo" accept="image/*, .pdf, .doc, .txt">
+									      	<input id="Memo_file" type="file" class="" name="Memo_file" accept="image/*, .pdf, .doc, .txt">
 									    <br>
 					        		</form>
 					      		</div>
 					      		<div class="modal-footer">
+					      			<p id="add_memo_status_msg"></p>
 							        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-							        <button type="button" class="btn btn-primary">Add Memorandum</button>
+							        <button type="button" class="btn btn-primary" onclick="addMemo()">Add Memorandum</button>
 					      		</div>
 					    	</div>
 					  	</div>
@@ -324,4 +327,54 @@ if (!$_SESSION['user']) {
 		</footer> -->
 
 	</body>
+
+	<script>
+		async function uploadFile() {
+			let formData = new FormData();
+			var file = document.getElementById('Memo_file').files[0];
+			formData.append("file", file);
+			const response = await fetch('../database/upload_memo.php', {
+								method: "POST",
+								body: formData
+							});
+			// ToDo: Make sure the filename of the image uploaded by user is unique.
+			//console.log(response.text());
+			if (response.statusText != "OK") {
+			//if (response.responseText != "OK") {
+				alert("Unable to upload the Memorandum. Reason: " + response.responseText);
+				return false;
+			}
+			return true;
+		}
+
+		function addMemo() {
+			document.getElementById('add_memo_status_msg').innerHTML = ""; // Reset status message
+
+			var MemoUser = document.getElementById('Memo_user').value;
+			var MemoNum = document.getElementById('Memo_num').value;
+			var MemoSeries = document.getElementById('Memo_series').value;
+			var MemoTitle = document.getElementById('Memo_title').value;
+			var MemoSigned = document.getElementById('signed_date').value;
+			// Filename is empty in case the user didn't upload any picture or when there's an error during file upload.
+			var MemoFile =  (uploadFile())? document.getElementById('Memo_file').files[0].name : ""; 
+	
+			var data = {'mUser': MemoUser, 'mNum': MemoNum, 'mSeries': MemoSeries, 'mTitle': MemoTitle, 'mSigned': MemoSigned, 'mFile': MemoFile};
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				console.log(this);
+				if ((this.readyState == 4) && (this.status == 200)) {
+					if (this.responseText == "OK") {
+						document.getElementById('AddMemorandumModal').style.display = 'none';
+						location.reload();
+					} else {
+						document.getElementById('add_memo_status_msg').innerHTML = "Unable to add new memorandum. Please try again."+this.responseText;
+					}
+				}
+			};
+			xmlhttp.open("POST", "../database/add_memo.php", true);
+			xmlhttp.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+			xmlhttp.send(JSON.stringify(data));
+		}
+	</script>
+
 </html>
