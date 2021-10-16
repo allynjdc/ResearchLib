@@ -82,10 +82,14 @@ if (!$_SESSION['user']) {
 						</div>
 						<br><br><br>
 						<div class="center-div">
-							<a class="col-sm-3 center-div" href="user_list.php">
-								<img src="../images/icon_user.png"  width="120" height="120">
-								<br><br> USERS
-							</a>
+							<!-- Only admin users are allowed to update users -->
+							<?php if ($_SESSION['usertype'] && $_SESSION['usertype'] == '1') { ?>
+								<a class="col-sm-3 center-div" href="user_list.php">
+									<img src="../images/icon_user.png"  width="120" height="120">
+									<br><br> USERS
+								</a>
+							<?php } ?>
+
 		                    <a class="col-sm-3 center-div" href="researcher_list.php">
 		                    	<img src="../images/icon_researcher.png" width="120" height="120">
 		                    	<br><br> RESEARCHERS
