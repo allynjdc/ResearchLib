@@ -1,4 +1,5 @@
 <?php
+include "../database/db_config.php";
 session_start();
 
 if (!$_SESSION['user']) {
@@ -89,22 +90,22 @@ if (!$_SESSION['user']) {
 									    <input id="Memo_user" type="hidden" value="<?= $_SESSION['userid'] ?>" name="Memo_user">
 									    <div class="input-group">
 									      	<span class="input-group-addon">Memorandum number</span>
-									      	<input id="Memo_num" type="number" min="1" max="1000" class="form-control" name="Memo_num" placeholder="DM 000">
+									      	<input id="Memo_num" type="number" min="1" max="1000" class="form-control" name="Memo_num" placeholder="DM 000" required>
 									    </div>
 									    <br>
 									    <input id="Memo_series" type="hidden" min="2010" max="2100" class="form-control" name="Memo_series" value="<?= date("Y") ?>">
 									    <div class="input-group">
 									      	<span class="input-group-addon">Subject</span>
-									      	<input id="Memo_title" type="text" class="form-control" name="Memo_title" placeholder="Memorandum Title">
+									      	<input id="Memo_title" type="text" class="form-control" name="Memo_title" placeholder="Memorandum Title" required>
 									    </div>
 									    <br>
 									    <div class="input-group">
 									      	<span class="input-group-addon">Date Signed</span>
-									      	<input id="signed_date" type="date" class="form-control" name="signed_date" placeholder="Additional Info" min="2001-01-01" max="2099-12-31">
+									      	<input id="signed_date" type="date" class="form-control" name="signed_date" placeholder="Additional Info" min="2001-01-01" max="2099-12-31" required>
 									    </div>
 									    <br>
 									       	<p class="text-justify">Insert the File:</p>
-									      	<input id="Memo_file" type="file" class="" name="Memo_file" accept="image/*, .pdf, .doc, .txt">
+									      	<input id="Memo_file" type="file" class="" name="Memo_file" accept="image/*, .pdf, .doc, .txt" required>
 									    <br>
 					        		</form>
 					      		</div>
@@ -119,8 +120,9 @@ if (!$_SESSION['user']) {
 
 
 			    	<br>
+			    	<!--
 			    	<div class="" style="padding:2%; border: solid #e3dede 1px; border-radius:1%;">
-			    		<!-- <div class="col-sm-offset-1 col-sm-10"> -->
+			    		<div class="col-sm-offset-1 col-sm-10">
 			    			<p class="h4 text-justify"><b><a href="memorandum_view.php">MAY 11, 2021 DM 284, S. 2021 - VIRTUAL TRAINING ON ADVANCING RESEARCH THROUGH 6D SCHEME FOR SECOND BATCH </b></a></p>
 						
 							<p class="h5 text-justify">
@@ -129,7 +131,6 @@ if (!$_SESSION['user']) {
 							<p class="h5 text-justify">
 								DM 284, s. 2021
 							</p>
-			    		<!-- </div> -->
 			    			<p class="text-right" style="">
 								<a href="#UpdateMemorandumModal" data-toggle="modal" data-target="#UpdateMemorandumModal" data-whatever="	UpdateMemorandum" style="color: green;">
 									update
@@ -139,126 +140,99 @@ if (!$_SESSION['user']) {
 							</p>
 					</div>
 					<br>
-					<div class="" style="padding:2%; border: solid #e3dede 1px; border-radius:1%;">
-			    		<!-- <div class="col-sm-offset-1 col-sm-10"> -->
-			    			<p class="h4 text-justify"><b><a href="memorandum_view.php">MAY 11, 2021 DM 284, S. 2021 - VIRTUAL TRAINING ON ADVANCING RESEARCH THROUGH 6D SCHEME FOR SECOND BATCH </b></a></p>
+					-->
+					<!-- FETCHING MEMORANDUM -->
+					<?php 
+						$query = "SELECT * FROM memorandum ORDER BY memo_date";
+						if ($result = $db->query($query)){
+							while ($row = $result->fetch_assoc()){
+								$memoNum = $row['memo_number'];
+								$memoSeries = $row['memo_series'];
+								$memoSubject = $row['memo_subject'];
+								$mDate = strtotime($row['memo_date']);
+								$memoFilename = $row['memo_filename'];
+								$memoDir = $row['memo_filepath'];
+
+								$months = array("null","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
+								$memoDate = strtoupper($months[date('m',$mDate)])." ".date('d',$mDate).", ".date('Y',$mDate);
+								// $memoDate = $mDate;
+
+								echo "
+									<div style=\"padding:2%; border: solid #e3dede 1px; border-radius:1%;\">
+						    			<p class=\"h4 text-justify\"><b><a href=\"memorandum_view.php\">".$memoDate." DM ".$memoNum.", S. ".$memoSeries." - ".strtoupper($memoSubject)." </b></a></p>
+									
+										<p class=\"h5 text-justify\">
+											".ucwords(strtolower($memoSubject))."
+										</p>
+										<p class=\"h5 text-justify\">
+											DM ".$memoNum.", s. ".$memoSeries."
+										</p>
+						    			<p class=\"text-right\">
+											<a href=\"#UpdateMemorandumModal\" data-toggle=\"modal\" data-target=\"#UpdateMemorandumModal".$row['memo_id']."\" data-whatever=\"UpdateMemorandum\" style=\"color: green;\">
+												update
+											</a> 
+											&nbsp;&nbsp;|&nbsp;&nbsp; 
+											<a href=\" \" style=\"color: red;\">remove</a>
+										</p>
+									</div>
+									<br>
+								";
+
+							?>
+
+							<!-- Modal For Updated Memorandum -->
+							<div class="modal fade text-justify col-sm-12" id="UpdateMemorandumModal<?=$row['memo_id']?>" tabindex="-1" role="dialog" aria-labelledby="UpdateMemorandumModalLabel" aria-hidden="true">
+							    <div class="modal-dialog" role="document">
+							    	<div class="modal-content">
+							      		<div class="modal-header">
+							        		<h5 class="modal-title h3 col-sm-10" id="UpdateMemorandumModalLabel">Update Memorandum</h5>
+							        		<button type="button col-sm-2 text-right" class="close" data-dismiss="modal" aria-label="Close">
+							          			<span aria-hidden="true">&times;</span>
+							        		</button>
+							      		</div>
+							      		<div class="modal-body">
+							        		<form>
+											    <input id="UPDATE_Memo_user_<?=$row['memo_id']?>" type="hidden" value="<?=$row['memo_user_id']?>" name="Memo_user">
+											    <div class="input-group">
+											      	<span class="input-group-addon">Memorandum number</span>
+											      	<input id="UPDATE_Memo_num_<?=$row['memo_id']?>" type="number" min="1" max="1000" class="form-control" name="Memo_num" value="<?=$row['memo_number']?>">
+											    </div>
+											    <br>
+											    <input id="UPDATE_Memo_series_<?=$row['memo_id']?>" type="hidden" min="2010" max="2100" class="form-control" name="Memo_series" value="<?=$row['memo_series']?>">
+											    <div class="input-group">
+											      	<span class="input-group-addon">Subject</span>
+											      	<input id="UPDATE_Memo_title_<?=$row['memo_id']?>" type="text" class="form-control" name="Memo_title" value="<?=$row['memo_subject']?>">
+											    </div>
+											    <br>
+											    <div class="input-group">
+											      	<span class="input-group-addon">Date Signed</span>
+											      	<input id="UPDATE_signed_date_<?=$row['memo_id']?>" type="date" class="form-control" name="signed_date" value="<?=$row['memo_date']?>" min="2001-01-01" max="2099-12-31">
+											    </div>
+											    <br>
+											    	<input type="hidden" id="update_memo_old_file_<?=$row['memo_id']?>" value="<?=$row['memo_filename']?>">
+											       	<p class="text-justify">Insert the File:</p>
+											      	<input id="UPDATE_Memo_file_<?=$row['memo_id']?>" type="file" class="" value="<?=$row['memo_filename']?>" name="Memo_file" accept="image/*, .pdf, .doc, .txt">
+											    <br>
+							        		</form>
+							      		</div>
+							      		<div class="modal-footer">
+							      			<p id="update_memo_status_msg_<?=$row['memo_id']?>"></p>
+									        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+									        <button type="button" class="btn btn-primary" onclick="updateMemo(<?=$row['memo_id']?>)">Update Memorandum</button>
+							      		</div>
+							    	</div>
+							  	</div>
+							</div>
+
+
+							<?php
+							}
+						} else {
+							echo "<p> No uploaded memorandum yet.</p>";
+						}
 						
-							<p class="h5 text-justify">
-								Virtual Training on Advancing Research Through 6D Scheme for Second Batch
-							</p>
-							<p class="h5 text-justify">
-								DM 284, s. 2021
-							</p>
-			    		<!-- </div> -->
-			    			<p class="text-right" style="">
-								<a href="#UpdateMemorandumModal" data-toggle="modal" data-target="#UpdateMemorandumModal" data-whatever="UpdateMemorandum" style="color: green;">
-									update
-								</a> 
-								&nbsp;&nbsp;|&nbsp;&nbsp; 
-								<a href="" style="color: red;">remove</a>
-							</p>
-					</div>
-					<br>
-					<div class="" style="padding:2%; border: solid #e3dede 1px; border-radius:1%;">
-			    		<!-- <div class="col-sm-offset-1 col-sm-10"> -->
-			    			<p class="h4 text-justify"><b><a href="memorandum_view.php">MAY 11, 2021 DM 284, S. 2021 - VIRTUAL TRAINING ON ADVANCING RESEARCH THROUGH 6D SCHEME FOR SECOND BATCH </b></a></p>
-						
-							<p class="h5 text-justify">
-								Virtual Training on Advancing Research Through 6D Scheme for Second Batch
-							</p>
-							<p class="h5 text-justify">
-								DM 284, s. 2021
-							</p>
-			    		<!-- </div> -->
-			    			<p class="text-right" style="">
-								<a href="#UpdateMemorandumModal" data-toggle="modal" data-target="#UpdateMemorandumModal" data-whatever="UpdateMemorandum" style="color: green;">
-									update
-								</a> 
-								&nbsp;&nbsp;|&nbsp;&nbsp; 
-								<a href="" style="color: red;">remove</a>
-							</p>
-					</div>
-					<br>
-					<div class="" style="padding:2%; border: solid #e3dede 1px; border-radius:1%;">
-			    		<!-- <div class="col-sm-offset-1 col-sm-10"> -->
-			    			<p class="h4 text-justify"><b><a href="memorandum_view.php">MAY 11, 2021 DM 284, S. 2021 - VIRTUAL TRAINING ON ADVANCING RESEARCH THROUGH 6D SCHEME FOR SECOND BATCH </b></a></p>
-						
-							<p class="h5 text-justify">
-								Virtual Training on Advancing Research Through 6D Scheme for Second Batch
-							</p>
-							<p class="h5 text-justify">
-								DM 284, s. 2021
-							</p>
-			    		<!-- </div> -->
-			    			<p class="text-right" style="">
-								<a href="#UpdateMemorandumModal" data-toggle="modal" data-target="#UpdateMemorandumModal" data-whatever="UpdateMemorandum" style="color: green;">
-									update
-								</a> 
-								&nbsp;&nbsp;|&nbsp;&nbsp; 
-								<a href="" style="color: red;">remove</a>
-							</p>
-					</div>
-					<br>
-					<div class="" style="padding:2%; border: solid #e3dede 1px; border-radius:1%;">
-			    		<!-- <div class="col-sm-offset-1 col-sm-10"> -->
-			    			<p class="h4 text-justify"><b><a href="memorandum_view.php">MAY 11, 2021 DM 284, S. 2021 - VIRTUAL TRAINING ON ADVANCING RESEARCH THROUGH 6D SCHEME FOR SECOND BATCH </b></a></p>
-						
-							<p class="h5 text-justify">
-								Virtual Training on Advancing Research Through 6D Scheme for Second Batch
-							</p>
-							<p class="h5 text-justify">
-								DM 284, s. 2021
-							</p>
-			    		<!-- </div> -->
-			    			<p class="text-right" style="">
-								<a href="#UpdateMemorandumModal" data-toggle="modal" data-target="#UpdateMemorandumModal" data-whatever="UpdateMemorandum" style="color: green;">
-									update
-								</a> 
-								&nbsp;&nbsp;|&nbsp;&nbsp; 
-								<a href="" style="color: red;">remove</a>
-							</p>
-					</div>
-					<br>
-					<div class="" style="padding:2%; border: solid #e3dede 1px; border-radius:1%;">
-			    		<!-- <div class="col-sm-offset-1 col-sm-10"> -->
-			    			<p class="h4 text-justify"><b><a href="memorandum_view.php">MAY 11, 2021 DM 284, S. 2021 - VIRTUAL TRAINING ON ADVANCING RESEARCH THROUGH 6D SCHEME FOR SECOND BATCH </b></a></p>
-						
-							<p class="h5 text-justify">
-								Virtual Training on Advancing Research Through 6D Scheme for Second Batch
-							</p>
-							<p class="h5 text-justify">
-								DM 284, s. 2021
-							</p>
-			    		<!-- </div> -->
-			    			<p class="text-right" style="">
-								<a href="#UpdateMemorandumModal" data-toggle="modal" data-target="#UpdateMemorandumModal" data-whatever="UpdateMemorandum" style="color: green;">
-									update
-								</a> 
-								&nbsp;&nbsp;|&nbsp;&nbsp; 
-								<a href="" style="color: red;">remove</a>
-							</p>
-					</div>
-					<br>
-					<div class="" style="padding:2%; border: solid #e3dede 1px; border-radius:1%;">
-			    		<!-- <div class="col-sm-offset-1 col-sm-10"> -->
-			    			<p class="h4 text-justify"><b><a href="memorandum_view.php">MAY 11, 2021 DM 284, S. 2021 - VIRTUAL TRAINING ON ADVANCING RESEARCH THROUGH 6D SCHEME FOR SECOND BATCH </b></a></p>
-						
-							<p class="h5 text-justify">
-								Virtual Training on Advancing Research Through 6D Scheme for Second Batch
-							</p>
-							<p class="h5 text-justify">
-								DM 284, s. 2021
-							</p>
-			    		<!-- </div> -->
-			    			<p class="text-right" style="">
-								<a href="#UpdateMemorandumModal" data-toggle="modal" data-target="#UpdateMemorandumModal" data-whatever="UpdateMemorandum" style="color: green;">
-									update
-								</a> 
-								&nbsp;&nbsp;|&nbsp;&nbsp; 
-								<a href="" style="color: red;">remove</a>
-							</p>
-					</div>
-					<br>
+					?>
+					
 
 					<div class="text-right">
 						<ul class="pagination pagination-sm ">
@@ -274,45 +248,6 @@ if (!$_SESSION['user']) {
 
 				</div>
 						
-				<!-- Modal For Updated Memorandum -->
-				<div class="modal fade text-justify col-sm-12" id="UpdateMemorandumModal" tabindex="-1" role="dialog" aria-labelledby="UpdateMemorandumModalLabel" aria-hidden="true">
-				    <div class="modal-dialog" role="document">
-				    	<div class="modal-content">
-				      		<div class="modal-header">
-				        		<h5 class="modal-title h3 col-sm-10" id="UpdateMemorandumModalLabel">Update Memorandum</h5>
-				        		<button type="button col-sm-2 text-right" class="close" data-dismiss="modal" aria-label="Close">
-				          			<span aria-hidden="true">&times;</span>
-				        		</button>
-				      		</div>
-				      		<div class="modal-body">
-				        		<form>
-								    <div class="input-group">
-								      	<span class="input-group-addon">Memorandum Code</span>
-								      	<input id="Memo_code" type="text" class="form-control" name="Memo_code" placeholder="DM 000, s. 2021">
-								    </div>
-								    <br>
-								    <div class="input-group">
-								      	<span class="input-group-addon">Subject</span>
-								      	<input id="title" type="text" class="form-control" name="title" placeholder="Memorandum Title">
-								    </div>
-								    <br>
-								    <div class="input-group">
-								      	<span class="input-group-addon">Date Signed</span>
-								      	<input id="signed_date" type="date" class="form-control" name="signed_date" placeholder="Additional Info" min="2001-01-01" max="2099-12-31">
-								    </div>
-								    <br>
-								       	<p class="text-justify">Insert the File:</p>
-								      	<input id="memo" type="file" class="" name="memo" accept="image/*, .pdf, .doc, .txt">
-								    <br>
-				        		</form>
-				      		</div>
-				      		<div class="modal-footer">
-						        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-						        <button type="button" class="btn btn-primary">Update Memorandum</button>
-				      		</div>
-				    	</div>
-				  	</div>
-				</div>
 
 
 				<div class="col-sm-3 sidenav" >
@@ -329,9 +264,26 @@ if (!$_SESSION['user']) {
 	</body>
 
 	<script>
-		async function uploadFile() {
+		// async function uploadFile() {
+		// 	let formData = new FormData();
+		// 	var file = document.getElementById('Memo_file').files[0];
+		// 	formData.append("file", file);
+		// 	const response = await fetch('../database/upload_memo.php', {
+		// 						method: "POST",
+		// 						body: formData
+		// 					});
+		// 	// ToDo: Make sure the filename of the image uploaded by user is unique.
+		// 	//console.log(response.text());
+		// 	if (response.statusText != "OK") {
+		// 	//if (response.responseText != "OK") {
+		// 		alert("Unable to upload the Memorandum. Reason: " + response.responseText);
+		// 		return false;
+		// 	}
+		// 	return true;
+		// }
+
+		async function uploadFile(file) {
 			let formData = new FormData();
-			var file = document.getElementById('Memo_file').files[0];
 			formData.append("file", file);
 			const response = await fetch('../database/upload_memo.php', {
 								method: "POST",
@@ -356,7 +308,15 @@ if (!$_SESSION['user']) {
 			var MemoTitle = document.getElementById('Memo_title').value;
 			var MemoSigned = document.getElementById('signed_date').value;
 			// Filename is empty in case the user didn't upload any picture or when there's an error during file upload.
-			var MemoFile =  (uploadFile())? document.getElementById('Memo_file').files[0].name : ""; 
+			var isUploadFile = (document.getElementById('Memo_file').files.length != 0);
+			if(!isUploadFile || MemoNum == "" || MemoSeries == "" || MemoTitle == "" || MemoSigned == ""){
+				document.getElementById('add_memo_status_msg').style.color = 'red';
+				document.getElementById('add_memo_status_msg').innerHTML = "Provide all the needed information. Please try again."+this.responseText;
+				return ;
+			}
+
+			var file = document.getElementById('Memo_file').files[0];
+			var MemoFile =  (uploadFile(file))? file.name : ""; 
 	
 			var data = {'mUser': MemoUser, 'mNum': MemoNum, 'mSeries': MemoSeries, 'mTitle': MemoTitle, 'mSigned': MemoSigned, 'mFile': MemoFile};
 			var xmlhttp = new XMLHttpRequest();
@@ -375,6 +335,41 @@ if (!$_SESSION['user']) {
 			xmlhttp.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
 			xmlhttp.send(JSON.stringify(data));
 		}
+
+		function updateMemo(memoId) {
+
+			console.log(memoId);
+			document.getElementById('update_memo_status_msg_' + memoId).innerHTML = ""; // Reset status message
+			var isUploadFile = (document.getElementById('UPDATE_Memo_file_' + memoId).files.length != 0);
+			//console.log(isUploadFile);
+
+			var MemoUser = document.getElementById('UPDATE_Memo_user_' + memoId).value;
+			var MemoNum = document.getElementById('UPDATE_Memo_num_' + memoId).value;
+			var MemoSeries = document.getElementById('UPDATE_Memo_series_' + memoId).value;
+			var MemoTitle = document.getElementById('UPDATE_Memo_title_' + memoId).value;
+			var MemoSigned = document.getElementById('UPDATE_signed_date_' + memoId).value;
+			// filename is the old filename in the case where the user don't want to update picture or when there's an error during file upload.
+			var oldFilename = document.getElementById('update_memo_old_file_' + memoId).value;
+			var file = document.getElementById('UPDATE_Memo_file_' + memoId).files[0];
+			var MemoFile =  (isUploadFile && uploadFile(file)) ? file.name : oldFilename; 
+	
+			var data = {'mID': memoId, 'mUser': MemoUser, 'mNum': MemoNum, 'mSeries': MemoSeries, 'mTitle': MemoTitle, 'mSigned': MemoSigned, 'mFile': MemoFile};
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if ((this.readyState == 4) && (this.status == 200)) {
+					if (this.responseText == "OK") {
+						document.getElementById('UpdateMemorandumModal' + memoId).style.display = 'none';
+						location.reload();
+					} else {
+						document.getElementById('update_memo_status_msg_' + memoId).innerHTML = "Unable to update user information. Please try again." + this.responseText;
+					}
+				}
+			};
+			xmlhttp.open("POST", "../database/update_memo.php", true);
+			xmlhttp.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+			xmlhttp.send(JSON.stringify(data));
+		}
+
 	</script>
 
 </html>
