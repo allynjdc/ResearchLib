@@ -1,4 +1,5 @@
 <?php
+include "../database/db_config.php";
 session_start();
 
 if (!$_SESSION['user']) {
@@ -63,29 +64,47 @@ if (!$_SESSION['user']) {
 			      	<p><a href="#">Link</a></p> -->
 			    </div>
 			    <div class="col-sm-6 center-div center-content body_middle"> 
-			    	<br> <br>
-			      	<img class="img-circle center-block" src="../images/calcaben.png" alt="calcaben" width="200px" height="200px"> 
+			    	
+			    	<?php 
+						$id = intval($_SESSION['userid']);
+						// echo $id;
+						$query = "SELECT * FROM researcher WHERE researcher_id = '$id'";
+						if ($result = $db->query($query)){
+							// echo "result";
+							while ($row = $result->fetch_assoc()){
+								// echo "row";
+								$userFullname = $row['researcher_first_name']." ".$row['researcher_middle_name'][0].". ".$row['researcher_last_name'];
+								$userImage = empty($row['researcher_profile_picture']) ? $defaultImg : $row['researcher_profile_picture'];								
+					?>
 
+			    	<br> <br>
+			      	<img class="img-circle center-block" src="../images/profile_pictures/<?=$userImage?>" alt="<?=$userFullname?>" width="200px" height="200px"> 
 			      	<br>
-			      	
 			      	<div>
 			      		<p class="title_brand_nav h3">
-			      			<b>Allyn Joy D. Calcaben</b>
+			      			<b><?=ucwords(strtolower($userFullname))?></b>
 			      		</p>
-			      		<p class="h4">
-			      			Special Science Teacher 1 <br>
-			      			Tagum National Trade School <br>
+			      		<p class="title_brand_nav h5">
+			      			<?=ucwords(strtolower($row['researcher_email']))?>
+			      			<br>
 			      		</p>
-			      		<br>
-			      		<form action="/action_page.php" >
-    						<div class="input-group-btn" >
-   								<button type="button" class="btn btn-default btn-sm">
-						          	<span class="glyphicon glyphicon-pencil"></span> Edit 
-						        </button>
-  							</div>
-  						</form>
-			      		<hr>	
+			      		<p class="h5">
+			      			<!-- <?=ucwords(strtolower($row['researcher_email']))?> <br> -->
+			      			<?=ucwords(strtolower($row['researcher_designation']))?> <br>
+			      			<?=ucwords(strtolower($row['researcher_office']))?> <br>
+			      		</p>
+			      		<br>	
 			      	</div>
+
+			      	<?php 
+
+			      		}
+
+					} else {
+						echo "<p> No users yet.</p>";
+					}
+
+					?>
 
 			      	<div class="text-justify">
 			      		<p class="title_brand_nav h4">

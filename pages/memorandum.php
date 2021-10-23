@@ -1,4 +1,5 @@
 <?php
+include "../database/db_config.php";
 session_start();
 ?>
 
@@ -70,97 +71,55 @@ session_start();
 
 			    <div class="col-sm-6 center_content">
 			    	<br>
-			    	<div class="" style="padding:2%; border: solid #e3dede 1px; border-radius:1%;">
-			    		<!-- <div class="col-sm-offset-1 col-sm-10"> -->
-			    			<p class="h4 text-justify"><b><a href="memorandum_view.php">MAY 11, 2021 DM 284, S. 2021 - VIRTUAL TRAINING ON ADVANCING RESEARCH THROUGH 6D SCHEME FOR SECOND BATCH </b></a></p>
+			    	<!-- <div class="" style="padding:2%; border: solid #e3dede 1px; border-radius:1%;">
+		    			<p class="h4 text-justify"><b><a href="memorandum_view.php">MAY 11, 2021 DM 284, S. 2021 - VIRTUAL TRAINING ON ADVANCING RESEARCH THROUGH 6D SCHEME FOR SECOND BATCH </b></a></p>
+					
+						<p class="h5 text-justify">
+							Virtual Training on Advancing Research Through 6D Scheme for Second Batch
+						</p>
+						<p class="h5 text-justify">
+							DM 284, s. 2021
+						</p>
+					</div> 
+					<br> -->
+
+					<!-- FETCHING MEMORANDUM -->
+					<?php 
+						$query = "SELECT * FROM memorandum ORDER BY memo_date";
+						if ($result = $db->query($query)){
+							while ($row = $result->fetch_assoc()){
+								$memoNum = $row['memo_number'];
+								$memoSeries = $row['memo_series'];
+								$memoSubject = $row['memo_subject'];
+								$mDate = strtotime($row['memo_date']);
+								$memoFilename = $row['memo_filename'];
+								$memoDir = $row['memo_filepath'];
+
+								$months = array("null","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
+								$memoDate = strtoupper($months[date('m',$mDate)])." ".date('d',$mDate).", ".date('Y',$mDate);
+								// $memoDate = $mDate;
+
+								echo "
+									<div style=\"padding:2%; border: solid #e3dede 1px; border-radius:1%;\">
+						    			<p class=\"h4 text-justify\"><b><a href=\"memorandum_view.php?memoid=".$row['memo_id']."\">".$memoDate." DM ".$memoNum.", S. ".$memoSeries." - ".strtoupper($memoSubject)." </b></a></p>
+									
+										<p class=\"h5 text-justify\">
+											".ucwords(strtolower($memoSubject))."
+										</p>
+										<p class=\"h5 text-justify\">
+											DM ".$memoNum.", s. ".$memoSeries."
+										</p>
+									</div>
+									<br>
+								";
+							}
 						
-							<p class="h5 text-justify">
-								Virtual Training on Advancing Research Through 6D Scheme for Second Batch
-							</p>
-							<p class="h5 text-justify">
-								DM 284, s. 2021
-							</p>
-			    		<!-- </div> -->
-					</div>
-					<br>
-					<div class="" style="padding:2%; border: solid #e3dede 1px; border-radius:1%;">
-			    		<!-- <div class="col-sm-offset-1 col-sm-10"> -->
-			    			<p class="h4 text-justify"><b><a href="memorandum_view.php">MAY 11, 2021 DM 284, S. 2021 - VIRTUAL TRAINING ON ADVANCING RESEARCH THROUGH 6D SCHEME FOR SECOND BATCH </b></a></p>
-						
-							<p class="h5 text-justify">
-								Virtual Training on Advancing Research Through 6D Scheme for Second Batch
-							</p>
-							<p class="h5 text-justify">
-								DM 284, s. 2021
-							</p>
-			    		<!-- </div> -->
-					</div>
-					<br>
-					<div class="" style="padding:2%; border: solid #e3dede 1px; border-radius:1%;">
-			    		<!-- <div class="col-sm-offset-1 col-sm-10"> -->
-			    			<p class="h4 text-justify"><b><a href="memorandum_view.php">MAY 11, 2021 DM 284, S. 2021 - VIRTUAL TRAINING ON ADVANCING RESEARCH THROUGH 6D SCHEME FOR SECOND BATCH </b></a></p>
-						
-							<p class="h5 text-justify">
-								Virtual Training on Advancing Research Through 6D Scheme for Second Batch
-							</p>
-							<p class="h5 text-justify">
-								DM 284, s. 2021
-							</p>
-			    		<!-- </div> -->
-					</div>
-					<br>
-					<div class="" style="padding:2%; border: solid #e3dede 1px; border-radius:1%;">
-			    		<!-- <div class="col-sm-offset-1 col-sm-10"> -->
-			    			<p class="h4 text-justify"><b><a href="memorandum_view.php">MAY 11, 2021 DM 284, S. 2021 - VIRTUAL TRAINING ON ADVANCING RESEARCH THROUGH 6D SCHEME FOR SECOND BATCH </b></a></p>
-						
-							<p class="h5 text-justify">
-								Virtual Training on Advancing Research Through 6D Scheme for Second Batch
-							</p>
-							<p class="h5 text-justify">
-								DM 284, s. 2021
-							</p>
-			    		<!-- </div> -->
-					</div>
-					<br>
-					<div class="" style="padding:2%; border: solid #e3dede 1px; border-radius:1%;">
-			    		<!-- <div class="col-sm-offset-1 col-sm-10"> -->
-			    			<p class="h4 text-justify"><b><a href="memorandum_view.php">MAY 11, 2021 DM 284, S. 2021 - VIRTUAL TRAINING ON ADVANCING RESEARCH THROUGH 6D SCHEME FOR SECOND BATCH </b></a></p>
-						
-							<p class="h5 text-justify">
-								Virtual Training on Advancing Research Through 6D Scheme for Second Batch
-							</p>
-							<p class="h5 text-justify">
-								DM 284, s. 2021
-							</p>
-			    		<!-- </div> -->
-					</div>
-					<br>
-					<div class="" style="padding:2%; border: solid #e3dede 1px; border-radius:1%;">
-			    		<!-- <div class="col-sm-offset-1 col-sm-10"> -->
-			    			<p class="h4 text-justify"><b><a href="memorandum_view.php">MAY 11, 2021 DM 284, S. 2021 - VIRTUAL TRAINING ON ADVANCING RESEARCH THROUGH 6D SCHEME FOR SECOND BATCH </b></a></p>
-						
-							<p class="h5 text-justify">
-								Virtual Training on Advancing Research Through 6D Scheme for Second Batch
-							</p>
-							<p class="h5 text-justify">
-								DM 284, s. 2021
-							</p>
-			    		<!-- </div> -->
-					</div>
-					<br>
-					<div class="" style="padding:2%; border: solid #e3dede 1px; border-radius:1%;">
-			    		<!-- <div class="col-sm-offset-1 col-sm-10"> -->
-			    			<p class="h4 text-justify"><b><a href="memorandum_view.php">MAY 11, 2021 DM 284, S. 2021 - VIRTUAL TRAINING ON ADVANCING RESEARCH THROUGH 6D SCHEME FOR SECOND BATCH </b></a></p>
-						
-							<p class="h5 text-justify">
-								Virtual Training on Advancing Research Through 6D Scheme for Second Batch
-							</p>
-							<p class="h5 text-justify">
-								DM 284, s. 2021
-							</p>
-			    		<!-- </div> -->
-					</div>
-					<br>
+						} else {
+							echo "<p> No uploaded memorandum yet.</p>";
+						}
+
+						?>
+					
 
 					<div class="text-right">
 						<ul class="pagination pagination-sm ">

@@ -159,7 +159,7 @@ if (!$_SESSION['user']) {
 
 								echo "
 									<div style=\"padding:2%; border: solid #e3dede 1px; border-radius:1%;\">
-						    			<p class=\"h4 text-justify\"><b><a href=\"memorandum_view.php\">".$memoDate." DM ".$memoNum.", S. ".$memoSeries." - ".strtoupper($memoSubject)." </b></a></p>
+						    			<p class=\"h4 text-justify\"><b><a href=\"memorandum_view.php?memoid=".$row['memo_id']."\">".$memoDate." DM ".$memoNum.", S. ".$memoSeries." - ".strtoupper($memoSubject)." </b></a></p>
 									
 										<p class=\"h5 text-justify\">
 											".ucwords(strtolower($memoSubject))."
@@ -365,7 +365,7 @@ if (!$_SESSION['user']) {
 					}
 				}
 			};
-			xmlhttp.open("POST", "../database/update_memo.php", true);
+			xmlhttp.open("POST", "../database/update_researcher.php", true);
 			xmlhttp.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
 			xmlhttp.send(JSON.stringify(data));
 		}

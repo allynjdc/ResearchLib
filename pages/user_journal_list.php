@@ -69,7 +69,7 @@ if (!$_SESSION['user']) {
 			    	<p>&nbsp;</p>
 			    	<div class="text-justify">
 			    		<a href="user_add_journal.php">
-			    			<button type="button" class="btn btn-primary " >
+			    			<button type="button" class="btn btn-primary ">
 								Add Journal
 							</button>
 			    		</a>						

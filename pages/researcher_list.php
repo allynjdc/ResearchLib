@@ -1,4 +1,5 @@
 <?php
+include "../database/db_config.php";
 session_start();
 
 if (!$_SESSION['user']) {
@@ -98,46 +99,57 @@ if (!$_SESSION['user']) {
 						      		</div>
 						      		<div class="modal-body">
 						        		<form>
+						        			<input id="researcher_user" type="hidden" value="<?= $_SESSION['userid'] ?>" name="researcher_user">
 						          			<div class="form-group">
 						          				<label for="researcher_photo" class="col-form-label">Upload Image:</label>
 						          				<input id="researcher_photo" type="file" class="" name="researcher_photo" accept="image/*">
 						          			</div>
 
 						          			<div class="form-group">
-						            			<label for="researcher-name" class="col-form-label">Name:</label>
-						            			<input type="text" class="form-control" id="researcher-name">
+						            			<label for="researcher_fname" class="col-form-label">First Name:</label>
+						            			<input type="text" class="form-control" id="researcher_fname">
 						          			</div>
 						          			<div class="form-group">
-									            <label for="researcher-designation" class="col-form-label">Designation:</label>
-									            <input type="text" class="form-control" id="researcher-designation">
+						            			<label for="researcher_mname" class="col-form-label">Middle Name:</label>
+						            			<input type="text" class="form-control" id="researcher_mname">
 						          			</div>
 						          			<div class="form-group">
-									            <label for="researcher-station" class="col-form-label">Office / School:</label>
-									            <input type="text" class="form-control" id="researcher-station">
+						            			<label for="researcher_lname" class="col-form-label">Last Name:</label>
+						            			<input type="text" class="form-control" id="researcher_lname">
 						          			</div>
 						          			<div class="form-group">
-									            <label for="researcher-email" class="col-form-label">Email:</label>
-									            <input type="email" class="form-control" id="researcher-email">
+									            <label for="researcher_designation" class="col-form-label">Designation:</label>
+									            <input type="text" class="form-control" id="researcher_designation">
 						          			</div>
 						          			<div class="form-group">
-									            <label for="researcher-username" class="col-form-label">Username:</label>
-									            <input type="text" class="form-control" id="researcher-username">
+									            <label for="researcher_station" class="col-form-label">Office / School:</label>
+									            <input type="text" class="form-control" id="researcher_station">
 						          			</div>
+						          			<div class="form-group">
+									            <label for="researcher_email" class="col-form-label">Email:</label>
+									            <input type="email" class="form-control" id="researcher_email">
+						          			</div>
+						          			<!-- <div class="form-group">
+									            <label for="researcher_username" class="col-form-label">Username:</label>
+									            <input type="text" class="form-control" id="researcher_username">
+						          			</div> -->
 						        		</form>
 						      		</div>
 						      		<div class="modal-footer">
+						      			<p id="add_researcher_status_msg"></p>
 								        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-								        <button type="button" class="btn btn-primary">Add Researcher</button>
+								        <button type="button" class="btn btn-primary" onclick="addResearcher()">Add Researcher</button>
 						      		</div>
 						    	</div>
 						  	</div>
 						</div>
 
 						<br>
+						
 						<!-- For Fetching ---> 
-						<div class="col-sm-12 text-justify" >
-							<!-- style="border: solid #e8e4e3 0.5px; border-radius: 25px;"> -->
-							<a href="user_profile_researcher.php"> <!-- padulong sa profile page sa user --->
+						
+						<!-- <div class="col-sm-12 text-justify" >
+							<a href="user_profile_researcher.php"> 
 								<div class="col-sm-12">
 									<div class="col-sm-1" >
 										<img class="  img-circle " src="../images/calcaben.png" alt="Calcaben" width="70px" height="70px">
@@ -161,168 +173,120 @@ if (!$_SESSION['user']) {
 								</div>
 							</a>
 							<p> &nbsp;</p>
-						</div>
-						<div class="col-sm-12 text-justify" >
-							<!-- style="border: solid #e8e4e3 0.5px; border-radius: 25px;"> -->
-							<a href="user_profile_researcher.php"> <!-- padulong sa profile page sa user --->
-								<div class="col-sm-12">
-									<div class="col-sm-1" >
-										<img class="  img-circle " src="../images/calcaben.png" alt="Calcaben" width="70px" height="70px">
+						</div> -->
+
+						<?php
+						$query = "SELECT * FROM researcher ORDER BY researcher_first_name";
+						if ($result = $db->query($query)) {
+							$profileDir = "../images/profile_pictures/";
+							$defaultImg = "default_profile_picture.jpg";
+
+							while ($row = $result->fetch_assoc()) {
+								$userFullname = $row['researcher_first_name']." ".$row['researcher_middle_name'][0].". ".$row['researcher_last_name'];
+								$userImage = empty($row['researcher_profile_picture']) ? $defaultImg : $row['researcher_profile_picture'];
+
+								echo "
+									<div class=\"col-sm-12 text-justify\" >
+										<a href=\"user_profile_researcher.php?id=".$row['researcher_id']."\"> 
+											<!-- padulong sa profile page sa user --->
+											<div class=\"col-sm-12\">
+												<div class=\"col-sm-1\" >
+													<img class=\"img-circle\" src=\"".$profileDir.$userImage."\" alt=\"".$userFullname."\" width=\"70px\" height=\"70px\">
+												</div>
+												<div class=\"col-sm-7 \" style=\" \">
+													<p class=\"h4\" style=\" \"> 
+														".ucwords(strtolower($userFullname))."
+													</p>
+													<p class=\"h6\">
+														".ucwords(strtolower($row['researcher_designation']))." 
+														<br>
+														".ucwords(strtolower($row['researcher_office']))." 
+														<br>
+													</p>	
+												</div>
+												<div class=\"col-sm-4 text-right h5\" style=\" \">
+													<a href=\"#UpdateResearcherModal\" data-toggle=\"modal\" data-target=\"#UpdateResearcherModal".$row['researcher_id']."\" data-whatever=\"UpdateResearcher\">update</a> 
+													&nbsp;&nbsp;|&nbsp;&nbsp; 
+													<a href=\" \">remove</a>
+												</div>
+											</div>
+										</a>
+										<p> &nbsp;</p>
 									</div>
-									<div class="col-sm-7 " style=" ">
-										<p class="h4" style=""> 
-											ALLYN JOY D. CALCABEN
-										</p>
-										<p class="h6">
-											Special Science Teacher I 
-											<br>
-											Tagum National Trade Schoool 
-											<br>
-										</p>	
-									</div>
-									<div class="col-sm-4 text-right h5" style="">
-										<a href="#UpdateResearcherModal" data-toggle="modal" data-target="#UpdateResearcherModal" data-whatever="UpdateResearcher">update</a> 
-										&nbsp;&nbsp;|&nbsp;&nbsp; 
-										<a href="">remove</a>
-									</div>
-								</div>
-							</a>
-							<p> &nbsp;</p>
-						</div>
-						<div class="col-sm-12 text-justify" >
-							<!-- style="border: solid #e8e4e3 0.5px; border-radius: 25px;"> -->
-							<a href="user_profile_researcher.php"> <!-- padulong sa profile page sa user --->
-								<div class="col-sm-12">
-									<div class="col-sm-1" >
-										<img class="  img-circle " src="../images/calcaben.png" alt="Calcaben" width="70px" height="70px">
-									</div>
-									<div class="col-sm-7 " style=" ">
-										<p class="h4" style=""> 
-											ALLYN JOY D. CALCABEN
-										</p>
-										<p class="h6">
-											Special Science Teacher I 
-											<br>
-											Tagum National Trade Schoool 
-											<br>
-										</p>	
-									</div>
-									<div class="col-sm-4 text-right h5" style="">
-										<a href="#UpdateResearcherModal" data-toggle="modal" data-target="#UpdateResearcherModal" data-whatever="UpdateResearcher">update</a> 
-										&nbsp;&nbsp;|&nbsp;&nbsp; 
-										<a href="">remove</a>
-									</div>
-								</div>
-							</a>
-							<p> &nbsp;</p>
-						</div>
-						<div class="col-sm-12 text-justify" >
-							<!-- style="border: solid #e8e4e3 0.5px; border-radius: 25px;"> -->
-							<a href="user_profile_researcher.php"> <!-- padulong sa profile page sa user --->
-								<div class="col-sm-12">
-									<div class="col-sm-1" >
-										<img class="  img-circle " src="../images/calcaben.png" alt="Calcaben" width="70px" height="70px">
-									</div>
-									<div class="col-sm-7 " style=" ">
-										<p class="h4" style=""> 
-											ALLYN JOY D. CALCABEN
-										</p>
-										<p class="h6">
-											Special Science Teacher I 
-											<br>
-											Tagum National Trade Schoool 
-											<br>
-										</p>	
-									</div>
-									<div class="col-sm-4 text-right h5" style="">
-										<a href="#UpdateResearcherModal" data-toggle="modal" data-target="#UpdateResearcherModal" data-whatever="UpdateResearcher">update</a> 
-										&nbsp;&nbsp;|&nbsp;&nbsp; 
-										<a href="">remove</a>
-									</div>
-								</div>
-							</a>
-							<p> &nbsp;</p>
-						</div>
-						<div class="col-sm-12 text-justify" >
-							<!-- style="border: solid #e8e4e3 0.5px; border-radius: 25px;"> -->
-							<a href="user_profile_researcher.php"> <!-- padulong sa profile page sa user --->
-								<div class="col-sm-12">
-									<div class="col-sm-1" >
-										<img class="  img-circle " src="../images/calcaben.png" alt="Calcaben" width="70px" height="70px">
-									</div>
-									<div class="col-sm-7 " style=" ">
-										<p class="h4" style=""> 
-											ALLYN JOY D. CALCABEN
-										</p>
-										<p class="h6">
-											Special Science Teacher I 
-											<br>
-											Tagum National Trade Schoool 
-											<br>
-										</p>	
-									</div>
-									<div class="col-sm-4 text-right h5" style="">
-										<a href="#UpdateResearcherModal" data-toggle="modal" data-target="#UpdateResearcherModal" data-whatever="UpdateResearcher">update</a> 
-										&nbsp;&nbsp;|&nbsp;&nbsp; 
-										<a href="">remove</a>
-									</div>
-								</div>
-							</a>
-							<p> &nbsp;</p>
+								";
+							
+						?>
+				      
+					    <!-- Modal For Update Researcher -->
+						<div class="modal fade text-justify col-sm-12" id="UpdateResearcherModal<?=$row['researcher_id']?>" tabindex="-1" role="dialog" aria-labelledby="UpdateResearcherModalLabel" aria-hidden="true">
+						    <div class="modal-dialog" role="document">
+						    	<div class="modal-content">
+						      		<div class="modal-header">
+						        		<h5 class="modal-title h3 col-sm-10" id="UpdateResearcherModalLabel">Update Researcher</h5>
+						        		<button type="button col-sm-2 text-right" class="close" data-dismiss="modal" aria-label="Close">
+						          			<span aria-hidden="true">&times;</span>
+						        		</button>
+						      		</div>
+									<div class="modal-body">
+						        		<form>
+						        			<input id="UPDATE_researcher_user<?=$row['researcher_id']?>" type="hidden" value="<?=$row['researcher_user_id'] ?>" name="researcher_user">
+						          			<input type="hidden" id="UPDATE_researcher_old_photo<?=$row['researcher_id']?>" value="<?=$row['researcher_profile_picture']?>">
+						          			<div class="form-group">
+						          				<label for="UPDATE_researcher_photo<?=$row['researcher_id']?>" class="col-form-label">Upload Image:</label>
+						          				<input id="UPDATE_researcher_photo<?=$row['researcher_id']?>" type="file" class="" name="UPDATE_researcher_photo<?=$row['researcher_id']?>" accept="image/*" value="<?=$row['researcher_profile_picture']?>">
+						          			</div>
+
+						          			<div class="form-group">
+						            			<label for="UPDATE_researcher_fname<?=$row['researcher_id']?>" class="col-form-label" >First Name:</label>
+						            			<input type="text" class="form-control" id="UPDATE_researcher_fname<?=$row['researcher_id']?>" value="<?=$row['researcher_first_name']?>">
+						          			</div>
+						          			<div class="form-group">
+						            			<label for="UPDATE_researcher_mname<?=$row['researcher_id']?>" class="col-form-label" >Middle Name:</label>
+						            			<input type="text" class="form-control" id="UPDATE_researcher_mname<?=$row['researcher_id']?>" value="<?=$row['researcher_middle_name']?>">
+						          			</div>
+						          			<div class="form-group">
+						            			<label for="UPDATE_researcher_lname<?=$row['researcher_id']?>" class="col-form-label" >Last Name:</label>
+						            			<input type="text" class="form-control" id="UPDATE_researcher_lname<?=$row['researcher_id']?>" value="<?=$row['researcher_last_name']?>">
+						          			</div>
+						          			<div class="form-group">
+									            <label for="UPDATE_researcher_designation<?=$row['researcher_id']?>" class="col-form-label" >Designation:</label>
+									            <input type="text" class="form-control" id="UPDATE_researcher_designation<?=$row['researcher_id']?>" value="<?=$row['researcher_designation']?>">
+						          			</div>
+						          			<div class="form-group">
+									            <label for="UPDATE_researcher_station<?=$row['researcher_id']?>" class="col-form-label" >Office / School:</label>
+									            <input type="text" class="form-control" id="UPDATE_researcher_station<?=$row['researcher_id']?>" value="<?=$row['researcher_office']?>">
+						          			</div>
+						          			<div class="form-group">
+									            <label for="UPDATE_researcher_email<?=$row['researcher_id']?>" class="col-form-label" >Email:</label>
+									            <input type="email" class="form-control" id="UPDATE_researcher_email<?=$row['researcher_id']?>" value="<?=$row['researcher_email']?>">
+						          			</div>
+						          			<!-- <div class="form-group">
+									            <label for="researcher_username" class="col-form-label">Username:</label>
+									            <input type="text" class="form-control" id="researcher_username">
+						          			</div> -->
+						        		</form>
+						      		</div>
+						      		<div class="modal-footer">
+						      			<p id="update_researcher_status_msg"></p>
+								        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+								        <button type="button" class="btn btn-primary" onclick="updateResearcher(<?=$row['researcher_id']?>)">Update Researcher</button>
+						      		</div>
+						    	</div>
+				  			</div>
 						</div>
 
-				      
+
+				      	<?php 
+
+				      		}
+
+						} else {
+							echo "<p> No users yet.</p>";
+						}
+
+						?>
 					</div>
 			    </div>
-
-
-
-			    <!-- Modal For Update Researcher -->
-				<div class="modal fade text-justify col-sm-12" id="UpdateResearcherModal" tabindex="-1" role="dialog" aria-labelledby="UpdateResearcherModalLabel" aria-hidden="true">
-				    <div class="modal-dialog" role="document">
-				    	<div class="modal-content">
-				      		<div class="modal-header">
-				        		<h5 class="modal-title h3 col-sm-10" id="UpdateResearcherModalLabel">Update Researcher</h5>
-				        		<button type="button col-sm-2 text-right" class="close" data-dismiss="modal" aria-label="Close">
-				          			<span aria-hidden="true">&times;</span>
-				        		</button>
-				      		</div>
-				      		<div class="modal-body">
-				        		<form>
-				          			<div class="form-group">
-				          				<label for="researcher_photo" class="col-form-label">Upload Image:</label>
-				          				<input id="researcher_photo" type="file" class="" name="researcher_photo" accept="image/*">
-				          			</div>
-
-				          			<div class="form-group">
-				            			<label for="researcher-name" class="col-form-label">Name:</label>
-				            			<input type="text" class="form-control" id="researcher-name">
-				          			</div>
-				          			<div class="form-group">
-							            <label for="researcher-designation" class="col-form-label">Designation:</label>
-							            <input type="text" class="form-control" id="researcher-designation">
-				          			</div>
-				          			<div class="form-group">
-							            <label for="researcher-station" class="col-form-label">Office / School:</label>
-							            <input type="text" class="form-control" id="researcher-station">
-				          			</div>
-				          			<div class="form-group">
-							            <label for="researcher-email" class="col-form-label">Email:</label>
-							            <input type="email" class="form-control" id="researcher-email">
-				          			</div>
-				          			<div class="form-group">
-							            <label for="researcher-username" class="col-form-label">Username:</label>
-							            <input type="text" class="form-control" id="researcher-username">
-				          			</div>
-				        		</form>
-				      		</div>
-				      		<div class="modal-footer">
-						        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-						        <button type="button" class="btn btn-primary">Add Researcher</button>
-				      		</div>
-				    	</div>
-				  	</div>
-				</div>
 
 
 			    <!-- RIGHT SIDE NAVIGATION -->
@@ -339,4 +303,103 @@ if (!$_SESSION['user']) {
 		</footer>
 
 	</body>
+
+
+
+	<script>
+		async function uploadImage(file) {
+			let formData = new FormData();
+			formData.append("file", file);
+			const response = await fetch('../database/upload_image.php', {
+								method: "POST",
+								body: formData
+							});
+			// ToDo: Make sure the filename of the image uploaded by user is unique.
+			if (response.statusText != "OK") {
+			//if (response.responseText != "OK") {
+				alert("Unable to upload the image. Reason: " + response.responseText);
+				return false;
+			}
+			return true;
+		}
+
+		function addResearcher() {
+			document.getElementById('add_researcher_status_msg').innerHTML = ""; // Reset status message
+			
+			var rUser = document.getElementById('researcher_user').value;
+			var firstName = document.getElementById('researcher_fname').value;
+			var middleName = document.getElementById('researcher_mname').value;
+			var lastName = document.getElementById('researcher_lname').value;
+			var designation = document.getElementById('researcher_designation').value;
+			var office = document.getElementById('researcher_station').value;
+			var email = document.getElementById('researcher_email').value;
+
+			// Filename is empty in case the user didn't upload any picture or when there's an error during file upload.
+			var isUploadFile = (document.getElementById('researcher_photo').files.length != 0);
+			if(!isUploadFile || firstName == "" || lastName == "" || email == "" || office == "" || designation == ""){
+				document.getElementById('add_memo_status_msg').style.color = 'red';
+				document.getElementById('add_memo_status_msg').innerHTML = "Provide all the needed information. Please try again."+this.responseText;
+				return ;
+			}			
+
+			var file =  document.getElementById('researcher_photo').files[0];
+			var PhotoFile = (uploadImage(file)) ? file.name : "";
+	
+			var data = {'user': rUser, 'fname': firstName, 'mname': middleName, 'lname': lastName, 'designation': designation, 'office': office, 'email': email , 'filename':PhotoFile};
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if ((this.readyState == 4) && (this.status == 200)) {
+					if (this.responseText == "OK") {
+						document.getElementById('AddResearcherModal').style.display = 'none';
+						location.reload();
+					} else {
+						document.getElementById('add_researcher_status_msg').innerHTML = "Unable to add new researcher. Please try again." + this.responseText;;
+					}
+				}
+			};
+			xmlhttp.open("POST", "../database/add_researcher.php", true);
+			xmlhttp.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+			xmlhttp.send(JSON.stringify(data));
+		}
+
+		function updateResearcher(researcherId) {
+			console.log(researcherId);
+			document.getElementById('update_researcher_status_msg').innerHTML = ""; // Reset status message
+			var isUploadFile = (document.getElementById('UPDATE_researcher_photo' + researcherId).files.length != 0);
+
+			var rUser = document.getElementById('UPDATE_researcher_user'+researcherId).value;
+			var firstName = document.getElementById('UPDATE_researcher_fname'+researcherId).value;
+			var middleName = document.getElementById('UPDATE_researcher_mname'+researcherId).value;
+			var lastName = document.getElementById('UPDATE_researcher_lname'+researcherId).value;
+			var designation = document.getElementById('UPDATE_researcher_designation'+researcherId).value;
+			var office = document.getElementById('UPDATE_researcher_station'+researcherId).value;
+			var email = document.getElementById('UPDATE_researcher_email'+researcherId).value;
+
+			// Filename is empty in case the user didn't upload any picture or when there's an error during file upload.
+			var oldPhoto = document.getElementById('UPDATE_researcher_old_photo'+researcherId).value;
+			var file =  document.getElementById('UPDATE_researcher_photo'+researcherId).files[0];
+			var PhotoFile = (isUploadFile && uploadImage(file)) ? file.name : oldPhoto;
+			
+			var data = {'rID':researcherId, 'user': rUser, 'fname': firstName, 'mname': middleName, 'lname': lastName, 'designation': designation, 'office': office, 'email': email , 'filename':PhotoFile};
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if ((this.readyState == 4) && (this.status == 200)) {
+					if (this.responseText == "OK") {
+						document.getElementById('UpdateResearcherModal'+researcherId).style.display = 'none';
+						location.reload();
+					} else {
+						document.getElementById('update_researcher_status_msg').innerHTML = "Unable to add new researcher. Please try again." + this.responseText;;
+					}
+				}
+			};
+			xmlhttp.open("POST", "../database/update_researcher.php", true);
+			xmlhttp.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+			xmlhttp.send(JSON.stringify(data));
+		}
+
+
+	</script>
+
+
 </html>
+

@@ -1,4 +1,5 @@
 <?php
+include "../database/db_config.php";
 session_start();
 ?>
 
@@ -70,24 +71,53 @@ session_start();
 			    </div>
 
 			    <div class="col-sm-6 center_content body_middle">
-			    <div class=" center_content" >
-			    		      	
-					<div>
-						<p class="author_name h4" style="color: maroon;"> <b>VIRTUAL TRAINING ON ADVANCING RESEARCH THROUGH 6D SCHEME FOR SECOND BATCH </b> </p>
-					</div>
+				    <div class=" center_content" >
+				    
+				    <!-- FETCHING MEMORANDUM DATA -->
+					<?php 
+						$id = intval($_GET['memoid']);
+						// echo $id;
+						$query = "SELECT * FROM memorandum WHERE memo_id = '$id'";
+						if ($result = $db->query($query)){
+							// echo "result";
+							while ($row = $result->fetch_assoc()){
+								// echo "row";
+								$memoNum = $row['memo_number'];
+								$memoSeries = $row['memo_series'];
+								$memoSubject = $row['memo_subject'];
+								$mDate = strtotime($row['memo_date']);
+								$memoFilename = $row['memo_filename'];
+								$memoDir = $row['memo_filepath'];
 
-					<div>
-						<p>May 11, 2021 </p>
-						<p>DM 284, s. 2021 </p>
+								$months = array("null","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
+								$memoDate = strtoupper($months[date('m',$mDate)])." ".date('d',$mDate).", ".date('Y',$mDate);
+					?>
+						<div>
+							<p class="author_name h4" style="color: maroon;"> <b> <?=ucwords(strtolower($memoSubject))?></b> </p>
+						</div>
+ 
+						<div>
+							<p><?=$memoDate?> </p>
+							<p>DM <?=$memoNum?>, s. <?=$memoSeries?> </p>
+							
+						</div>
+						<div class="align-items-center">
+							<iframe src="<?=$memoDir?>" width="100%" height="700px">
+	    					</iframe>
+	    					<br> <br>
+						</div>
 						
+						<?php 
+
+							}	
+						} else {
+							echo "<p> No uploaded memorandum yet.</p>";
+						}
+
+					?>
+
+
 					</div>
-					<div class="align-items-center">
-						<iframe src="../resources/memo/DM284-05-12-2021-VIRTUAL-TRAINING-ON-ADVANCING-RESEARCH-THROUGH-6D-SCHEME-FOR-SECOND-BATCH.pdf" width="100%" height="700px">
-    					</iframe>
-    					<br> <br>
-					</div>
-					
-				</div>
 				</div>
 						
 				<div class="col-sm-3 sidenav" >
