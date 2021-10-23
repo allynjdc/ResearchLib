@@ -1,9 +1,47 @@
 <?php
+include "../database/db_config.php";
 session_start();
 
 if (!$_SESSION['user']) {
 	header("Location:index.php");   // Redirect to index page. User cannot view this page if he/she is not yet logged in.
 }
+
+if (isset($_POST['submit'])){
+
+	$user_id = $_POST['journ_user'];
+	$title = $_POST['journ_title'];
+	$desc = $db->real_escape_string($_POST['journ_desc']);
+	$volume = $_POST['journ_vol'];
+	$issue = $_POST['journ_issue'];
+	$issn = $db->real_escape_string($_POST['journ_issn']);
+	$pub = $_POST['journ_publisher'];
+	$jdate = $_POST['journ_date'];
+	$dev = $_POST['journ_dev_team'];
+	$photoname = $_FILES['journ_photo']['name'];
+	$location1 = "../images/journals/".$photoname;
+	$filename = $_FILES['journ_file']['name'];
+	$location2 = "../resources/journals/".$filename;
+	$posted = date('y-m-d h:m:s');
+    $updated = date('y-m-d h:m:s');
+
+	$query = "INSERT INTO research_journal (journal_id, journal_user_id, journal_title, journal_description, journal_volume, journal_issue, journal_issn, journal_publisher_name, journal_date_publish, journal_editor_team, journal_filename, journal_filepath, journal_posted_at, journal_updated_at, journal_photo)
+            VALUES (NULL, '$user_id', '$title', '$desc', '$volume', '$issue', '$issn', '$pub', '$jdate', '$dev', '$filename', '$location2', '$posted', '$updated', '$photoname')";
+
+    if ($db->query($query) === TRUE) {
+		// Save the upload file to the local filesystem
+		if (move_uploaded_file($_FILES['journ_photo']['tmp_name'], $location1) && move_uploaded_file($_FILES['journ_file']['tmp_name'], $location2)) {
+			header("Location:user_journal_list.php");    
+		} else {
+		    echo "NOK";
+		}
+
+    } else {
+		echo "NOK <br>";
+		echo $db->error;
+	}
+
+}
+
 ?>
 <DOCTYPE! html>
 <html>
@@ -61,49 +99,56 @@ if (!$_SESSION['user']) {
 			    <div class="col-sm-12 center-div"> 
                     
                     <div class="col-sm-6 col-sm-offset-3 body_middle">
-                    	<br>
                     	<h3> Add Journal </h3>
-                    	<br>
-                    	<form>
+                    	<form target="_SELF" method="POST" enctype="multipart/form-data">
+                    		<input id="journ_user" type="hidden" value="<?= $_SESSION['userid'] ?>" name="journ_user">
 						    <div class="input-group">
 						      	<span class="input-group-addon">Journal Title</span>
-						      	<input id="journ_title" type="text" class="form-control" name="journ_title" placeholder="title">
+						      	<input id="journ_title" type="text" class="form-control" name="journ_title" placeholder="title" required>
 						    </div>
 						    <br>
 						    <div class="input-group">
 						      	<span class="input-group-addon">Journal Description</span>
-						      	<input id="journ_desc" type="text" class="form-control" name="journ_desc" placeholder="tell us about the Journal">
+						      	<input id="journ_desc" type="text" class="form-control" name="journ_desc" placeholder="tell us about the Journal" required>
 						    </div>
 						    <br>
 						    <div class="input-group">
 						      	<span class="input-group-addon">Volume</span>
-						      	<input id="journ_vol" type="number" class="form-control" name="journ_vol" placeholder="1" min="1" max="50">
+						      	<input id="journ_vol" type="number" class="form-control" name="journ_vol" placeholder="1" min="1" max="50" required>
 						    </div>
 						    <br>
 						    <div class="input-group">
 						      	<span class="input-group-addon">Issue</span>
-						      	<input id="journ_issue" type="number" class="form-control" name="journ_issue" placeholder="1" min="1" max="50">
+						      	<input id="journ_issue" type="number" class="form-control" name="journ_issue" placeholder="1" min="1" max="50" required>
 						    </div>
 						    <br>
 						    <div class="input-group">
 						      	<span class="input-group-addon">ISSN</span>
-						      	<input id="journ_issn" type="text" class="form-control" name="journ_issn" placeholder="1467-9817" >
+						      	<input id="journ_issn" type="text" class="form-control" name="journ_issn" placeholder="1467-9817" required>
 						    </div>
 						    <br>
 						    <div class="input-group">
 						      	<span class="input-group-addon">Date Published</span>
-						      	<input id="signed_date" type="date" class="form-control" name="signed_date" placeholder="Additional Info" min="2001-01-01" max="2099-12-31">
+						      	<input id="journ_date" type="date" class="form-control" name="journ_date" placeholder="Additional Info" min="2001-01-01" max="2099-12-31" required>
+						    </div>
+						    <br>
+						    <div class="input-group">
+						      	<span class="input-group-addon">Publisher</span>
+						      	<input id="journ_publisher" type="text" class="form-control" name="journ_publisher" placeholder="Additional Info" required>
 						    </div>
 						    <br>
 						    <div class="input-group">
 						      	<span class="input-group-addon">Development Team Member</span>
-						      	<input id="dev_team" type="text" class="form-control" name="dev_team" placeholder="Member Name">
+						      	<input id="journ_dev_team" type="text" class="form-control" name="journ_dev_team" placeholder="Member Name" required>
 						    </div>
 						    <br>
-						       	<p class="text-justify">Insert the Front Page Photo:</p>
-						      	<input id="journ_photo" type="file" class="" name="journ_photo" accept="image/*, .pdf, .doc, .txt">
-						    <br>
-						    <button class="btn-success" type="submit" >Add</button>
+					       	<p class="text-justify">Insert the Front Page Photo:
+					      		<input id="journ_photo" type="file" class="" name="journ_photo" accept="image/*, .pdf, .doc, .txt" required>
+					      	</p>
+					       	<p class="text-justify">Journal Final Copy:
+					      		<input id="journ_file" type="file" class="" name="journ_file" accept="image/*, .pdf, .doc, .txt" required>
+					      	</p>
+						    <input type = "submit" name = "submit" value = "Add Journal">
 	  					</form>
                     </div>
 	                    
@@ -113,9 +158,10 @@ if (!$_SESSION['user']) {
 
 
 		<!-- Footer -->
-		<footer class="container-fluid text-center mt-auto">
+		<!-- <footer class="container-fluid text-center mt-auto">
   			<p>All rights reserved &copy; 2021</p>
-		</footer>
+		</footer> -->
 
 	</body>
+
 </html>

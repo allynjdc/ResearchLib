@@ -14,11 +14,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $mSigned = $decoded['mSigned'];
     $mFile = $decoded['mFile'];
     $mFilepath = "../resources/memo/".$mFile;
-    $mPosted = date('y-m-d h:m:s');
     $mUpdated = date('y-m-d h:m:s');
 
     $query = "UPDATE memorandum 
-                SET memo_user_id = '$mUser', memo_number = '$mNum', memo_series = '$mSeries', memo_subject = '$mTitle', memo_date = '$mSigned', memo_filename = '$mFile', memo_filepath = '$mFilepath', memo_posted_at = '$mPosted', memo_updated_at = '$mUpdated' 
+                SET memo_user_id = '$mUser', memo_number = '$mNum', memo_series = '$mSeries', memo_subject = '$mTitle', memo_date = '$mSigned', memo_filename = '$mFile', memo_filepath = '$mFilepath', memo_updated_at = '$mUpdated' 
                 WHERE memo_id = '$memoId'";
 
     if ($db->query($query) === TRUE) echo "OK";

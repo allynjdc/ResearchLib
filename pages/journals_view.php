@@ -1,4 +1,5 @@
 <?php
+include "../database/db_config.php";
 session_start();
 ?>
 
@@ -71,22 +72,35 @@ session_start();
 
 			    <div class="col-sm-6 center_content body_middle" >
 
-			    	<div class="center_content col-sm-12"  height="300px">  
+			    	<!-- FETCHING JOURNAL DATA -->
+			    	<?php 
+						$jid = intval($_GET['id']);
+						// echo $id;
+						$query = "SELECT * FROM research_journal WHERE journal_id = '$jid'";
+						if ($result = $db->query($query)){
+							// echo "result";
+							while ($row = $result->fetch_assoc()){
+								$mDate = strtotime($row['journal_date_publish']);
+								$months = array("null","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
+								$jDate = strtoupper($months[date('m',$mDate)])." ".date('Y',$mDate);
 
+					?>
+
+			    	<div class="center_content col-sm-12"  height="300px">  
 			    		<div> 
-			    			<p class="author_name h3" style="color: maroon;"> <b>SCIENCE DILIMAN: A PHILIPPINE JOURNAL OF PURE AND APPLIED SCIENCES </b> </p>
+			    			<p class="author_name h3" style="color: maroon;"> <b> <?=strtoupper($row['journal_title'])?> </b> </p>
 			    		</div>
 			    		<br>     	
 						<div class="col-sm-2" >
-							<img class="img-responsive" src="../images/science-diliman.png" alt="science-diliman" width="90px" height="130px" >
+							<img class="img-responsive" src="../images/journals/<?=$row['journal_photo']?>" alt="<?=$row['journal_title']?>" width="90px" height="130px" >
 						</div>
 						
 						<div class="col-sm-10 text-left" >
 							
-							<p>Volume 28. No. 1, series 2021 </p>
-							<p>November 25, 2021 </p>
-							<p>ISSN: 1467-9817</p>
-							<p>DOI: 1467-9817</p>
+							<p>Volume <?=$row['journal_volume']?>. No. <?=$row['journal_issue']?>, series <?=date('Y',$mDate)?> </p>
+							<p><?=$jDate?></p>
+							<p>ISSN: <?=$row['journal_issn']?></p>
+							<!-- <p>DOI: 1467-9817</p> -->
 							
 						</div>
 					</div>
@@ -98,15 +112,13 @@ session_start();
 						</div>
 						<div>
 							<p class="col-sm-12 text-justify">
-								The Journal of Research in Reading provides an international forum for research focusing on literacy. It is a peer-reviewed journal principally devoted to reports of original empirical research in reading and closely related fields (e.g., spoken language, writing), and to informed reviews of relevant literature. The Journal welcomes papers on the learning, teaching, and use of literacy in adults or children in a variety of contexts, with a particular focus on psychological and educational approaches. The Journal encourages papers within any research paradigm and from researchers in any relevant field.
+								<?=$row['journal_description']?>
 							</p>
 							<p class="col-sm-12 text-justify">
 								<br>
-								The Journal of Research in Reading is published for the United Kingdom Literacy Association.
+								This Journal was published by the <?=$row['journal_publisher_name']?>.
 							</p>
 						</div>
-						
-						
 					</div>
 
 					<div class="center_content col-sm-12">
@@ -212,6 +224,15 @@ session_start();
 						</div>
 
 					</div>
+
+					<?php
+
+						}
+					} else {
+						echo "<p> No uploaded journal yet.</p>";
+					}
+						
+					?>
 
 				</div>
 				

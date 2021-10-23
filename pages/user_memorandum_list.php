@@ -225,7 +225,7 @@ if (!$_SESSION['user']) {
 							</div>
 
 
-							<?php
+					<?php
 							}
 						} else {
 							echo "<p> No uploaded memorandum yet.</p>";

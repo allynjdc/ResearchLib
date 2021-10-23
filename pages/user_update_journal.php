@@ -1,9 +1,64 @@
 <?php
+include "../database/db_config.php";
 session_start();
 
 if (!$_SESSION['user']) {
 	header("Location:index.php");   // Redirect to index page. User cannot view this page if he/she is not yet logged in.
 }
+
+if (isset($_POST['submit'])){
+	$jid = $_POST['journ_id'];
+	$user_id = $_POST['journ_user'];
+	$title = $_POST['journ_title'];
+	$desc = $db->real_escape_string($_POST['journ_desc']);
+	$volume = $_POST['journ_vol'];
+	$issue = $_POST['journ_issue'];
+	$issn = $db->real_escape_string($_POST['journ_issn']);
+	$pub = $_POST['journ_publisher'];
+	$jdate = $_POST['journ_date'];
+	$dev = $_POST['journ_dev_team'];
+    $updated = date('y-m-d h:m:s');
+
+	$old_photoname = $_POST['journ_old_photo'];
+	$new_photoname = $_FILES['journ_photo']['name'];
+	$photoname = empty($new_photoname) ? $old_photoname : $new_photoname;
+	$location1 = "../images/journals/".$photoname;
+	
+
+	$old_filename = $_POST['journ_old_file'];
+	$new_filename = $_FILES['journ_file']['name'];
+	$filename = empty($new_filename) ? $old_filename : $new_filename;
+	$location2 = "../resources/journals/".$filename;
+
+	$query = "UPDATE research_journal 
+			SET journal_title = '$title', journal_description = '$desc', journal_volume = '$volume', journal_issue = '$issue', journal_issn = '$issn', journal_publisher_name = '$pub', journal_date_publish = '$jdate', journal_filename = '$filename', journal_filepath = '$location2', journal_editor_team = '$dev', journal_updated_at = '$updated', journal_photo = '$photoname'
+            WHERE journal_id = '$jid'";
+
+if ($db->query($query) === TRUE) {
+	$uploadSuccess = true;
+	$errorMsg = "";
+	if (!empty($new_filename) && !move_uploaded_file($_FILES['journ_file']['tmp_name'],$location2)) {
+		$uploadSuccess = false;
+		$errorMsg .= $_FILES['journ_file']['error'];
+	} 
+	if (!empty($new_photoname) && !move_uploaded_file($_FILES['journ_photo']['tmp_name'],$location1)) {
+		$uploadSuccess = false;
+		$errorMsg .= $_FILES['journ_photo']['error'];
+	}
+	
+	if ($uploadSuccess){ 
+		header("Location:user_journal_list.php"); 
+	} else {
+		echo "NOK".$errorMsg; 
+	}
+} else {
+		echo "NOK 2";
+		echo $db->error;
+	}
+
+		echo $db->error;
+}
+
 ?>
 
 <DOCTYPE! html>
@@ -61,61 +116,91 @@ if (!$_SESSION['user']) {
 			    <!-- MIDDLE CONTENT -->
 			    <div class="col-sm-12 center-div"> 
                     
+			    	<!-- FETCHING JOURNAL DATA -->
+			    	<?php 
+						$jid = intval($_GET['id']);
+						// echo $id;
+						$query = "SELECT * FROM research_journal WHERE journal_id = '$jid'";
+						if ($result = $db->query($query)){
+							// echo "result";
+							while ($row = $result->fetch_assoc()){
+
+					?>
+
                     <div class="col-sm-6 col-sm-offset-3 body_middle" >
-                    	<br>
                     	<h3> Update Journal </h3>
-                    	<br>
-                    	<form>
+                    	<form target="_SELF" method="POST" enctype="multipart/form-data">
+                    		<input id="journ_id" type="hidden" value="<?=$row['journal_id'] ?>" name="journ_id">
+                    		<input id="journ_user" type="hidden" value="<?=$row['journal_user_id'] ?>" name="journ_user">
 						    <div class="input-group">
 						      	<span class="input-group-addon">Journal Title</span>
-						      	<input id="journ_title" type="text" class="form-control" name="journ_title" placeholder="title">
+						      	<input id="journ_title" type="text" class="form-control" name="journ_title" placeholder="title" value="<?=$row['journal_title']?>">
 						    </div>
 						    <br>
 						    <div class="input-group">
 						      	<span class="input-group-addon">Journal Description</span>
-						      	<input id="journ_desc" type="text" class="form-control" name="journ_desc" placeholder="tell us about the Journal">
+						      	<input id="journ_desc" type="text" class="form-control" name="journ_desc" placeholder="tell us about the Journal" value="<?=$row['journal_description']?>">
 						    </div>
 						    <br>
 						    <div class="input-group">
 						      	<span class="input-group-addon">Volume</span>
-						      	<input id="journ_vol" type="number" class="form-control" name="journ_vol" placeholder="1" min="1" max="50">
+						      	<input id="journ_vol" type="number" class="form-control" name="journ_vol" placeholder="1" min="1" max="50" value="<?=$row['journal_volume']?>">
 						    </div>
 						    <br>
 						    <div class="input-group">
 						      	<span class="input-group-addon">Issue</span>
-						      	<input id="journ_issue" type="number" class="form-control" name="journ_issue" placeholder="1" min="1" max="50">
+						      	<input id="journ_issue" type="number" class="form-control" name="journ_issue" placeholder="1" min="1" max="50" value="<?=$row['journal_issue']?>">
 						    </div>
 						    <br>
 						    <div class="input-group">
 						      	<span class="input-group-addon">ISSN</span>
-						      	<input id="journ_issn" type="text" class="form-control" name="journ_issn" placeholder="1467-9817" >
+						      	<input id="journ_issn" type="text" class="form-control" name="journ_issn" placeholder="1467-9817" value="<?=$row['journal_issn']?>">
 						    </div>
 						    <br>
 						    <div class="input-group">
 						      	<span class="input-group-addon">Date Published</span>
-						      	<input id="signed_date" type="date" class="form-control" name="signed_date" placeholder="Additional Info" min="2001-01-01" max="2099-12-31">
+						      	<input id="journ_date" type="date" class="form-control" name="journ_date" placeholder="Additional Info" min="2001-01-01" max="2099-12-31" value="<?=$row['journal_date_publish']?>">
+						    </div>
+						    <br>
+						    <div class="input-group">
+						      	<span class="input-group-addon">Publisher</span>
+						      	<input id="journ_publisher" type="text" class="form-control" name="journ_publisher" placeholder="Additional Info" value="<?=$row['journal_publisher_name']?>">
 						    </div>
 						    <br>
 						    <div class="input-group">
 						      	<span class="input-group-addon">Development Team Member</span>
-						      	<input id="dev_team" type="text" class="form-control" name="dev_team" placeholder="Member Name">
+						      	<input id="journ_dev_team" type="text" class="form-control" name="journ_dev_team" placeholder="Member Name" value="<?=$row['journal_editor_team']?>">
 						    </div>
 						    <br>
-						       	<p class="text-justify">Insert the Front Page Photo:</p>
-						      	<input id="journ_photo" type="file" class="" name="journ_photo" accept="image/*, .pdf, .doc, .txt">
-						    <br>
-						    <button class="btn-success" type="submit" >Update</button>
+					       	<p class="text-justify">Insert the Front Page Photo:
+					       		<input id="journ_old_photo" type="hidden" class="" name="journ_old_photo" accept="image/*, .pdf, .doc, .txt" value="<?=$row['journal_photo']?>">
+					      		<input id="journ_photo" type="file" class="" name="journ_photo" accept="image/*, .pdf, .doc, .txt" value="<?=$row['journal_photo']?>">
+					      	</p>
+					       	<p class="text-justify">Journal Final Copy:
+					       		<input id="journ_old_file" type="hidden" class="" name="journ_old_file" accept="image/*, .pdf, .doc, .txt" value="<?=$row['journal_filename']?>">
+					      		<input id="journ_file" type="file" class="" name="journ_file" accept="image/*, .pdf, .doc, .txt" value="<?=$row['journal_filename']?>">
+					      	</p>
+						    <input type="submit" name="submit" value="Update Journal">
 	  					</form>
                     </div>
 	                    
 			    </div>
+
+			    <?php
+					}
+				} else {
+					echo "<p> No uploaded memorandum yet.</p>";
+				}
+				?>
+
+
 		  </div>
 		</div>
 
 
 		<!-- Footer -->
 		<footer class="container-fluid text-center mt-auto">
-  			<p>All rights reserved &copy; 2021</p>
+  			<!-- <p>All rights reserved &copy; 2021</p> -->
 		</footer>
 
 	</body>
