@@ -1,5 +1,10 @@
 <?php
+include "../database/db_config.php";
 session_start();
+
+if (!$_SESSION['user']) {
+	header("Location:index.php");   // Redirect to index page. User cannot view this page if he/she is not yet logged in.
+}
 ?>
 <DOCTYPE! html>
 <html>
@@ -69,108 +74,56 @@ session_start();
 
 			    <div class="col-sm-6 center_content"> <!-- style="background-color: white; " -->
 			    	<br>
-			    	<div class="col-sm-12" style="padding:2%; border: solid #e3dede 1px; border-radius:1%;">
-		    			<div class="col-sm-2" >
-							<img class="" src="../images/science-diliman.png" alt="science-diliman" width="75px" height="110px">
-						</div>
-						<div class="col-sm-10">
-							<p class="h4 text-justify"><b><a href="journals_view.php">SCIENCE DILIMAN: A PHILIPPINE JOURNAL OF PURE AND APPLIED SCIENCES
-			    			</a></b></p>
-						
-							<p class="text-justify">
-								Volume 28. No. 1
-							</p>
-							<p class="text-justify">
-								June 2016. 
-							</p>
-						</div>
-					</div>
-					<div><br><br><br><br><br><br><br><br></div>
+			    	
+			    	<!-- FETCHING MEMORANDUM -->
+					<?php 
+						$query = "SELECT * FROM research_journal ORDER BY journal_date_publish DESC";
+						if ($result = $db->query($query)){
+							while ($row = $result->fetch_assoc()){
+								$jid = $row['journal_id'];
+								$jtitle = $row['journal_title'];
+								$jvol = $row['journal_volume'];
+								$jissue = $row['journal_issue'];
+								$mDate = strtotime($row['journal_date_publish']);
+								$jphoto = $row['journal_photo'];
+								$jLoc = "../images/journals/".$jphoto;
+
+								$months = array("null","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
+								$jDate = strtoupper($months[date('m',$mDate)])." ".date('Y',$mDate);
+								// $memoDate = $mDate;
+					?>
+
 					<div class="col-sm-12" style="padding:2%; border: solid #e3dede 1px; border-radius:1%;">
 		    			<div class="col-sm-2" >
-							<img class="" src="../images/science-diliman.png" alt="science-diliman" width="75px" height="110px">
+							<img class="" src="<?=$jLoc?>" alt="<?=$jtitle?>" width="75px" height="110px">
 						</div>
 						<div class="col-sm-10">
-							<p class="h4 text-justify"><b><a href="journals_view.php">SCIENCE DILIMAN: A PHILIPPINE JOURNAL OF PURE AND APPLIED SCIENCES
+							<p class="h4 text-justify"><b><a href="journals_view.php?id=<?=$jid?>"> 
+								<?=strtoupper($jtitle)?>
 			    			</a></b></p>
 						
 							<p class="text-justify">
-								Volume 28. No. 1
+								Volume <?=$jvol?>. No. <?=$jissue?>
 							</p>
 							<p class="text-justify">
-								June 2016. 
+								<?=$jDate?>. 
 							</p>
 						</div>
 					</div>
-					<div><br><br><br><br><br><br><br><br></div>
-					<div class="col-sm-12" style="padding:2%; border: solid #e3dede 1px; border-radius:1%; height: auto">
-		    			<div class="col-sm-2" >
-							<img class="" src="../images/science-diliman.png" alt="science-diliman" width="75px" height="110px">
-						</div>
-						<div class="col-sm-10">
-							<p class="h4 text-justify"><b><a href="journals_view.php">SCIENCE DILIMAN: A PHILIPPINE JOURNAL OF PURE AND APPLIED SCIENCES
-			    			</a></b></p>
+					<div>&nbsp;</div>
+
+					<?php
+
+						}
+					} else {
+						echo "<p> No uploaded journal yet.</p>";
+					}
 						
-							<p class="text-justify">
-								Volume 28. No. 1
-							</p>
-							<p class="text-justify">
-								June 2016. 
-							</p>
-						</div>
-					</div>
-					<div><br><br><br><br><br><br><br><br></div>
-					<div class="col-sm-12" style="padding:2%; border: solid #e3dede 1px; border-radius:1%; height: auto">
-		    			<div class="col-sm-2" >
-							<img class="" src="../images/science-diliman.png" alt="science-diliman" width="75px" height="110px">
-						</div>
-						<div class="col-sm-10">
-							<p class="h4 text-justify"><b><a href="journals_view.php">SCIENCE DILIMAN: A PHILIPPINE JOURNAL OF PURE AND APPLIED SCIENCES
-			    			</a></b></p>
-						
-							<p class="text-justify">
-								Volume 28. No. 1
-							</p>
-							<p class="text-justify">
-								June 2016. 
-							</p>
-						</div>
-					</div>
-					<div><br><br><br><br><br><br><br><br></div>
-					<div class="col-sm-12" style="padding:2%; border: solid #e3dede 1px; border-radius:1%;">
-		    			<div class="col-sm-2" >
-							<img class="" src="../images/science-diliman.png" alt="science-diliman" width="75px" height="110px">
-						</div>
-						<div class="col-sm-10">
-							<p class="h4 text-justify"><b><a href="journals_view.php">SCIENCE DILIMAN: A PHILIPPINE JOURNAL OF PURE AND APPLIED SCIENCES
-			    			</a></b></p>
-						
-							<p class="text-justify">
-								Volume 28. No. 1
-							</p>
-							<p class="text-justify">
-								June 2016. 
-							</p>
-						</div>
-					</div>
-					<div><br><br><br><br><br><br><br><br></div>
-					<div class="col-sm-12" style="padding:2%; border: solid #e3dede 1px; border-radius:1%;">
-		    			<div class="col-sm-2" >
-							<img class="" src="../images/science-diliman.png" alt="science-diliman" width="75px" height="110px">
-						</div>
-						<div class="col-sm-10">
-							<p class="h4 text-justify"><b><a href="journals_view.php">SCIENCE DILIMAN: A PHILIPPINE JOURNAL OF PURE AND APPLIED SCIENCES
-			    			</a></b></p>
-						
-							<p class="text-justify">
-								Volume 28. No. 1
-							</p>
-							<p class="text-justify">
-								June 2016. 
-							</p>
-						</div>
-					</div>
-					<br>
+					?>
+
+
+					
+
 
 					<div class="text-right">
 						<ul class="pagination pagination-sm ">

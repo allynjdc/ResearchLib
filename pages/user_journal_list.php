@@ -146,6 +146,7 @@ if (!$_SESSION['user']) {
 							</p>
 						</div>
 					</div>
+					<div>&nbsp;</div>
 
 					<?php
 
