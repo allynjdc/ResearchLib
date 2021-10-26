@@ -72,6 +72,8 @@ if (!$_SESSION['user']) {
 						$query = "SELECT * FROM researcher WHERE researcher_id = '$id'";
 						if ($result = $db->query($query)){
 							// echo "result";
+
+	                        $defaultImg = "default_profile_picture.jpg";
 							while ($row = $result->fetch_assoc()){
 								// echo "row";
 								$userFullname = $row['researcher_first_name']." ".$row['researcher_middle_name'][0].". ".$row['researcher_last_name'];
@@ -113,29 +115,35 @@ if (!$_SESSION['user']) {
 			      		<p class="title_brand_nav h4">
 			  				<b> Researches: </b> <br><br>
 			      		</p>
-			      	
-				      	<div class="" style="left:10px">
+			      		<div class="" style="left:10px">
+
+				      		<!-- FETCHING RESEARCH DATA -->
+					    	<?php 
+								$query = "SELECT * FROM research_output AS ro INNER JOIN research_creation AS rc INNER JOIN research_journal AS rj INNER JOIN researcher as r ON rj.journal_id = ro.research_journal_id AND ro.research_id = rc.creation_research_id AND rc.creation_researcher_id = r.researcher_id WHERE r.researcher_id = '$id'";
+
+								if ($result = $db->query($query)){
+									// echo "result";
+									while ($row = $result->fetch_assoc()){
+
+							?>
 				      		<div class="">
-								<p class="h4 text-justify"><b><a>DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </b></a></p>
-								<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
-								<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
-								<p></p>
-								<br> 
-							</div>
-							<div class="">
-								<p class="h4 text-justify"><b><a>DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </b></a></p>
-								<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
-								<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
-								<p></p>
+								<p class="h4 text-justify"><b><a href="research_view.php?rid=<?=$row['research_id']?>"> <?=strtoupper($row['research_title'])?> </a></b></p>
+								<p class="h5 text-justify" style="color: maroon">
+									<?=$row['researcher_first_name'][0].".".$row['researcher_middle_name'][0].". ".$row['researcher_last_name']?> - <?=ucwords(strtolower($row['journal_title'])).", ".date('Y',strtotime($row['journal_date_publish']))?> 
+								</p>
+								<p class="h6 text-justify">
+									<?=substr($row['research_abstract'], 0, 270)."....."?>
+								</p>
+								<p>&nbsp;</p>
 								<br>
 							</div>
-							<div class="">
-								<p class="h4 text-justify"><b><a>DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </b></a></p>
-								<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
-								<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
-								<p></p>
-								<br>
-							</div>
+
+							<?php
+								}
+							} else {
+								echo "<p> No conducted Research yet.</p>";
+							}
+							?>
 				      	</div>
 			      	</div>
 			    </div>

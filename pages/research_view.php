@@ -1,4 +1,5 @@
 <?php
+include "../database/db_config.php";
 session_start();
 ?>
 
@@ -70,33 +71,59 @@ session_start();
 
 			    <div class="col-sm-6 center_content body_middle" >
 			    <div class=" center_content" >
+
+			    	<!-- FETCHING RESEARCH DATA -->
+			    	<?php 
+			    		$id = intval($_GET['rid']);
+						$query = "SELECT * FROM research_output AS ro INNER JOIN research_creation AS rc INNER JOIN research_journal AS rj INNER JOIN researcher as r ON rj.journal_id = ro.research_journal_id AND ro.research_id = rc.creation_research_id AND rc.creation_researcher_id = r.researcher_id WHERE ro.research_id = '$id'";
+
+						echo "hello ".$id;
+
+						if ($result = $db->query($query)){
+							// echo "result";
+							while ($row = $result->fetch_assoc()){
+
+								$jtitle = ucwords(strtolower($row['journal_title']));
+								$jpages = $row['research_journal_pages'];
+								$rdate = strtotime($row['journal_date_publish']);
+								$months = array("null","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
+
+								echo "hey ";
+
+					?>
 			    		      	
 					<div>
-						<p class="author_name h3" style="color: maroon;"> <b>DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </b> </p>
+						<p class="author_name h3" style="color: maroon;"> 
+							<b> <?=strtoupper($row['research_title'])?> </b>
+						</p>
 					</div>
 
 					<div>
 						<br>
-						<p>November 2021 </p>
-						<p>DOI: 00.0000/0000000000000-0</p>
-						<p> In book: Twenty-one Mental Models That Can Change Policing (pp.9-14) </p>
+						<p> <?=strtoupper($months[date('m',$rdate)])." ".date('Y',$rdate)?> </p>
+						<p>DOI: <?=$row['research_doi']?></p>
+						<p> In book: <?=$jtitle?> (pp. <?=$jpages?>) </p>
 
 						<div> 
-							<p><span class="glyphicon glyphicon-folder-open">  </span>&nbsp;&nbsp;School Division</p> 
-							<p><span class="glyphicon glyphicon-book">  </span> &nbsp;&nbsp;Action Research </p>
-							<p><span class="glyphicon glyphicon-briefcase">  </span>&nbsp;&nbsp;Governance</p>
+							<p><span class="glyphicon glyphicon-folder-open">  </span>&nbsp;&nbsp;<?=$row['research_category']?></p> 
+							<p><span class="glyphicon glyphicon-book">  </span> &nbsp;&nbsp;<?=$row['research_type']?> </p>
+							<p><span class="glyphicon glyphicon-briefcase">  </span>&nbsp;&nbsp;<?=$row['research_agenda']?></p>
 						</div>
 						
 						<div>
 							<br>
-							<p class="h4" style="color: maroon;"><b>   Authors: </b></p>
+							<p class="h4" style="color: maroon;"><b>   Author: </b></p>
 							<div class="" style=" height: 50px">
 								<div class="col-sm-1" >
-									<img class="  img-circle " src="../images/calcaben.png" alt="Calcaben" width="50px" height="50px">
+									<img class="  img-circle " src="../images/<?=$row['researcher_profile_photo']?>" alt="<?=$row['researcher_last_name']?>" width="50px" height="50px">
 								</div>
 								
 								<div class="col-sm-11 text-left" >
-									<p> <b class="author_name" style="color: maroon;"> Allyn Joy D. Calcaben </b> <br> Tagum National Trade School</p>
+									<p> 
+										<b class="author_name" style="color: maroon;"> <?=$row['researcher_first_name']." ".$row['researcher_middle_name'][0].". ".$row['researcher_last_name']?> 
+										</b> 
+										<br> <?=$row['researcher_office']?>
+									</p>
 								</div>
 							</div>
 						</div>
@@ -105,28 +132,61 @@ session_start();
 					<div>
 						<br> 
 						<p class="h4" style="color: maroon;"><b> Abstract </b></p>
-						<p class="text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, it will save space since it has no permanent storage place in the Division Office. The file management system can centralize all of an organization's documents for easy access. It can minimize project delays. Lastly, it will serve as a resource for teachers - researchers who are about to write a research paper. This can also be used as a guide for them to get an idea of what they can do while writing their own research paper. As a result, with the advent of technology, it is critical to have quick access to and management of information. The proposed system's major goal is to provide an operational tool that will help teacher-researchers of the Department of Education, Tagum City Division in filing, saving, and retrieving research outputs. The researcher has curated the system just for that function to serve the teacher-researchers as well as the School’s Division Research Committee and the Department of Education, Tagum City Division. 
+						<p class="text-justify">
+							<?=$row['research_abstract']?>
 						</p>
 					</div>
 					<div class="align-items-center">
 						<br>
-						<iframe src="../resources/research/CALCABEN-AJ-Tagum-National-Trade-School-final(updated).pdf" width="100%" height="700px">
+						<iframe src="../resources/research/<?=$row['research_filename']?>" width="100%" height="700px">
     					</iframe>
     					<br> <br>
 					</div>
 					<div>
 						<p class="h4" style="color: maroon;"> <b> Cite this:</b></p>
 						<div>
+							<?php
+									// $mla = "";
+									// if(!empty($row['researcher_last_name'])){
+									// 	$mla = $mla.$row['researcher_last_name'].", ".$row['researcher_first_name'].". ";
+									// } else {
+									// 	$mla = $mla."";
+									// }
+
+								$mla = $row['researcher_last_name'].", ".$row['researcher_first_name'].'. "'.$row['research_title'].'." <i>'.$row['journal_title']."</i>, vol. ".$row['journal_volume'].", no. ".$row['journal_issue'].", ".$months[date('m',$rdate)]." ".date('Y',$rdate).", pp. ".$row['research_journal_pages'].", doi: ".$row['research_doi'].".";
+
+								$apa = $row['researcher_last_name'].", ".$row['researcher_first_name'][0].'. ('.date('Y',$rdate)."). ".$row['research_title'].'. <i>'.$row['journal_title'].", ".$row['journal_volume']."</i>(".$row['journal_issue']."), ".$row['research_journal_pages'].". ".$row['research_doi'].".";
+
+								$chicago = $row['researcher_first_name']." ".$row['researcher_last_name'].', "'.$row['research_title'].'," <i>'.$row['journal_title']."</i> ".$row['journal_volume'].", no. ".$row['journal_issue']." (".date('Y',$rdate)."): ".$row['research_journal_pages'].", ".$row['research_doi'].".";;
+
+							?>
 							<p class="col-md-2" style="color: maroon;"><b>MLA</b></p>
-							<p class="col-md-10">Guan, Yuanhui, Weihua Shi, and Desheng Wu. "The Design and Development of a School File Management System for Standardized." 2012 International Conference on Computer Science and Electronics Engineering. Vol. 2. IEEE, 2012.</p>
+							<p class="col-md-10">
+								<?=$mla?>
+								<!-- Guan, Yuanhui, Weihua Shi, and Desheng Wu. "The Design and Development of a School File Management System for Standardized." 2012 International Conference on Computer Science and Electronics Engineering. Vol. 2. IEEE, 2012. -->
+							</p>
 						</div>
 						<div>
 							<p class="col-md-2" style="color: maroon;"><b>APA</b></p>
-							<p class="col-md-10">Guan, Y., Shi, W., & Wu, D. (2012, March). The Design and Development of a School File Management System for Standardized. In 2012 International Conference on Computer Science and Electronics Engineering (Vol. 2, pp. 630-634). IEEE.</p>
+							<p class="col-md-10">
+								<?=$apa?>
+								<!-- Guan, Y., Shi, W., & Wu, D. (2012, March). The Design and Development of a School File Management System for Standardized. In 2012 International Conference on Computer Science and Electronics Engineering (Vol. 2, pp. 630-634). IEEE. -->
+							</p>
 						</div>
 							<p class="col-md-2" style="color: maroon;"><b>CHICAGO</b></p>
-							<p class="col-md-10">Guan, Yuanhui, Weihua Shi, and Desheng Wu. "The Design and Development of a School File Management System for Standardized." In 2012 International Conference on Computer Science and Electronics Engineering, vol. 2, pp. 630-634. IEEE, 2012.</p>
+							<p class="col-md-10">
+								<?=$chicago?>
+								<!-- Guan, Yuanhui, Weihua Shi, and Desheng Wu. "The Design and Development of a School File Management System for Standardized." In 2012 International Conference on Computer Science and Electronics Engineering, vol. 2, pp. 630-634. IEEE, 2012. -->
+							</p>
 						</div>
+
+						<?php
+							}
+						} else {
+							echo "<p> No conducted Research yet.</p>";
+						}
+						?>
+
 					</div>
 					</div>
 						

@@ -1,4 +1,5 @@
 <?php
+include "../database/db_config.php";
 session_start();
 
 if (!$_SESSION['user']) {
@@ -113,12 +114,27 @@ if (!$_SESSION['user']) {
 						    <div id="conducted" class="tab-pane fade in active">
 						      	<h3 class="title_brand_nav">Research Conducted</h3>
 						      	<br>
+
+						      	<!-- FETCHING RESEARCH DATA -- CONDUCTED -->
+						    	<?php 
+						    		$status = "Conducted";
+									$query = "SELECT * FROM research_output AS ro INNER JOIN research_creation AS rc INNER JOIN research_journal AS rj INNER JOIN researcher as r ON rj.journal_id = ro.research_journal_id AND ro.research_id = rc.creation_research_id AND rc.creation_researcher_id = r.researcher_id WHERE research_status = '$status'";
+									if ($result = $db->query($query)){
+										// echo "result";
+										while ($row = $result->fetch_assoc()){
+
+								?>
+
 						      	<div class="">
-									<p class="h4 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </a></b></p>
-									<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
-									<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
+									<p class="h4 text-justify"><b><a href="research_view.php?rid=<?=$row['research_id']?>"> <?=strtoupper($row['research_title'])?> </a></b></p>
+									<p class="h5 text-justify" style="color: maroon">
+										<?=$row['researcher_first_name'][0].".".$row['researcher_middle_name'][0].". ".$row['researcher_last_name']?> - <?=ucwords(strtolower($row['journal_title'])).", ".date('Y',strtotime($row['journal_date_publish']))?> 
+									</p>
+									<p class="h6 text-justify">
+										<?=substr($row['research_abstract'], 0, 270)."....."?>
+									</p>
 									<p class="text-right" style="">
-										<a href="user_update_research.php" style="color: green;">
+										<a href="user_update_research.php?rid=<?=$row['research_id']?>" style="color: green;">
 											update
 										</a> 
 										&nbsp;&nbsp;|&nbsp;&nbsp; 
@@ -126,45 +142,14 @@ if (!$_SESSION['user']) {
 									</p>
 									<p>&nbsp;</p>
 								</div>
-								<div class="">
-									<p class="h4 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </a></b></p>
-									<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
-									<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
-									<p class="text-right" style="">
-										<a href="user_update_research.php" style="color: green;">
-											update
-										</a> 
-										&nbsp;&nbsp;|&nbsp;&nbsp; 
-										<a href="" style="color: red;">remove</a>
-									</p>
-									<p>&nbsp;</p>
-								</div>
-								<div class="">
-									<p class="h4 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </a></b></p>
-									<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
-									<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
-									<p class="text-right" style="">
-										<a href="user_update_research.php" style="color: green;">
-											update
-										</a> 
-										&nbsp;&nbsp;|&nbsp;&nbsp; 
-										<a href="" style="color: red;">remove</a>
-									</p>
-									<p>&nbsp;</p>
-								</div>
-								<div class="">
-									<p class="h4 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </a></b></p>
-									<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
-									<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
-									<p class="text-right" style="">
-										<a href="user_update_research.php" style="color: green;">
-											update
-										</a> 
-										&nbsp;&nbsp;|&nbsp;&nbsp; 
-										<a href="" style="color: red;">remove</a>
-									</p>
-									<p>&nbsp;</p>
-								</div>
+
+								<?php
+									}
+								} else {
+									echo "<p> No uploaded Conducted Research yet.</p>";
+								}
+								?>
+
 								<div class="text-right">
 									<ul class="pagination pagination-sm ">
 									    <li><a href="#">Previous</a></li>
@@ -176,16 +161,32 @@ if (!$_SESSION['user']) {
 									    <li><a href="#">Next</a></li>
 			  						</ul>
 								</div>
+
 						    </div>
 						    <div id="submitted" class="tab-pane fade">
 						      	<h3 class="title_brand_nav">Research Submitted</h3>
 						      	<br>
+						      	
+						      	<!-- FETCHING RESEARCH DATA -- SUBMITTED -->
+						    	<?php 
+						    		$status = "SUBMITTED";
+									$query = "SELECT * FROM research_output AS ro INNER JOIN research_creation AS rc INNER JOIN research_journal AS rj INNER JOIN researcher as r ON rj.journal_id = ro.research_journal_id AND ro.research_id = rc.creation_research_id AND rc.creation_researcher_id = r.researcher_id WHERE research_status = '$status'";
+									if ($result = $db->query($query)){
+										// echo "result";
+										while ($row = $result->fetch_assoc()){
+
+								?>
+
 						      	<div class="">
-									<p class="h4 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </a></b></p>
-									<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
-									<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
+									<p class="h4 text-justify"><b><a href="research_view.php?rid=<?=$row['research_id']?>"> <?=strtoupper($row['research_title'])?> </a></b></p>
+									<p class="h5 text-justify" style="color: maroon">
+										<?=$row['researcher_first_name'][0].".".$row['researcher_middle_name'][0].". ".$row['researcher_last_name']?> - <?=ucwords(strtolower($row['journal_title'])).", ".date('Y',strtotime($row['journal_date_publish']))?> 
+									</p>
+									<p class="h6 text-justify">
+										<?=substr($row['research_abstract'], 0, 270)."....."?>
+									</p>
 									<p class="text-right" style="">
-										<a href="user_update_research.php" style="color: green;">
+										<a href="user_update_research.php?rid=<?=$row['research_id']?>" style="color: green;">
 											update
 										</a> 
 										&nbsp;&nbsp;|&nbsp;&nbsp; 
@@ -193,45 +194,14 @@ if (!$_SESSION['user']) {
 									</p>
 									<p>&nbsp;</p>
 								</div>
-								<div class="">
-									<p class="h4 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </a></b></p>
-									<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
-									<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
-									<p class="text-right" style="">
-										<a href="user_update_research.php" style="color: green;">
-											update
-										</a> 
-										&nbsp;&nbsp;|&nbsp;&nbsp; 
-										<a href="" style="color: red;">remove</a>
-									</p>
-									<p>&nbsp;</p>
-								</div>
-								<div class="">
-									<p class="h4 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </a></b></p>
-									<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
-									<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
-									<p class="text-right" style="">
-										<a href="user_update_research.php" style="color: green;">
-											update
-										</a> 
-										&nbsp;&nbsp;|&nbsp;&nbsp; 
-										<a href="" style="color: red;">remove</a>
-									</p>
-									<p>&nbsp;</p>
-								</div>
-								<div class="">
-									<p class="h4 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </a></b></p>
-									<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
-									<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
-									<p class="text-right" style="">
-										<a href="user_update_research.php" style="color: green;">
-											update
-										</a> 
-										&nbsp;&nbsp;|&nbsp;&nbsp; 
-										<a href="" style="color: red;">remove</a>
-									</p>
-									<p>&nbsp;</p>
-								</div>
+
+								<?php
+									}
+								} else {
+									echo "<p> No uploaded Submitted Research yet.</p>";
+								}
+								?>
+
 								<div class="text-right">
 									<ul class="pagination pagination-sm ">
 									    <li><a href="#">Previous</a></li>
@@ -243,16 +213,32 @@ if (!$_SESSION['user']) {
 									    <li><a href="#">Next</a></li>
 			  						</ul>
 								</div>
+
 						    </div>
 						    <div id="disseminated" class="tab-pane fade">
 						      	<h3 class="title_brand_nav">Research Disseminated</h3>
 						      	<br>
+						      	
+						      	<!-- FETCHING RESEARCH DATA -- DISSEMINATED -->
+						    	<?php 
+						    		$status = "Disseminated";
+									$query = "SELECT * FROM research_output AS ro INNER JOIN research_creation AS rc INNER JOIN research_journal AS rj INNER JOIN researcher as r ON rj.journal_id = ro.research_journal_id AND ro.research_id = rc.creation_research_id AND rc.creation_researcher_id = r.researcher_id WHERE research_status = '$status'";
+									if ($result = $db->query($query)){
+										// echo "result";
+										while ($row = $result->fetch_assoc()){
+
+								?>
+
 						      	<div class="">
-									<p class="h4 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </a></b></p>
-									<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
-									<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
+									<p class="h4 text-justify"><b><a href="research_view.php?rid=<?=$row['research_id']?>"> <?=strtoupper($row['research_title'])?> </a></b></p>
+									<p class="h5 text-justify" style="color: maroon">
+										<?=$row['researcher_first_name'][0].".".$row['researcher_middle_name'][0].". ".$row['researcher_last_name']?> - <?=ucwords(strtolower($row['journal_title'])).", ".date('Y',strtotime($row['journal_date_publish']))?> 
+									</p>
+									<p class="h6 text-justify">
+										<?=substr($row['research_abstract'], 0, 270)."....."?>
+									</p>
 									<p class="text-right" style="">
-										<a href="user_update_research.php" style="color: green;">
+										<a href="user_update_research.php?rid=<?=$row['research_id']?>" style="color: green;">
 											update
 										</a> 
 										&nbsp;&nbsp;|&nbsp;&nbsp; 
@@ -260,45 +246,14 @@ if (!$_SESSION['user']) {
 									</p>
 									<p>&nbsp;</p>
 								</div>
-								<div class="">
-									<p class="h4 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </a></b></p>
-									<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
-									<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
-									<p class="text-right" style="">
-										<a href="user_update_research.php" style="color: green;">
-											update
-										</a> 
-										&nbsp;&nbsp;|&nbsp;&nbsp; 
-										<a href="" style="color: red;">remove</a>
-									</p>
-									<p>&nbsp;</p>
-								</div>
-								<div class="">
-									<p class="h4 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </a></b></p>
-									<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
-									<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
-									<p class="text-right" style="">
-										<a href="user_update_research.php" style="color: green;">
-											update
-										</a> 
-										&nbsp;&nbsp;|&nbsp;&nbsp; 
-										<a href="" style="color: red;">remove</a>
-									</p>
-									<p>&nbsp;</p>
-								</div>
-								<div class="">
-									<p class="h4 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </a></b></p>
-									<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
-									<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
-									<p class="text-right" style="">
-										<a href="user_update_research.php" style="color: green;">
-											update
-										</a> 
-										&nbsp;&nbsp;|&nbsp;&nbsp; 
-										<a href="" style="color: red;">remove</a>
-									</p>
-									<p>&nbsp;</p>
-								</div>
+
+								<?php
+									}
+								} else {
+									echo "<p> No uploaded Disseminated Research yet.</p>";
+								}
+								?>
+
 								<div class="text-right">
 									<ul class="pagination pagination-sm ">
 									    <li><a href="#">Previous</a></li>
@@ -310,40 +265,32 @@ if (!$_SESSION['user']) {
 									    <li><a href="#">Next</a></li>
 			  						</ul>
 								</div>
+
 						    </div>
 						    <div id="used" class="tab-pane fade">
 						      	<h3 class="title_brand_nav">Research Used</h3>
 						      	<br>
+						      	
+						      	<!-- FETCHING RESEARCH DATA -- USED -->
+						    	<?php 
+						    		$status = "Used";
+									$query = "SELECT * FROM research_output AS ro INNER JOIN research_creation AS rc INNER JOIN research_journal AS rj INNER JOIN researcher as r ON rj.journal_id = ro.research_journal_id AND ro.research_id = rc.creation_research_id AND rc.creation_researcher_id = r.researcher_id WHERE research_status = '$status'";
+									if ($result = $db->query($query)){
+										// echo "result";
+										while ($row = $result->fetch_assoc()){
+
+								?>
+
 						      	<div class="">
-									<p class="h4 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </a></b></p>
-									<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
-									<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
-									<p class="text-right" style="">
-										<a href="user_update_research.php" style="color: green;">
-											update
-										</a> 
-										&nbsp;&nbsp;|&nbsp;&nbsp; 
-										<a href="" style="color: red;">remove</a>
+									<p class="h4 text-justify"><b><a href="research_view.php?rid=<?=$row['research_id']?>"> <?=strtoupper($row['research_title'])?> </a></b></p>
+									<p class="h5 text-justify" style="color: maroon">
+										<?=$row['researcher_first_name'][0].".".$row['researcher_middle_name'][0].". ".$row['researcher_last_name']?> - <?=ucwords(strtolower($row['journal_title'])).", ".date('Y',strtotime($row['journal_date_publish']))?> 
 									</p>
-									<p>&nbsp;</p>								</div>
-								<div class="">
-									<p class="h4 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </a></b></p>
-									<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
-									<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
-									<p class="text-right" style="">
-										<a href="user_update_research.php" style="color: green;">
-											update
-										</a> 
-										&nbsp;&nbsp;|&nbsp;&nbsp; 
-										<a href="" style="color: red;">remove</a>
+									<p class="h6 text-justify">
+										<?=substr($row['research_abstract'], 0, 270)."....."?>
 									</p>
-									<p>&nbsp;</p>								</div>
-								<div class="">
-									<p class="h4 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </a></b></p>
-									<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
-									<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
 									<p class="text-right" style="">
-										<a href="user_update_research.php" style="color: green;">
+										<a href="user_update_research.php?rid=<?=$row['research_id']?>" style="color: green;">
 											update
 										</a> 
 										&nbsp;&nbsp;|&nbsp;&nbsp; 
@@ -351,19 +298,14 @@ if (!$_SESSION['user']) {
 									</p>
 									<p>&nbsp;</p>
 								</div>
-								<div class="">
-									<p class="h4 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </a></b></p>
-									<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
-									<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
-									<p class="text-right" style="">
-										<a href="user_update_research.php" style="color: green;">
-											update
-										</a> 
-										&nbsp;&nbsp;|&nbsp;&nbsp; 
-										<a href="" style="color: red;">remove</a>
-									</p>
-									<p>&nbsp;</p>
-								</div>
+
+								<?php
+									}
+								} else {
+									echo "<p> No uploaded Used Research yet.</p>";
+								}
+								?>
+
 								<div class="text-right">
 									<ul class="pagination pagination-sm ">
 									    <li><a href="#">Previous</a></li>
@@ -375,6 +317,7 @@ if (!$_SESSION['user']) {
 									    <li><a href="#">Next</a></li>
 			  						</ul>
 								</div>
+
 						    </div>
 						</div>
 					</div>

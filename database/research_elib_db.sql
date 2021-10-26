@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 24, 2021 at 03:04 PM
+-- Generation Time: Oct 26, 2021 at 04:44 PM
 -- Server version: 10.1.26-MariaDB
 -- PHP Version: 7.1.9
 
@@ -88,6 +88,14 @@ CREATE TABLE `research_creation` (
   `creation_research_id` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `research_creation`
+--
+
+INSERT INTO `research_creation` (`creation_researcher_id`, `creation_research_id`) VALUES
+(1, 2),
+(3, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -143,12 +151,17 @@ CREATE TABLE `research_output` (
   `research_keywords` varchar(512) NOT NULL,
   `research_journal_id` int(11) NOT NULL,
   `research_journal_pages` varchar(1024) NOT NULL,
-  `research_cite_mla` varchar(1024) NOT NULL,
-  `research_cite_apa` varchar(1024) NOT NULL,
-  `research_cite_chicago` varchar(1024) NOT NULL,
   `research_filename` varchar(1024) NOT NULL,
   `research_filepath` varchar(1024) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `research_output`
+--
+
+INSERT INTO `research_output` (`research_id`, `research_title`, `research_doi`, `research_category`, `research_type`, `research_agenda`, `research_status`, `research_abstract`, `research_date_publish`, `research_office`, `research_keywords`, `research_journal_id`, `research_journal_pages`, `research_filename`, `research_filepath`) VALUES
+(1, 'The ACES II program system', '10.1093/ajae/aaq063', 'Division', 'Action Research', 'Governance', 'Conducted', 'ACES II, a new program system for ab initio electronic structure calculations is described. The strengths of ACES II involve the use of many-body perturbation theory (MBPT) and coupled-cluster (CC) theory for calculating the energy, geometry, spectra, and properties of small- to medium-sized molecules. This paper gives a brief overview of the ACES II project, describes many features of the program system, and documents a number of benchmark calculations. © 1992 John Wiley & Sons, Inc.', '2021-10-25', 'DepEd Tagum City Division', 'System, Computer Programming, Developmental', 1, '11-15', 'CALCABEN-AJ-Tagum-National-Trade-School-final(updated).pdf', '../resources/research/CALCABEN-AJ-Tagum-National-Trade-School-final(updated)'),
+(2, 'FILEM: a file management system', '7269428', 'National', 'Action Research', 'DRRM', 'Conducted', 'The design of a multi-level store file management system is described. The index structure and functional capabilities of the system are presented. The paper discusses the roles of disk and tape in the system, how the system was debugged, periodic checks of the disk space management, some interesting statistics, and the future of the FILEM system. 4 figures', '2020-10-05', 'Magugpo Pilot Central Elementary School', 'File Management System', 2, '20 - 30', 'CALCABEN-AJ-Tagum-National-Trade-School-final(updated).pdf', '../resources/research/CALCABEN-AJ-Tagum-National-Trade-School-final(updated)');
 
 -- --------------------------------------------------------
 
@@ -168,6 +181,7 @@ CREATE TABLE `user` (
   `user_office` varchar(1024) NOT NULL,
   `user_type` tinyint(255) NOT NULL COMMENT '1:admin, 0:normal user',
   `user_pwd_state` tinyint(4) NOT NULL COMMENT '1: updated, 0: default',
+  `user_active_state` int(255) NOT NULL COMMENT '0 - deactivated; 1 - activated',
   `user_profile_picture` varchar(1024) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -175,10 +189,10 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`user_id`, `user_username`, `user_password`, `user_first_name`, `user_middle_name`, `user_last_name`, `user_email_address`, `user_designation`, `user_office`, `user_type`, `user_pwd_state`, `user_profile_picture`) VALUES
-(1, 'ajcalcaben', 'a6f2df33c90bf193238b14f611e0e44f', 'Allyn Joy', 'Diez', 'Calcaben', 'allynjoy.calcaben@deped.gov.ph', 'Special Science Teacher I', 'Tagum National Trade School', 1, 1, ''),
-(2, 'jautor', 'a6f2df33c90bf193238b14f611e0e44f', 'Jemwel', 'Oghoc', 'Autor', 'joautor@up.edu.ph', 'Teacher III', 'Tagum City National High School', 0, 1, ''),
-(3, 'jcautor', 'd41d8cd98f00b204e9800998ecf8427e', 'Jemma', 'Calcaben', 'Autor', 'jcautor@gmail.com', 'Master Teacher I', 'Magugpo Pilot Central Elementary School', 0, 1, 'My Post (4).png');
+INSERT INTO `user` (`user_id`, `user_username`, `user_password`, `user_first_name`, `user_middle_name`, `user_last_name`, `user_email_address`, `user_designation`, `user_office`, `user_type`, `user_pwd_state`, `user_active_state`, `user_profile_picture`) VALUES
+(1, 'ajautor', 'a6f2df33c90bf193238b14f611e0e44f', 'Allyn Joy', 'Calcaben', 'Autor', 'allynjoy.calcaben@deped.gov.ph', 'Special Science Teacher I', 'Tagum National Trade School', 1, 1, 0, 'blob.png'),
+(2, 'jautor', 'a6f2df33c90bf193238b14f611e0e44f', 'Jemwel', 'Oghoc', 'Autor', 'joautor@up.edu.ph', 'Teacher III', 'Tagum City National High School', 0, 1, 0, ''),
+(3, 'jcautor', 'd41d8cd98f00b204e9800998ecf8427e', 'Jemma', 'Calcaben', 'Autor', 'jcautor@gmail.com', 'Master Teacher I', 'Magugpo Pilot Central Elementary School', 0, 1, 0, 'My Post (4).png');
 
 --
 -- Indexes for dumped tables
@@ -251,7 +265,7 @@ ALTER TABLE `research_journal`
 -- AUTO_INCREMENT for table `research_output`
 --
 ALTER TABLE `research_output`
-  MODIFY `research_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `research_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `user`
