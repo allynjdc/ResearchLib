@@ -1,5 +1,4 @@
 <?php
-// NOTE: Uploading profile image is not yet being handled. [2021-10-03]
 
 include 'db_config.php';
 

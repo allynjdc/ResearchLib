@@ -112,7 +112,7 @@ if (isset($_POST['submit'])){
                     	<br>
                     	<h3> Upload Research </h3>
                     	<br>
-                    	<form target="_SELF" method="POST" enctype="multipart/form-data">
+                    	<form id="add_researcher_form" target="_SELF" method="POST" enctype="multipart/form-data">
                     		<input id="research_user_id" type="hidden" class="form-control" name="research_user_id" value="<?=$_SESSION['userid']?>">
 						    <div class="input-group">
 						      	<span class="input-group-addon">Title</span>
@@ -123,7 +123,27 @@ if (isset($_POST['submit'])){
 						      	<span class="input-group-addon">Researchers</span>
 						      	<input id="researcher_name" type="text" class="form-control" name="researcher_name" placeholder="Juan Dela Cruz">
 						    </div>
+							<br/>
+							<label id="researchers_label">Researchers: </label>
+							<!-- <input id="title2" type="text" name="researcher_name" placeholder="Juan Dela Cruz" readonly />
+							<button type="button" name="remove_researcher">&#10006;</button>
+							<br> -->
+							<select name="researchers" id="researchers_selection">
+								<option value=""></option>
+								<?php
+									$query = "SELECT * FROM researcher";
+									if ($result = $db->query($query)) {
+										while ($row = $result->fetch_assoc()) {
+											echo "<option value=\"".$row['researcher_id']."\">". $row['researcher_first_name']." ".$row['researcher_last_name']."</option>";
+										}
+									} else {
+										echo "<option value=''>Error</option>";
+									}
+								?>
+							</select>
+							<button type="button" onclick="addResearcherName()" class="btn btn-primary">+ Add </button>
                             <br/>
+
                             <div class="input-group">
 						      	<span class="input-group-addon">School / Office</span>
 						      	<input id="research_office" type="text" class="form-control" name="research_office" placeholder="ex. Tagum National Trade School">
@@ -245,4 +265,33 @@ if (isset($_POST['submit'])){
 		</footer> -->
 
 	</body>
+	<script>
+		function addResearcherName() {
+			var selectedResearcher = document.getElementById("researchers_selection");
+			var index = selectedResearcher.selectedIndex;
+			if (selectedResearcher.value == "") {
+				alert("Please select a researcher to add");
+				return;
+			}
+			var inputNode = document.createElement("input");
+			inputNode.type = "text";
+			inputNode.readOnly = true;
+			inputNode.value = selectedResearcher.options[index].text;
+
+			var brNode = document.createElement("br");
+			var deleteNode = document.createElement("button");
+			deleteNode.type="button";
+			var textNode = document.createTextNode("x");
+			//textNode.style.color = "red";
+			deleteNode.appendChild(textNode);
+
+			var addForm = document.getElementById("add_researcher_form");
+			var selectionList = document.getElementById("researchers_selection");
+			addForm.insertBefore(inputNode, selectionList);
+			addForm.insertBefore(deleteNode, selectionList);
+			addForm.insertBefore(brNode, selectionList);
+
+			selectedResearcher.value = ""; // Reset the selection to empty after adding new researcher name
+		}
+	</script>
 </html>
