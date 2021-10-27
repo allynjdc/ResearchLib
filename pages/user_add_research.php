@@ -1,8 +1,46 @@
 <?php
+include "../database/db_config.php";
 session_start();
 
 if (!$_SESSION['user']) {
 	header("Location:index.php");   // Redirect to index page. User cannot view this page if he/she is not yet logged in.
+}
+
+if (isset($_POST['submit'])){
+
+	$user_id 	= $_POST['research_user_id'];
+	$title 		= $_POST['research_title'];
+	$reseacher 	= $_POST['researcher_name'];
+	$office 	= $_POST['research_office'];
+	$category 	= $_POST['research_category'];
+	$type 		= $_POST['research_type'];
+	$agenda 	= $_POST['research_agenda'];
+	$date 		= $_POST['research_date_published'];
+	$doi 		= $db->real_escape_string($_POST['research_doi']);
+	$journal 	= $_POST['research_journal_title'];
+	$pages 		= $db->real_escape_string($_POST['research_journal_pages']);
+	$status 	= $_POST['research_status'];
+	$abstract 	= $db->real_escape_string($_POST['research_abstract']);
+	$keywords 	= $db->real_escape_string($_POST['research_keywords']);
+	$filename	= $_FILES['research_file']['name'];
+	$location 	= '../resources/research/'.$filename;
+
+	$query = "INSERT INTO research_output (research_id, research_title, research_office, research_category, research_type, research_agenda, research_date_publish, research_doi, research_journal_id, research_journal_pages, research_abstract, research_status, research_keywords, research_filename, research_filepath)
+            VALUES (NULL, '$title', '$office', '$category', '$type', '$agenda', '$date', '$doi', '2', '$pages', '$abstract', '$status', '$keywords', '$filename', '$location')";
+
+    if ($db->query($query) === TRUE) {
+		// Save the upload file to the local filesystem
+		if (move_uploaded_file($_FILES['research_file']['tmp_name'], $location)) {
+			header("Location:user_research_status.php");    
+		} else {
+		    echo "NOK";
+		}
+
+    } else {
+		echo "NOK <br>";
+		echo $db->error;
+	}
+
 }
 ?>
 
@@ -74,20 +112,21 @@ if (!$_SESSION['user']) {
                     	<br>
                     	<h3> Upload Research </h3>
                     	<br>
-                    	<form>
+                    	<form target="_SELF" method="POST" enctype="multipart/form-data">
+                    		<input id="research_user_id" type="hidden" class="form-control" name="research_user_id" value="<?=$_SESSION['userid']?>">
 						    <div class="input-group">
 						      	<span class="input-group-addon">Title</span>
-						      	<input id="Memo_code" type="text" class="form-control" name="research_title" placeholder="Research Title">
+						      	<input id="research_title" type="text" class="form-control" name="research_title" placeholder="Research Title">
 						    </div>
 						    <br>
 						    <div class="input-group" >
 						      	<span class="input-group-addon">Researchers</span>
-						      	<input id="title" type="text" class="form-control" name="researcher_name" placeholder="Juan Dela Cruz">
+						      	<input id="researcher_name" type="text" class="form-control" name="researcher_name" placeholder="Juan Dela Cruz">
 						    </div>
                             <br/>
                             <div class="input-group">
-						      	<span class="input-group-addon">School</span>
-						      	<input id="title" type="text" class="form-control" name="school_name" placeholder="Tagum National Trade School">
+						      	<span class="input-group-addon">School / Office</span>
+						      	<input id="research_office" type="text" class="form-control" name="research_office" placeholder="ex. Tagum National Trade School">
 						    </div>
 						    <br>
 						    <div class="input-group">
@@ -125,20 +164,21 @@ if (!$_SESSION['user']) {
                             </br>
                             <div class="input-group" >
 						      	<span class="input-group-addon">Date Signed</span>
-						      	<input id="date_signed" type="date" class="form-control" name="date_signed" placeholder="">
+						      	<input id="research_date_published" type="date" class="form-control" min="" name="research_date_published" min="2001-01-01" max="2099-12-31" required>
 						    </div>
                             <br/>
                             <div class="input-group" >
 						      	<span class="input-group-addon">DOI</span>
 						      	<input id="research_doi" type="text" class="form-control" name="research_doi" placeholder="00.0000/0000000000000-0">
 						    </div>
-                            <br/>
+						    <br/>
+						    
                             <div class="input-group" >
 						      	<span class="input-group-addon">Journal Title</span>
-						      	<input id="journal_title" type="text" class="form-control" name="journal_title" placeholder="Title of Journal">
+						      	<input id="research_journal_title" type="text" class="form-control" name="research_journal_title" placeholder="Title of Journal">
 						    </div>
                             <br/>
-                            <div class="input-group">
+                            <!-- <div class="input-group">
 						      	<span class="input-group-addon">Volume</span>
 						      	<input id="journ_vol" type="number" class="form-control" name="journ_vol" placeholder="1" min="1" max="50">
 						    </div>
@@ -147,10 +187,20 @@ if (!$_SESSION['user']) {
 						      	<span class="input-group-addon">Issue</span>
 						      	<input id="journ_issue" type="number" class="form-control" name="journ_issue" placeholder="1" min="1" max="50">
 						    </div>
-						    <br>
+						    <br> -->
                             <div class="input-group" >
 						      	<span class="input-group-addon">Pages</span>
-						      	<input id="journal_title" type="text" class="form-control" name="journal_title" placeholder="xx-xx">
+						      	<input id="research_journal_pages" type="text" class="form-control" name="research_journal_pages" placeholder="xx-xx">
+						    </div>
+                            <br/>
+                            <div class="input-group" >
+						      	<span class="input-group-addon">Research Abstract</span>
+						      	<textarea id="research_abstract" name="research_abstract" rows="4" cols="76"> </textarea>
+						    </div>
+                            <br/>
+                            <div class="input-group" >
+						      	<span class="input-group-addon">Research Keywords</span>
+						      	<textarea id="research_keywords" name="research_keywords" rows="2" cols="75"> </textarea>
 						    </div>
                             <br/>
                             <div class="input-group">
@@ -165,9 +215,9 @@ if (!$_SESSION['user']) {
 						    <br>
 
 						    	<p class="text-justify">Insert the Research File:</p>
-						      	<input id="journ_photo" type="file" class="" name="journ_photo" accept="image/*, .pdf, .doc, .txt">
+						      	<input id="research_file" type="file" class="" name="research_file" accept="image/*, .pdf, .doc, .txt">
 						    <br>
-						    <button class="btn-success" type="submit" >Upload Research</button>
+						    <input type = "submit" name = "submit" value = "Add Research">
 	  					</form>
                     </div>
 	                    

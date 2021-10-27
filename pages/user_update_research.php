@@ -1,8 +1,47 @@
 <?php
+include "../database/db_config.php";
 session_start();
 
 if (!$_SESSION['user']) {
 	header("Location:index.php");   // Redirect to index page. User cannot view this page if he/she is not yet logged in.
+}
+
+if (isset($_POST['submit'])){
+
+	$r_id 		= $_POST['research_id'];
+	$title 		= $_POST['research_title'];
+	$reseacher 	= $_POST['researcher_name'];
+	$office 	= $_POST['research_office'];
+	$category 	= $_POST['research_category'];
+	$type 		= $_POST['research_type'];
+	$agenda 	= $_POST['research_agenda'];
+	$date 		= $_POST['research_date_published'];
+	$doi 		= $db->real_escape_string($_POST['research_doi']);
+	$journal 	= $_POST['research_journal_title'];
+	$pages 		= $db->real_escape_string($_POST['research_journal_pages']);
+	$status 	= $_POST['research_status'];
+	$abstract 	= $db->real_escape_string($_POST['research_abstract']);
+	$keywords 	= $db->real_escape_string($_POST['research_keywords']);
+	$filename	= $_FILES['research_file']['name'];
+	$location 	= '../resources/research/'.$filename;
+
+	$query = "UPDATE research_output 
+			  SET research_title = '$title', research_office = '$office', research_category = '$category', research_type = '$type', research_agenda = '$agenda', research_date_publish = '$date', research_doi = '$doi', research_journal_id = '2', research_journal_pages = '$pages', research_abstract = '$abstract', research_status = '$status', research_keywords = '$keywords', research_filename = '$filename', research_filepath = '$location'
+			  WHERE research_id = '$r_id' ";
+
+    if ($db->query($query) === TRUE) {
+		// Save the upload file to the local filesystem
+		if (move_uploaded_file($_FILES['research_file']['tmp_name'], $location)) {
+			header("Location:user_research_status.php");    
+		} else {
+		    echo "NOK";
+		}
+
+    } else {
+		echo "NOK <br>";
+		echo $db->error;
+	}
+
 }
 ?>
 
@@ -74,71 +113,97 @@ if (!$_SESSION['user']) {
                     	<br>
                     	<h3> Update Research </h3>
                     	<br>
-                    	<form>
+
+                    	<!-- FETCHING RESEARCH DATA -->
+				    	<?php 
+				    		$id = intval($_GET['rid']);
+							$query = "SELECT * FROM research_output AS ro INNER JOIN research_creation AS rc INNER JOIN research_journal AS rj INNER JOIN researcher as r ON rj.journal_id = ro.research_journal_id AND ro.research_id = rc.creation_research_id AND rc.creation_researcher_id = r.researcher_id WHERE ro.research_id = '$id'";
+
+
+
+							// echo "hello ".$id;
+
+							if ($result = $db->query($query)){
+								// echo "result";
+								while ($row = $result->fetch_assoc()){
+
+									$jtitle = ucwords(strtolower($row['journal_title']));
+									$jpages = $row['research_journal_pages'];
+									$rdate = strtotime($row['journal_date_publish']);
+									$months = array("null","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
+
+									// echo "hey ";
+
+						?>
+
+                    	<form target="_SELF" method="POST" enctype="multipart/form-data">
+						    <input id="research_id" type="hidden" class="form-control" name="research_id" value="<?=$row['research_id']?>">
+						    <input id="research_user_id" type="hidden" class="form-control" name="research_user_id" value="<?=$_SESSION['userid']?>">
 						    <div class="input-group">
 						      	<span class="input-group-addon">Title</span>
-						      	<input id="Memo_code" type="text" class="form-control" name="research_title" placeholder="Research Title">
+						      	<input id="research_title" type="text" class="form-control" name="research_title" value="<?=$row['research_title']?>">
 						    </div>
 						    <br>
 						    <div class="input-group" >
 						      	<span class="input-group-addon">Researchers</span>
-						      	<input id="title" type="text" class="form-control" name="researcher_name" placeholder="Juan Dela Cruz">
+						      	<input id="researcher_name" type="text" class="form-control" name="researcher_name" value="<?=$row['researcher_first_name']." ".$row['researcher_middle_name'][0].". ".$row['researcher_last_name']?> ">
 						    </div>
                             <br/>
                             <div class="input-group">
-						      	<span class="input-group-addon">School</span>
-						      	<input id="title" type="text" class="form-control" name="school_name" placeholder="Tagum National Trade School">
+						      	<span class="input-group-addon">School / Office</span>
+						      	<input id="research_office" type="text" class="form-control" name="research_office" value="<?=$row['research_office']?>">
 						    </div>
 						    <br>
 						    <div class="input-group">
 						      	<span class="input-group-addon">Research Category</span>
                                 <select name="research_category" id="research_category" class="form-control">
-                                    <option value="National"> National </option>
-                                    <option value="Regional"> Regional </option>
-                                    <option value="Schools Division"> Schools Division </option>
-                                    <option value="District"> District </option>
-                                    <option value="School"> School </option>
+                                    <option value="National" <?=($row['research_category']=="National")? "selected" : ""?> > National </option>
+                                    <option value="Regional" <?=($row['research_category']=="Regional")? "selected" : ""?> > Regional </option>
+                                    <option value="Schools Division" <?=($row['research_category']=="Schools Division")? "selected" : ""?> > Schools Division </option>
+                                    <option value="District" <?=($row['research_category']=="District")? "selected" : ""?> > District </option>
+                                    <option value="School" <?=($row['research_category']=="School")? "selected" : ""?> > School </option>
                                 </select>
 						    </div>
                             <br/>
                             <div class="input-group">
 						      	<span class="input-group-addon">Research Type</span>
                                 <select name="research_type" id="research_type" class="form-control">
-                                    <option value="Action Research"> Action Research </option>
-                                    <option value="Basic Research"> Basic Research </option>
+                                    <option value="Action Research" <?=($row['research_type']=="Action Research")? "selected" : ""?>> Action Research </option>
+                                    <option value="Basic Research" <?=($row['research_type']=="Basic Research")? "selected" : ""?>> Basic Research </option>
                                 </select>
                             </div>
                             </br>
                             <div class="input-group">
 						      	<span class="input-group-addon">Research Agenda</span>
                                 <select name="research_agenda" id="research_agenda" class="form-control">
-                                    <option value="Teaching and Learning"> Teaching and Learning </option>
-                                    <option value="Child Protection"> Child Protection </option>
-                                    <option value="Human Resource Development"> Human Resource Development </option>
-                                    <option value="Governance"> Governance </option>
-                                    <option value="DRRM"> DRRM </option>
-                                    <option value="Gender Development"> Gender Development </option>
-                                    <option value="Inclusive Education"> Inclusive Education </option>
-                                    <option value="Others"> Others </option>
+                                    <option value="Teaching and Learning" <?=($row['research_agenda']=="Teaching and Learning")? "selected" : ""?> > Teaching and Learning </option>
+                                    <option value="Child Protection" <?=($row['research_agenda']=="Child Protection")? "selected" : ""?> > Child Protection </option>
+                                    <option value="Human Resource Development" <?=($row['research_agenda']=="Human Resource Development")? "selected" : ""?> > Human Resource Development </option>
+                                    <option value="Governance" <?=($row['research_agenda']=="Governance")? "selected" : ""?> > Governance </option>
+                                    <option value="DRRM" <?=($row['research_agenda']=="DRRM")? "selected" : ""?> > DRRM </option>
+                                    <option value="Gender Development" <?=($row['research_agenda']=="Gender and Development")? "selected" : ""?> > Gender Development </option>
+                                    <option value="Inclusive Education" <?=($row['research_agenda']=="Inclusive Education")? "selected" : ""?> > Inclusive Education </option>
+                                    <option value="Others" <?=($row['research_agenda']=="Others")? "selected" : ""?> > Others </option>
                                 </select>
                             </div>
                             </br>
                             <div class="input-group" >
 						      	<span class="input-group-addon">Date Signed</span>
-						      	<input id="date_signed" type="date" class="form-control" name="date_signed" placeholder="">
+						      	<input id="research_date_published" type="date" class="form-control" min="" name="research_date_published" min="2001-01-01" max="2099-12-31" value="<?=$row['research_date_publish']?>" required>
 						    </div>
                             <br/>
                             <div class="input-group" >
 						      	<span class="input-group-addon">DOI</span>
-						      	<input id="research_doi" type="text" class="form-control" name="research_doi" placeholder="00.0000/0000000000000-0">
+						      	<input id="research_doi" type="text" class="form-control" name="research_doi" value="<?=$row['research_doi']?>">
 						    </div>
-                            <br/>
+						    <br/>
+						    
                             <div class="input-group" >
 						      	<span class="input-group-addon">Journal Title</span>
-						      	<input id="journal_title" type="text" class="form-control" name="journal_title" placeholder="Title of Journal">
+						      	<input id="research_journal_title" type="text" class="form-control" name="research_journal_title" placeholder="Title of Journal" value="<?=$row['journal_title']?>">
 						    </div>
                             <br/>
-                            <div class="input-group">
+                            <!-- <div class="input-group">
 						      	<span class="input-group-addon">Volume</span>
 						      	<input id="journ_vol" type="number" class="form-control" name="journ_vol" placeholder="1" min="1" max="50">
 						    </div>
@@ -147,31 +212,48 @@ if (!$_SESSION['user']) {
 						      	<span class="input-group-addon">Issue</span>
 						      	<input id="journ_issue" type="number" class="form-control" name="journ_issue" placeholder="1" min="1" max="50">
 						    </div>
-						    <br>
+						    <br> -->
                             <div class="input-group" >
 						      	<span class="input-group-addon">Pages</span>
-						      	<input id="journal_title" type="text" class="form-control" name="journal_title" placeholder="xx-xx">
+						      	<input id="research_journal_pages" type="text" class="form-control" name="research_journal_pages" value="<?=$row['research_journal_pages']?>">
+						    </div>
+                            <br/>
+                            <div class="input-group" >
+						      	<span class="input-group-addon">Research Abstract</span>
+						      	<textarea id="research_abstract" name="research_abstract" rows="4" cols="76" value=""> <?=$row['research_abstract']?> </textarea>
+						    </div>
+                            <br/>
+                            <div class="input-group" >
+						      	<span class="input-group-addon">Research Keywords</span>
+						      	<textarea id="research_keywords" name="research_keywords" rows="2" cols="75" value=""> <?=$row['research_keywords']?> </textarea>
 						    </div>
                             <br/>
                             <div class="input-group">
 						      	<span class="input-group-addon" style="background-color: #ffb19e;">Research Status</span>
                                 <select name="research_status" id="research_status" class="form-control">
-                                    <option value="Conducted"> Conducted </option>
-                                    <option value="Submitted"> Submitted </option>
-                                    <option value="Disseminated"> Disseminated </option>
-                                    <option value="Used"> Used </option>
+                                    <option value="Conducted" <?=($row['research_status']=="Conducted")? "selected" : ""?> > Conducted </option>
+                                    <option value="Submitted" <?=($row['research_status']=="Submitted")? "selected" : ""?> > Submitted </option>
+                                    <option value="Disseminated" <?=($row['research_status']=="Disseminated")? "selected" : ""?> > Disseminated </option>
+                                    <option value="Used" <?=($row['research_status']=="Used")? "selected" : ""?> > Used </option>
                                 </select>
 						    </div>
 						    <br>
 
 						    	<p class="text-justify">Insert the Research File:</p>
-						      	<input id="journ_photo" type="file" class="" name="journ_photo" accept="image/*, .pdf, .doc, .txt">
+						      	<input id="research_file" type="file" class="" name="research_file" value="<?=$row['research_filename']?>" accept="image/*, .pdf, .doc, .txt">
 						    <br>
-						    <button class="btn-success" type="submit" >Update Research</button>
+						    <input type = "submit" name = "submit" value = "Add Research">
 	  					</form>
+
+	  					<?php
+							}
+						} else {
+							echo "<p> No conducted Research yet.</p>";
+						}
+						?>
+
                     </div>
-	                    
-						
+	                   						
 			    </div>
 
 			    <!-- RIGHT SIDE NAVIGATION -->

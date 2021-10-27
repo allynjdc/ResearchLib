@@ -77,7 +77,7 @@ session_start();
 			    		$id = intval($_GET['rid']);
 						$query = "SELECT * FROM research_output AS ro INNER JOIN research_creation AS rc INNER JOIN research_journal AS rj INNER JOIN researcher as r ON rj.journal_id = ro.research_journal_id AND ro.research_id = rc.creation_research_id AND rc.creation_researcher_id = r.researcher_id WHERE ro.research_id = '$id'";
 
-						echo "hello ".$id;
+						// echo "hello ".$id;
 
 						if ($result = $db->query($query)){
 							// echo "result";
@@ -88,7 +88,7 @@ session_start();
 								$rdate = strtotime($row['journal_date_publish']);
 								$months = array("null","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
 
-								echo "hey ";
+								// echo "hey ";
 
 					?>
 			    		      	
@@ -115,7 +115,7 @@ session_start();
 							<p class="h4" style="color: maroon;"><b>   Author: </b></p>
 							<div class="" style=" height: 50px">
 								<div class="col-sm-1" >
-									<img class="  img-circle " src="../images/<?=$row['researcher_profile_photo']?>" alt="<?=$row['researcher_last_name']?>" width="50px" height="50px">
+									<img class="  img-circle " src="../images/profile_pictures/<?=$row['researcher_profile_picture']?>" alt="<?=$row['researcher_last_name']?>" width="50px" height="50px">
 								</div>
 								
 								<div class="col-sm-11 text-left" >
