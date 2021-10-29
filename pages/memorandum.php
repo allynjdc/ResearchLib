@@ -28,23 +28,39 @@ session_start();
 		<!-- Navigation -->
 		<nav class="navbar navbar-inverse" > <!-- navbar-default style="background-color: #D5EBF6"-->
 		  	<div class="container-fluid col-md-10 col-md-offset-1">
-			    <div class="navbar-header">
-			      	<a class="navbar-brand nav_title_a" href="index.php">
-			      		<span><img src="../images/logo1.png" height="30px" width="50px"></span>
+			    <div class="navbar-header col-sm-6">
+			      	<a class="navbar-brand nav_title_a col-sm-12" href="<?=(!isset($_SESSION['user']))? "index.php" : "homepage.php"?>">
+			      		<span class="col-sm-1"><img   src="../images/logo1.png" height="30px" width="50px"></span>
 			      		<!-- <p class="title_brand_nav text-center"> -->
-			      			<span class="title_brand_nav"> Division Digital Research Library </span>
+			      			<span class="title_brand_nav col-sm-11" style="margin-top:-2px;">
+			      				&nbsp; Digital Research Library
+			      			</span>
+			      			<br>
+			      			<h6 class="title_nav_p col-sm-11" style="margin-top:1px;font-size:10px;">
+			      				&nbsp;&nbsp;&nbsp;&nbsp;of DepEd RXI - Tagum City Division
+			      			</h6>
 			      		<!-- </p> -->
 			      	</a>
 			    </div>
-			    
-			    <ul class="nav navbar-nav navbar-right">
-			    	<li class="title_brand"><a class="title_brand" href="memorandum.php">Memorandums</a></li>
-			    	<li class="title_brand"><a class="title_brand" href="journals.php">Journals</a></li>
-					<?php
+			    <!-- <ul class="nav navbar-nav">
+			      	<li class=""><a href="#">Home</a></li>
+			      	<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Page 1 <span class="caret"></span></a>
+			        	<ul class="dropdown-menu">
+			          		<li><a href="#">Page 1-1</a></li>
+			          		<li><a href="#">Page 1-2</a></li>
+			          		<li><a href="#">Page 1-3</a></li>
+			        	</ul>
+			      	</li>
+			      	<li><a href="#">Page 2</a></li>
+			    </ul> -->
+			    <ul class="nav title_brand navbar-nav navbar-right">
+			    	<li class="title_brand" ><a class="title_brand" href="memorandum.php">Memorandums</a></li>
+			    	<li class="title_brand" ><a class="title_brand" href="journals.php">Journals</a></li>
+			      	<?php
 						if (!isset($_SESSION['user'])) {
-							echo "<li class=\"title_brand\"><a class=\"title_brand\" href=\"login.php\">Login in</a></li>";
+							echo "<li class=\"title_brand\" ><a class=\"title_brand\" href=\"login.php\">Login</a></li>";
 						} else {
-							echo "<li class=\" title_brand dropdown\">
+							echo "<li class=\"dropdown title_brand\" >
 									<a href=\"#\" class=\"title_brand dropbtn\">" . $_SESSION['user'] . "</a>
 									<div class=\"dropdown-content\">
 										<a href=\"user_profile_view.php\">View Profile</a>
