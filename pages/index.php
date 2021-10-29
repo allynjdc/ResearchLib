@@ -96,11 +96,11 @@ session_start();
 			      	<!-- <div class="col-md-1"></div> -->
 			      	
 					<div class="col-md-9 col-md-offset-1 form-row align-items-center" style="left:55px;">
-						<form action="/action_page.php">
+						<form action="search_result.php" method="GET" enctype="multipart/form-data">
     						<div class="input-group" >
-     							<input type="text" class="form-control" placeholder="Search" name="search" style="height: 40px;">
+     							<input type="text" class="form-control" placeholder="Search Researches" name="user_search" id="user_search" style="height: 40px;">
       							<div class="input-group-btn" >
-       								<button class="btn btn-default" type="submit" style="height: 40px;"><i class="glyphicon glyphicon-search">&nbsp;</i></button>
+       								<button class="btn btn-default" type="submit" name = "submit" style="height: 40px;"><i class="glyphicon glyphicon-search">&nbsp;</i></button>
       							</div>
     						</div>
  						</form>

@@ -1,5 +1,11 @@
 <?php
+include "../database/db_config.php";
 session_start();
+
+if (isset($_GET['submit'])){
+	$key 	= $_GET['user_search'];
+}
+
 ?>
 
 <DOCTYPE! html>
@@ -103,51 +109,51 @@ session_start();
 			    <div class="col-sm-6 center_content">
 			    	<br>
 			    	<div class="col-md-10 form-row align-items-center" >
-						<form action="/action_page.php" >
+						<form action="search_result.php" target="_SELF" method="GET" enctype="multipart/form-data" >
     						<div class="input-group" >
-     							<input type="text" class="form-control" placeholder="Search" name="search" style="height: 40px;">
+     							<input type="text" class="form-control" value="<?=$key?>" name="user_search" id="user_search" style="height: 40px;">
       							<div class="input-group-btn" >
-       								<button class="btn btn-default" type="submit" style="height: 40px;"><i class="glyphicon glyphicon-search">&nbsp;</i></button>
+       								<button class="btn btn-default" type="submit" name="submit" style="height: 40px;"><i class="glyphicon glyphicon-search">&nbsp;</i></button>
       							</div>
     						</div>
  						</form>
 					</div>
 					<br><br><hr>
+					<?php 
+						$key = "";
+						
+						if (isset($_GET['submit'])){
+							$key 	= $_GET['user_search'];
+						}
+
+						$search = "%".$key."%";
+						
+						$query = "SELECT * FROM research_output AS ro INNER JOIN research_creation AS rc INNER JOIN research_journal AS rj INNER JOIN researcher as r ON rj.journal_id = ro.research_journal_id AND ro.research_id = rc.creation_research_id AND rc.creation_researcher_id = r.researcher_id WHERE ro.research_keywords LIKE '$search'";
+
+						if ($result = $db->query($query)) {
+							while ($row = $result->fetch_assoc()) {
+															
+					?>
 					<div class="">
-						<p class="h4 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </a></b></p>
-						<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
-						<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
-						<p></p>
+						<p class="h4 text-justify"><b><a href="research_view.php?rid=<?=$row['research_id']?>"> <?=strtoupper($row['research_title'])?> </a></b></p>
+						<p class="h5 text-justify" style="color: maroon">
+							<?=$row['researcher_first_name'][0].".".$row['researcher_middle_name'][0].". ".$row['researcher_last_name']?> - <?=ucwords(strtolower($row['journal_title'])).", ".date('Y',strtotime($row['journal_date_publish']))?> 
+						</p>
+						<p class="h6 text-justify">
+							<?=substr($row['research_abstract'], 0, 270)."....."?>
+						</p>
+						<p>&nbsp;</p>
 						<br>
 					</div>
-					<div class="">
-						<p class="h4 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </a></b></p>
-						<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
-						<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
-						<p></p>
-						<br>
-					</div>
-					<div class="">
-						<p class="h4 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </a></b></p>
-						<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
-						<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
-						<p></p>
-						<br>
-					</div>
-					<div class="">
-						<p class="h4 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </a></b></p>
-						<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
-						<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
-						<p></p>
-						<br>
-					</div>
-					<div class="">
-						<p class="h4 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </a></b></p>
-						<p class="h5 text-justify" style="color: maroon">AJ Calcaben - Twenty-one Mental Models That Can Change Policing, 2021</p>
-						<p class="h6 text-justify">The file management system will assist in resolving the problem. To begin, it makes reviewing and approving content easier. The file management system will digitally store previously accepted, conducted, and used research papers, saving the School's Division Research Committee the time and effort of reviewing each physical copy. Second, since research papers are now digitally stored in the system, ...</p>
-						<p></p>
-						<br>
-					</div>
+
+					
+					<?php
+						}
+					} else {
+						echo "<p> No results found.</p>";
+					}
+					
+					?>
 
 					<div class="text-right">
 						<ul class="pagination pagination-sm ">
