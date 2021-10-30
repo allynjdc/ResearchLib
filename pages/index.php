@@ -42,7 +42,7 @@ session_start();
 
 		<nav class="navbar navbar-inverse" > <!-- navbar-default style="background-color: #D5EBF6"-->
 		  	<div class="container-fluid col-md-10 col-md-offset-1">
-			    <div class="navbar-header col-sm-6">
+			    <div class="navbar-header col-md-6">
 			      	<a class="navbar-brand nav_title_a col-sm-12" href="<?=(!isset($_SESSION['user']))? "index.php" : "homepage.php"?>">
 			      		<span class="col-sm-1"><img   src="../images/logo1.png" height="30px" width="50px"></span>
 			      		<!-- <p class="title_brand_nav text-center"> -->
@@ -67,9 +67,14 @@ session_start();
 			      	</li>
 			      	<li><a href="#">Page 2</a></li>
 			    </ul> -->
+			    <div>
 			    <ul class="nav title_brand navbar-nav navbar-right">
-			    	<li class="title_brand" ><a class="title_brand" href="memorandum.php">Memorandums</a></li>
-			    	<li class="title_brand" ><a class="title_brand" href="journals.php">Journals</a></li>
+			    	<li class="title_brand" >
+			    		<a class="title_brand" href="memorandum.php">Memorandums</a>
+			    	</li>
+			    	<li class="title_brand" >
+			    		<a class="title_brand" href="journals.php">Journals</a>
+			    	</li>
 			      	<?php
 						if (!isset($_SESSION['user'])) {
 							echo "<li class=\"title_brand\" ><a class=\"title_brand\" href=\"login.php\">Login</a></li>";
@@ -85,6 +90,7 @@ session_start();
 						}
 					?>
 			    </ul>
+				</div>
 		  	</div>
 		</nav>
 

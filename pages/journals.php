@@ -53,7 +53,7 @@ session_start();
 			      	</li>
 			      	<li><a href="#">Page 2</a></li>
 			    </ul> -->
-			    <ul class="nav title_brand navbar-nav navbar-right col-sm-6">
+			    <ul class="nav title_brand navbar-nav navbar-right">
 			    	<li class="title_brand" ><a class="title_brand" href="memorandum.php">Memorandums</a></li>
 			    	<li class="title_brand" ><a class="title_brand" href="journals.php">Journals</a></li>
 			      	<?php
@@ -159,9 +159,14 @@ session_start();
 		</div>
 
 		<!-- Footer -->
-		<!-- <footer class="container-fluid text-center mt-auto">
-  			<p>All rights reserved &copy; 2021</p>
-		</footer> -->
+		<footer class="container-fluid text-center mt-auto">
+  			<!-- <p>All rights reserved &copy; 2021</p> -->
+  			<div class="bg-light py-4">
+		      <div class="container text-center">
+		        <p class="text-muted mb-0 py-2">© 2019 Bootstrapious All rights reserved.</p>
+		      </div>
+		    </div>
+		</footer>
 
 	</body>
 </html>

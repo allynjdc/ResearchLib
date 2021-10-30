@@ -9,16 +9,13 @@ body {
   	background-size: cover;
 }
 
-div.content {
-	padding-bottom:1000px;
-}
 
-nav, nav.navbar {
- 	overflow: hidden;
-	position: fixed; /* Set the navbar to fixed position */
-  	top: 1; /* Position the navbar at the top of the page */
-  	width: 100%; /* Full width */
-}
+/*nav, nav.navbar {*/
+ 	/*overflow: hidden;*/
+	/*position: fixed;  Set the navbar to fixed position */
+  	/*top: 1;  Position the navbar at the top of the page */
+  	/*width: 100%;  Full width */
+/*}*/
 
 .navbar-header, nav, .navbar {
   color: black;

@@ -44,12 +44,12 @@ if (!$_SESSION['user']) {
 			      		<!-- </p> -->
 			      	</a>
 			    </div>
-			    <ul class="nav navbar-nav navbar-right col-sm-6">
+			    <ul class="nav navbar-nav navbar-right">
 			    	<li class="title_brand"><a class="title_brand" href="memorandum.php">Memorandums</a></li>
 			    	<li class="title_brand"><a class="title_brand" href="journals.php">Journals</a></li>
                     <!-- <li class="title_brand"><a class="title_brand" href="help.php">Help</a></li> -->
-			      	<li class="title_brand" class="dropdown">
-                        <a class="title_brand" href="#" class="dropbtn"><?= $_SESSION['user'] ?></a>
+			      	<li class="dropdown title_brand">
+                        <a class="title_brand dropbtn" href="#"><?= $_SESSION['user'] ?></a>
                         <div class="dropdown-content">
                             <a href="user_profile_view.php">View Profile</a>
                             <a href="user_profile_update.php">Edit Profile</a>
