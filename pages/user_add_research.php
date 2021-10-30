@@ -125,17 +125,9 @@ if (isset($_POST['submit'])){
 						      	<input id="research_title" type="text" class="form-control" name="research_title" placeholder="Research Title">
 						    </div>
 						    <br>
-						    <div class="input-group" >
-						      	<span class="input-group-addon">Researchers</span>
-						      	<input id="researcher_name" type="text" class="form-control" name="researcher_name" placeholder="Juan Dela Cruz">
-						    </div>
-							<br/>
-							<label id="researchers_label">Researchers: </label>
-							<!-- <input id="title2" type="text" name="researcher_name" placeholder="Juan Dela Cruz" readonly />
-							<button type="button" name="remove_researcher">&#10006;</button>
-							<br> -->
-							<select name="researchers" id="researchers_selection">
-								<option value=""></option>
+							<label id="researchers_label">Researchers: </label> </br>
+							<select name="researchers" id="researchers_selection" class="form-control-">
+								<option value=""></option> <!-- defuault option -->
 								<?php
 									$query = "SELECT * FROM researcher";
 									if ($result = $db->query($query)) {
@@ -147,7 +139,8 @@ if (isset($_POST['submit'])){
 									}
 								?>
 							</select>
-							<button type="button" onclick="addResearcherName()" class="btn btn-primary">+ Add </button>
+							<button type="button" id="add_name_btn" onclick="addResearcherName()" class="btn btn-outline-primary btn-sm" style="color:green;">+ Add </button>
+
                             <br/>
 
                             <div class="input-group">
@@ -243,7 +236,7 @@ if (isset($_POST['submit'])){
 						    	<p class="text-justify">Insert the Research File:</p>
 						      	<input id="research_file" type="file" class="" name="research_file" accept="image/*, .pdf, .doc, .txt">
 						    <br>
-						    <input type = "submit" name = "submit" value = "Add Research">
+						    <input type="submit" name="submit" value="Add Research">
 	  					</form>
                     </div>
 	                    
@@ -272,6 +265,12 @@ if (isset($_POST['submit'])){
 
 	</body>
 	<script>
+		function removeSelection(researcherId)
+		{
+			var nodeToDelete = document.getElementById("wrapper_" + researcherId);
+			nodeToDelete.parentNode.removeChild(nodeToDelete);
+		}
+
 		function addResearcherName() {
 			var selectedResearcher = document.getElementById("researchers_selection");
 			var index = selectedResearcher.selectedIndex;
@@ -279,25 +278,39 @@ if (isset($_POST['submit'])){
 				alert("Please select a researcher to add");
 				return;
 			}
-			var inputNode = document.createElement("input");
-			inputNode.type = "text";
-			inputNode.readOnly = true;
-			inputNode.value = selectedResearcher.options[index].text;
 
-			var brNode = document.createElement("br");
+			// <input>
+			// ToDo: If possible, don't put the researcher name in an input element. Maybe just in a div element with styling.
+			//		 Then the input element will be hidden, setting researcer id as the input's value.
+			var inputNode = document.createElement("input");
+			inputNode.setAttribute("type", "text");
+			inputNode.setAttribute("readonly", true);
+			inputNode.setAttribute("name", "researcher_name[]");
+			inputNode.setAttribute("value", selectedResearcher.options[index].text);
+
+			// <button> a button for deleting/removing the researcher
 			var deleteNode = document.createElement("button");
-			deleteNode.type="button";
+			deleteNode.type = "button";
+			deleteNode.id = "delete_" + selectedResearcher.value;
+			deleteNode.setAttribute("onclick", "removeSelection(" + selectedResearcher.value + ")");
+			deleteNode.setAttribute("class", "btn btn-sm");
+			deleteNode.setAttribute("style", "color: red;");
 			var textNode = document.createTextNode("x");
-			//textNode.style.color = "red";
 			deleteNode.appendChild(textNode);
+	
+			// <div> this element wraps the input element and button. So it is easier to remove them later on.
+			var divWrapper = document.createElement("div");
+			divWrapper.id = "wrapper_" + selectedResearcher.value;
+			divWrapper.appendChild(inputNode);
+			divWrapper.appendChild(deleteNode);
 
 			var addForm = document.getElementById("add_researcher_form");
 			var selectionList = document.getElementById("researchers_selection");
-			addForm.insertBefore(inputNode, selectionList);
-			addForm.insertBefore(deleteNode, selectionList);
-			addForm.insertBefore(brNode, selectionList);
+			addForm.insertBefore(divWrapper, selectionList);
 
 			selectedResearcher.value = ""; // Reset the selection to empty after adding new researcher name
+
+			// ToDo: Avoid duplicate researcher name by disabling the options that are already selected in the selected tag
 		}
 	</script>
 </html>
