@@ -91,28 +91,28 @@ if (!$_SESSION['user']) {
 							<!-- Only admin users are allowed to update users -->
 							<?php if ($_SESSION['usertype'] && $_SESSION['usertype'] == '1') { ?>
 								<a class="col-sm-3 center-div" href="user_list.php">
-									<img src="../images/icon_user.png"  width="120" height="120">
+									<img src="../images/icon_users.png"  width="120" height="120">
 									<br><br> USERS
 								</a>
 							<?php } ?>
 
 		                    <a class="col-sm-3 center-div" href="researcher_list.php">
-		                    	<img src="../images/icon_researcher.png" width="120" height="120">
+		                    	<img src="../images/icon_researchers.png" width="120" height="120">
 		                    	<br><br> RESEARCHERS
 		                    </a>
 						</div>
 		                <br><br><br><br><br><br><br><br><br><br>
 						<div class="center-div">
 							<a class="col-sm-3 center-div" href="user_research_status.php">
-								<img src="../images/icon_researches.png" width="120" height="120">
+								<img src="../images/icon_research.png" width="120" height="120">
 		                    	<br><br> RESEARCHES
 							</a>
 		                    <a class="col-sm-3 center-div" href="user_journal_list.php">
-		                    	<img src="../images/icon_journal.png" width="120" height="120">
+		                    	<img src="../images/icon_journals.png" width="120" height="120">
 		                    	<br><br> JOURNAL
 		                    </a>
 		                    <a class="col-sm-3 center-div" href="user_memorandum_list.php">
-		                    	<img src="../images/icon_memo.png" width="120" height="120">
+		                    	<img src="../images/icon_memos.png" width="120" height="120">
 		                    	<br><br> MEMORANDUMS
 		                    </a>
 						</div>
