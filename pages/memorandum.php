@@ -76,16 +76,16 @@ session_start();
 
 		<!-- MAIN TEMPLATE FOR THE CONTENT -->
 		<div class="container-fluid ">    
-		  	<div class="row content body_middle">
+		  	<div class="row content">
 
 			    <div class="col-sm-3 sidenav" >
-			    	<div class="col-sm-4" ></div>
+			    	<!-- <div class="col-sm-4" ></div>
 			    	<div class="col-sm-8 h6">
 			    					      	
-			      	</div>
+			      	</div> -->
 			    </div>
 
-			    <div class="col-sm-6 center_content">
+			    <div class="col-sm-6 center_content body_middle">
 			    	<br>
 			    	<!-- <div class="" style="padding:2%; border: solid #e3dede 1px; border-radius:1%;">
 		    			<p class="h4 text-justify"><b><a href="memorandum_view.php">MAY 11, 2021 DM 284, S. 2021 - VIRTUAL TRAINING ON ADVANCING RESEARCH THROUGH 6D SCHEME FOR SECOND BATCH </b></a></p>
@@ -158,9 +158,11 @@ session_start();
 		</div>
 
 		<!-- Footer -->
-		<!-- <footer class="container-fluid text-center mt-auto">
-  			<p>All rights reserved &copy; 2021</p>
-		</footer> -->
+		<div class="footer text-center">
+			<p>&nbsp;</p> 
+		    <p class="">All rights reserved &copy; 2021</p>
+		    <p>&nbsp;</p>
+		</div>
 
 	</body>
 </html>

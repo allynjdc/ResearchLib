@@ -205,9 +205,11 @@ if ($db->query($query) === TRUE) {
 
 
 		<!-- Footer -->
-		<footer class="container-fluid text-center mt-auto">
-  			<!-- <p>All rights reserved &copy; 2021</p> -->
-		</footer>
+		<div class="footer text-center">
+			<p>&nbsp;</p> 
+		    <p class="">All rights reserved &copy; 2021</p>
+		    <p>&nbsp;</p>
+		</div>
 
 	</body>
 </html>

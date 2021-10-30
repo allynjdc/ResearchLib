@@ -1,4 +1,4 @@
-footer {
+.footer {
    position: absolute;
    bottom: 0;
    width: 100%;
@@ -6,4 +6,9 @@ footer {
    /*background-color: maroon;
    color: white;
    */
+ /* background: #42A5F5;
+  color: white;*/
+  /*padding: 20px;*/
+  /*grid-row-start: 2;
+  grid-row-end: 3;*/
 }

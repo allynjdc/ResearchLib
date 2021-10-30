@@ -117,26 +117,29 @@ session_start();
     						</div>
  						</form>
 					</div>
-						
+					<div>
+						<p>&nbsp;</p>
+						<p>&nbsp;</p>
+						<p>&nbsp;</p>
+						<p>&nbsp;</p>
+						<p>&nbsp;</p>
+					</div>	
 			    </div>
 
 
 			    <div class=" sidenav">
-			    	<!-- <div class="well">
-			        	<p>ADS</p>
-			      	</div>
-			      	<div class="well">
-			        	<p>ADS</p>
-			      	</div> -->
+			    	
 			    </div>
 		  </div>
 		</div>
 
 
 		<!-- Footer -->
-		<footer class="container-fluid text-center mt-auto">
-  			<p>All rights reserved &copy; 2021</p>
-		</footer>
+		<div class="footer text-center">
+			<p>&nbsp;</p> 
+		    <p class="">All rights reserved &copy; 2021</p>
+		    <p>&nbsp;</p>
+		</div>
 
 	</body>
 </html>

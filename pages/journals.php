@@ -76,16 +76,16 @@ session_start();
 
 		<!-- MAIN TEMPLATE FOR THE CONTENT -->
 		<div class="container-fluid content">    
-		  	<div class="row content body_middle" >
+		  	<div class="row content " >
 
 			    <div class="col-sm-3 sidenav" >
-			    	<div class="col-sm-4" ></div>
+			    	<!-- <div class="col-sm-4" ></div>
 			    	<div class="col-sm-8 h6 body_middle">
 			    					      	
-			      	</div>
+			      	</div> -->
 			    </div>
 
-			    <div class="col-sm-6 center_content"> <!-- style="background-color: white; " -->
+			    <div class="col-sm-6 center_content body_middle"> <!-- style="background-color: white; " -->
 			    	<br>
 			    	
 			    	<!-- FETCHING MEMORANDUM -->
@@ -159,14 +159,11 @@ session_start();
 		</div>
 
 		<!-- Footer -->
-		<footer class="container-fluid text-center mt-auto">
-  			<!-- <p>All rights reserved &copy; 2021</p> -->
-  			<div class="bg-light py-4">
-		      <div class="container text-center">
-		        <p class="text-muted mb-0 py-2">© 2019 Bootstrapious All rights reserved.</p>
-		      </div>
-		    </div>
-		</footer>
+		<div class="footer text-center">
+			<p>&nbsp;</p> 
+		    <p class="">All rights reserved &copy; 2021</p>
+		    <p>&nbsp;</p>
+		</div>
 
 	</body>
 </html>
