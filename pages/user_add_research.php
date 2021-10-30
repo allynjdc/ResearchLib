@@ -10,7 +10,7 @@ if (isset($_POST['submit'])){
 
 	$user_id 	= $_POST['research_user_id'];
 	$title 		= $_POST['research_title'];
-	$reseacher 	= $_POST['researcher_name'];
+	$researchers = $_POST['researcher_id'];
 	$office 	= $_POST['research_office'];
 	$category 	= $_POST['research_category'];
 	$type 		= $_POST['research_type'];
@@ -40,7 +40,6 @@ if (isset($_POST['submit'])){
 		echo "NOK <br>";
 		echo $db->error;
 	}
-
 }
 ?>
 
@@ -62,6 +61,34 @@ if (isset($_POST['submit'])){
 		<link rel="stylesheet" type="text/css" href="../css/body_css.css">
 		<link rel="stylesheet" type="text/css" href="../css/footer_css.css">
         <link rel="stylesheet" type="text/css" href="../css/nav_css.css">
+
+		<style>
+			fieldset.scheduler-border {
+				border: solid 1px #DDD !important;
+				padding: 0 10px 10px 10px;
+				border-bottom: none;
+			}
+
+			legend.scheduler-border {
+				width: auto !important;
+				text-align: left;
+				border: none;
+				font-size: 14px;
+			}
+			.remove-from-list {
+				float:right;
+				display:inline-block;
+				padding:2px 5px;
+			}
+			.remove-from-list:hover {
+				float:right;
+				display:inline-block;
+				padding:2px 5px;
+				color: red;
+				cursor: pointer;
+			}
+			
+		</style>
 		
 	</head>
 	<body class="bg-light">
@@ -125,23 +152,36 @@ if (isset($_POST['submit'])){
 						      	<input id="research_title" type="text" class="form-control" name="research_title" placeholder="Research Title">
 						    </div>
 						    <br>
-							<label id="researchers_label">Researchers: </label> </br>
-							<select name="researchers" id="researchers_selection" class="form-control-">
-								<option value=""></option> <!-- defuault option -->
-								<?php
-									$query = "SELECT * FROM researcher";
-									if ($result = $db->query($query)) {
-										while ($row = $result->fetch_assoc()) {
-											echo "<option value=\"".$row['researcher_id']."\">". $row['researcher_first_name']." ".$row['researcher_last_name']."</option>";
-										}
-									} else {
-										echo "<option value=''>Error</option>";
-									}
-								?>
-							</select>
-							<button type="button" id="add_name_btn" onclick="addResearcherName()" class="btn btn-outline-primary btn-sm" style="color:green;">+ Add </button>
-
-                            <br/>
+							<fieldset class="scheduler-border">
+								<legend class="scheduler-border">Researchers</legend>
+								
+								<!-- This list displays the researchers that are selected/added by user. We hide this list by default. Show it only when there's an item on the list -->
+								<ul class="list-group list-group-flush" id="researcher_list_display" style="display:none;"></ul>
+				
+								<div class="input-group">
+									<select name="researchers" id="researchers_selection" class="form-control">
+										<option value="" selected disabled hidden>-- select a researcher --</option> <!-- defuault option -->
+										<?php
+											$query = "SELECT * FROM researcher ORDER BY researcher_first_name";
+											if ($result = $db->query($query)) {
+												while ($row = $result->fetch_assoc()) {
+													$firstName = strtolower($row['researcher_first_name']);
+													$middleInitial = $row['researcher_middle_name'][0];
+													$lastName =  strtolower($row['researcher_last_name']);
+													$fullName = ucwords($firstName." ".$middleInitial.". ".$lastName);
+													echo "<option value=\"".$row['researcher_id']."\">".$fullName."</option>";
+												}
+											} else {
+												echo "<option value=''>Error</option>";
+											}
+										?>
+									</select>
+									<div class="input-group-btn">
+										<button type="button" id="add_name_btn" onclick="addResearcherName()" class="btn btn-default">+ Add </button>
+									</div>
+								</div>
+							</fieldset>
+							<br/>
 
                             <div class="input-group">
 						      	<span class="input-group-addon">School / Office</span>
@@ -194,19 +234,21 @@ if (isset($_POST['submit'])){
 						    
                             <div class="input-group" >
 						      	<span class="input-group-addon">Journal Title</span>
-						      	<input id="research_journal_title" type="text" class="form-control" name="research_journal_title" placeholder="Title of Journal">
+								<select name="research_journal_title" id="research_journal_title" class="form-control" required>
+									<option value="" disabled selected>-- select a journal --</option>
+									<?php
+										$query = "SELECT * FROM research_journal ORDER BY journal_title";
+										if ($result = $db->query($query)) {
+											while ($row = $result->fetch_assoc()) {
+												echo "<option value=\"".$row['journal_id']."\">". $row['journal_title']."</option>";
+											}
+										} else {
+											echo "<option value=''>Error</option>";
+										}
+									?>
+								</select>
 						    </div>
                             <br/>
-                            <!-- <div class="input-group">
-						      	<span class="input-group-addon">Volume</span>
-						      	<input id="journ_vol" type="number" class="form-control" name="journ_vol" placeholder="1" min="1" max="50">
-						    </div>
-						    <br>
-						    <div class="input-group">
-						      	<span class="input-group-addon">Issue</span>
-						      	<input id="journ_issue" type="number" class="form-control" name="journ_issue" placeholder="1" min="1" max="50">
-						    </div>
-						    <br> -->
                             <div class="input-group" >
 						      	<span class="input-group-addon">Pages</span>
 						      	<input id="research_journal_pages" type="text" class="form-control" name="research_journal_pages" placeholder="xx-xx">
@@ -214,7 +256,7 @@ if (isset($_POST['submit'])){
                             <br/>
                             <div class="input-group" >
 						      	<span class="input-group-addon">Research Abstract</span>
-						      	<textarea id="research_abstract" name="research_abstract" rows="4" cols="76"> </textarea>
+						      	<textarea id="research_abstract" name="research_abstract" rows="4" cols="76" class="form-group"> </textarea>
 						    </div>
                             <br/>
                             <div class="input-group" >
@@ -269,48 +311,57 @@ if (isset($_POST['submit'])){
 	<script>
 		function removeSelection(researcherId)
 		{
-			var nodeToDelete = document.getElementById("wrapper_" + researcherId);
-			nodeToDelete.parentNode.removeChild(nodeToDelete);
+			// Remove from the list
+			var listItemToDelete = document.getElementById("researcher_list_" + researcherId);
+			listItemToDelete.parentNode.removeChild(listItemToDelete);
+
+			// Remove the hidden input
+			var inputToDelete = document.getElementById("reseacher_input_" + researcherId);
+			inputToDelete.parentNode.removeChild(inputToDelete);
+
+			// Show the list if there are still items left. Otherwise, hide.
+			var researcherList = document.getElementById("researcher_list_display");
+			var displayList = researcherList.children.length !== 0 ? 'block' : 'none';
+			researcherList.style.display = displayList;
 		}
 
 		function addResearcherName() {
 			var selectedResearcher = document.getElementById("researchers_selection");
 			var index = selectedResearcher.selectedIndex;
-			if (selectedResearcher.value == "") {
+			if (selectedResearcher.value == "") { 			// Require the user to select a researcher
 				alert("Please select a researcher to add");
 				return;
 			}
+	
+			// Create a list element: 
+			var listItemNode = document.createElement("li");
+			listItemNode.setAttribute("class", "list-group-item");
+			listItemNode.setAttribute("id", "researcher_list_" + selectedResearcher.value);
+			var listText = document.createTextNode(selectedResearcher.options[index].text);
+			var closeBtnNode = document.createElement("span");
+			closeBtnNode.setAttribute("class", "remove-from-list pointer");
+			closeBtnNode.setAttribute("onclick", "removeSelection(" + selectedResearcher.value + ")" );
+			closeBtnNode.innerHTML = "&#10006;";  // The "x" character
+			listItemNode.appendChild(listText);
+			listItemNode.appendChild(closeBtnNode);
 
-			// <input>
-			// ToDo: If possible, don't put the researcher name in an input element. Maybe just in a div element with styling.
-			//		 Then the input element will be hidden, setting researcer id as the input's value.
+			// Add the new list item to the list so we can display it
+			document.getElementById("researcher_list_display").appendChild(listItemNode);
+			document.getElementById("researcher_list_display").setAttribute("style", "display: block;");
+
+			// Create hidden input element where the value is the researcher id
 			var inputNode = document.createElement("input");
 			inputNode.setAttribute("type", "text");
-			inputNode.setAttribute("readonly", true);
-			inputNode.setAttribute("name", "researcher_name[]");
-			inputNode.setAttribute("value", selectedResearcher.options[index].text);
+			inputNode.setAttribute("hidden", true);
+			inputNode.setAttribute("name", "researcher_id[]");
+			inputNode.setAttribute("id", "reseacher_input_" + selectedResearcher.value);
+			inputNode.setAttribute("value", selectedResearcher.value);
 
-			// <button> a button for deleting/removing the researcher
-			var deleteNode = document.createElement("button");
-			deleteNode.type = "button";
-			deleteNode.id = "delete_" + selectedResearcher.value;
-			deleteNode.setAttribute("onclick", "removeSelection(" + selectedResearcher.value + ")");
-			deleteNode.setAttribute("class", "btn btn-sm");
-			deleteNode.setAttribute("style", "color: red;");
-			var textNode = document.createTextNode("x");
-			deleteNode.appendChild(textNode);
-	
-			// <div> this element wraps the input element and button. So it is easier to remove them later on.
-			var divWrapper = document.createElement("div");
-			divWrapper.id = "wrapper_" + selectedResearcher.value;
-			divWrapper.appendChild(inputNode);
-			divWrapper.appendChild(deleteNode);
+			// Add the new hidden input the form
+			document.getElementById("add_researcher_form").appendChild(inputNode);
 
-			var addForm = document.getElementById("add_researcher_form");
-			var selectionList = document.getElementById("researchers_selection");
-			addForm.insertBefore(divWrapper, selectionList);
-
-			selectedResearcher.value = ""; // Reset the selection to empty after adding new researcher name
+			 // Reset the selection to empty after adding new researcher name
+			selectedResearcher.value = "";
 
 			// ToDo: Avoid duplicate researcher name by disabling the options that are already selected in the selected tag
 		}
