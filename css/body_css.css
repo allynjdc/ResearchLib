@@ -102,3 +102,8 @@ li.title_brand a.title_brand {
 .body_middle {
 	background: rgba(255, 255, 255, 0.7)
 }
+
+textarea {
+	max-width: 95%;
+	box-sizing: border-box;
+}

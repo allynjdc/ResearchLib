@@ -176,7 +176,7 @@ session_start();
 						}
 					?>
 					<div>
-						<p class="h4" style="color: maroon;"> <b> Cite this:</b></p>
+						<p class="h4" style="color: maroon;"> <br> <b> Cite this:</b></p>
 						<div>
 							<?php
 									// $mla = "";
@@ -212,6 +212,7 @@ session_start();
 								<!-- Guan, Yuanhui, Weihua Shi, and Desheng Wu. "The Design and Development of a School File Management System for Standardized." In 2012 International Conference on Computer Science and Electronics Engineering, vol. 2, pp. 630-634. IEEE, 2012. -->
 							</p>
 						</div>
+						<p>&nbsp;</p>
 
 						<?php
 							}

@@ -263,12 +263,14 @@ if (isset($_POST['submit'])){
                             <br/>
                             <div class="input-group" >
 						      	<span class="input-group-addon">Research Abstract</span>
-						      	<textarea id="research_abstract" name="research_abstract" rows="4" cols="76" class="form-group"> </textarea>
+						      	<textarea id="research_abstract" name="research_abstract" rows="4" cols="76" class="md-textarea form-control"></textarea>
+						      	<!-- cols="76" -->
 						    </div>
                             <br/>
                             <div class="input-group" >
 						      	<span class="input-group-addon">Research Keywords</span>
-						      	<textarea id="research_keywords" name="research_keywords" rows="2" cols="75"> </textarea>
+						      	<textarea id="research_keywords" name="research_keywords" rows="2" cols="75" class="md-textarea form-control"> </textarea>
+						      	<!-- cols="75" -->
 						    </div>
                             <br/>
                             <div class="input-group">
