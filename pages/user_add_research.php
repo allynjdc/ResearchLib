@@ -25,18 +25,25 @@ if (isset($_POST['submit'])){
 	$filename	= $_FILES['research_file']['name'];
 	$location 	= '../resources/research/'.$filename;
 
-	$query = "INSERT INTO research_output (research_id, research_title, research_office, research_category, research_type, research_agenda, research_date_publish, research_doi, research_journal_id, research_journal_pages, research_abstract, research_status, research_keywords, research_filename, research_filepath)
+	$query1 = "INSERT INTO research_output (research_id, research_title, research_office, research_category, research_type, research_agenda, research_date_publish, research_doi, research_journal_id, research_journal_pages, research_abstract, research_status, research_keywords, research_filename, research_filepath)
             VALUES (NULL, '$title', '$office', '$category', '$type', '$agenda', '$date', '$doi', '2', '$pages', '$abstract', '$status', '$keywords', '$filename', '$location')";
 
-    if ($db->query($query) === TRUE) {
+	$query2 = "INSERT INTO research_creation (creation_researcher_id, creation_research_id) VALUES";
+	$values = [];
+	foreach($researchers as $rId) {
+		$values[] = "($rId, LAST_INSERT_ID())";
+	}
+	$query2 .= join(',', $values);
+
+	// Note: Order matters here. quiery1 should be first so that the "LAST_INSERT_ID()" value in query2 is correct.
+	if ($db->query($query1) === TRUE && $db->query($query2) === TRUE) {
 		// Save the upload file to the local filesystem
 		if (move_uploaded_file($_FILES['research_file']['tmp_name'], $location)) {
 			header("Location:user_research_status.php");    
 		} else {
-		    echo "NOK";
+			echo "NOK";
 		}
-
-    } else {
+	} else {
 		echo "NOK <br>";
 		echo $db->error;
 	}
