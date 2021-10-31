@@ -112,31 +112,31 @@ if (!$_SESSION['user']) {
 
 						          			<div class="form-group">
 						            			<label for="user-name" class="col-form-label">First Name:</label>
-						            			<input type="text" class="form-control" id="add-user-fname">
+						            			<input type="text" class="form-control" id="add-user-fname" required>
 						          			</div>
 											  <div class="form-group">
 						            			<label for="user-name" class="col-form-label">Middle Name:</label>
-						            			<input type="text" class="form-control" id="add-user-mname">
+						            			<input type="text" class="form-control" id="add-user-mname" required>
 						          			</div>
 											  <div class="form-group">
 						            			<label for="user-name" class="col-form-label">Last Name:</label>
-						            			<input type="text" class="form-control" id="add-user-lname">
+						            			<input type="text" class="form-control" id="add-user-lname" required>
 						          			</div>
 						          			<div class="form-group">
 									            <label for="user-designation" class="col-form-label">Designation:</label>
-									            <input type="text" class="form-control" id="add-user-designation">
+									            <input type="text" class="form-control" id="add-user-designation" required>
 						          			</div>
 						          			<div class="form-group">
 									            <label for="user-station" class="col-form-label">Office / School:</label>
-									            <input type="text" class="form-control" id="add-user-office">
+									            <input type="text" class="form-control" id="add-user-office" required>
 						          			</div>
 						          			<div class="form-group">
 									            <label for="user-email" class="col-form-label">Email:</label>
-									            <input type="email" class="form-control" id="add-user-email">
+									            <input type="email" class="form-control" id="add-user-email" required>
 						          			</div>
 						          			<div class="form-group">
 									            <label for="user-username" class="col-form-label">Username:</label>
-									            <input type="text" class="form-control" id="add-user-username">
+									            <input type="text" class="form-control" id="add-user-username" required>
 						          			</div>
 						        		</form>
 						      		</div>

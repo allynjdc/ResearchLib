@@ -130,27 +130,27 @@ if (!$_SESSION['user']) {
 
 						          			<div class="form-group">
 						            			<label for="researcher_fname" class="col-form-label">First Name:</label>
-						            			<input type="text" class="form-control" id="researcher_fname">
+						            			<input type="text" class="form-control" id="researcher_fname" required>
 						          			</div>
 						          			<div class="form-group">
 						            			<label for="researcher_mname" class="col-form-label">Middle Name:</label>
-						            			<input type="text" class="form-control" id="researcher_mname">
+						            			<input type="text" class="form-control" id="researcher_mname" required>
 						          			</div>
 						          			<div class="form-group">
 						            			<label for="researcher_lname" class="col-form-label">Last Name:</label>
-						            			<input type="text" class="form-control" id="researcher_lname">
+						            			<input type="text" class="form-control" id="researcher_lname" required>
 						          			</div>
 						          			<div class="form-group">
 									            <label for="researcher_designation" class="col-form-label">Designation:</label>
-									            <input type="text" class="form-control" id="researcher_designation">
+									            <input type="text" class="form-control" id="researcher_designation" required>
 						          			</div>
 						          			<div class="form-group">
 									            <label for="researcher_station" class="col-form-label">Office / School:</label>
-									            <input type="text" class="form-control" id="researcher_station">
+									            <input type="text" class="form-control" id="researcher_station" required>
 						          			</div>
 						          			<div class="form-group">
 									            <label for="researcher_email" class="col-form-label">Email:</label>
-									            <input type="email" class="form-control" id="researcher_email">
+									            <input type="email" class="form-control" id="researcher_email" required>
 						          			</div>
 						          			<!-- <div class="form-group">
 									            <label for="researcher_username" class="col-form-label">Username:</label>

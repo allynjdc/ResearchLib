@@ -99,7 +99,7 @@ if (!$_SESSION['user']) {
 									      	<input id="Memo_num" type="number" min="1" max="1000" class="form-control" name="Memo_num" placeholder="DM 000" required>
 									    </div>
 									    <br>
-									    <input id="Memo_series" type="hidden" min="2010" max="2100" class="form-control" name="Memo_series" value="<?= date("Y") ?>">
+									    <input id="Memo_series" type="hidden" min="2010" max="2100" class="form-control" name="Memo_series" value="<?= date("Y") ?>" required>
 									    <div class="input-group">
 									      	<span class="input-group-addon">Subject</span>
 									      	<input id="Memo_title" type="text" class="form-control" name="Memo_title" placeholder="Memorandum Title" required>
