@@ -93,8 +93,7 @@ if (!$_SESSION['user']) {
 							      	<!-- FETCHING RESEARCH DATA -- CONDUCTED -->
 							    	<?php 
 							    		$status = "Conducted";
-										/*$query = "SELECT * FROM research_output AS ro INNER JOIN research_creation AS rc INNER JOIN research_journal AS rj INNER JOIN researcher as r ON rj.journal_id = ro.research_journal_id AND ro.research_id = rc.creation_research_id AND rc.creation_researcher_id = r.researcher_id WHERE research_status = '$status'";
-										*/
+
 										$query = "SELECT * FROM research_output AS ro 
 												INNER JOIN research_journal AS rj ON ro.research_journal_id = rj.journal_id
 												WHERE ro.research_status = '$status'";
