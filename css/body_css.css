@@ -104,6 +104,6 @@ li.title_brand a.title_brand {
 }
 
 textarea {
-	max-width: 95%;
+	max-width: 100%;
 	box-sizing: border-box;
 }
