@@ -72,8 +72,9 @@ if (!$_SESSION['user']) {
 			    <div class="col-sm-6 center-div center-content body_middle"> 
 			    	
 			    	<?php 
-						$id = intval($_SESSION['userid']);
+						$id = isset($_GET['userid'])!=""? intval($_GET['userid']) : intval($_SESSION['userid']);
 						// echo $id;
+						// if(){}
 						$query = "SELECT * FROM user WHERE user_id = '$id'";
 						if ($result = $db->query($query)){
 							// echo "result";

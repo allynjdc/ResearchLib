@@ -91,7 +91,7 @@ session_start();
 			    	<!-- FETCHING JOURNAL DATA -->
 			    	<?php 
 						$jid = intval($_GET['id']);
-						// echo $id;
+						$defaultImg = "default_journal_photo.png";
 						$query = "SELECT * FROM research_journal WHERE journal_id = '$jid'";
 						if ($result = $db->query($query)){
 							// echo "result";
@@ -108,7 +108,7 @@ session_start();
 			    		</div>
 			    		<br>     	
 						<div class="col-sm-2" >
-							<img class="img-responsive" src="../images/journals/<?=$row['journal_photo']?>" alt="<?=$row['journal_title']?>" width="90px" height="130px" >
+							<img class="img-responsive" src="../images/journals/<?=empty($row['journal_photo']) ? $defaultImg : $row['journal_photo'];?>" alt="<?=$row['journal_title']?>" width="90px" height="130px" >
 						</div>
 						
 						<div class="col-sm-10 text-left" >

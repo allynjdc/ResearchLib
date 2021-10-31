@@ -22,7 +22,7 @@ session_start();
 		<link rel="stylesheet" type="text/css" href="../css/nav_css.css">
 		
 	</head>
-	<body class="bg-light" style="background-image: url('../images/bg.png'); background-position: center; background-repeat: no-repeat; background-size: cover;">
+	<body class="bg-light" style="background-image: url('../images/bgs.png'); background-position: center; background-repeat: no-repeat; background-size: cover;">
 		<!-- Navigation -->
 		<!-- <div class="main_nav">
 			<div class="topnav" id="myTopnav">

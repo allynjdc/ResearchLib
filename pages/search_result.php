@@ -2,10 +2,24 @@
 include "../database/db_config.php";
 session_start();
 
+$key 	= "";
+$date 	= "";
+$categ 	= "";
+$types	= "";
+$agenda = "";
+$filters = "";
 if (isset($_GET['submit'])){
 	$key 	= $_GET['user_search'];
+	$date 	= isset($_GET['date'])!="" ?  $_GET['date']: "";
+	$categ 	= isset($_GET['categ'])!="" ?  $_GET['categ']: "";
+	$types	= isset($_GET['types'])!="" ?  $_GET['types']: "";
+	$agenda = isset($_GET['agenda'])!="" ? $_GET['agenda']: "";
 }
 
+$filters = $date."".$categ."".$types."".$agenda;
+
+$cyear = date("Y-m-d", strtotime("-5 years"));
+$year = date('Y',strtotime($cyear));
 ?>
 
 <DOCTYPE! html>
@@ -25,6 +39,7 @@ if (isset($_GET['submit'])){
 
 		<link rel="stylesheet" type="text/css" href="../css/body_css.css">
 		<link rel="stylesheet" type="text/css" href="../css/footer_css.css">
+		<link rel="stylesheet" type="text/css" href="../css/nav_css.css">
 		
 	</head>
 	<body class="bg-light">
@@ -32,7 +47,7 @@ if (isset($_GET['submit'])){
 		<!-- Navigation -->
 		<nav class="navbar navbar-inverse" > <!-- navbar-default style="background-color: #D5EBF6"-->
 		  	<div class="container-fluid col-md-10 col-md-offset-1">
-			    <div class="navbar-header col-sm-6">
+			    <div class="navbar-header col-md-6">
 			      	<a class="navbar-brand nav_title_a col-sm-12" href="<?=(!isset($_SESSION['user']))? "index.php" : "homepage.php"?>">
 			      		<span class="col-sm-1"><img   src="../images/logo1.png" height="30px" width="50px"></span>
 			      		<!-- <p class="title_brand_nav text-center"> -->
@@ -57,24 +72,34 @@ if (isset($_GET['submit'])){
 			      	</li>
 			      	<li><a href="#">Page 2</a></li>
 			    </ul> -->
+			    <div>
 			    <ul class="nav title_brand navbar-nav navbar-right">
-			    	<li class="title_brand" ><a class="title_brand" href="memorandum.php">Memorandums</a></li>
-			    	<li class="title_brand" ><a class="title_brand" href="journals.php">Journals</a></li>
+			    	<li class="title_brand" >
+			    		<a class="title_brand" href="memorandum.php">Memorandums</a>
+			    	</li>
+			    	<li class="title_brand" >
+			    		<a class="title_brand" href="journals.php">Journals</a>
+			    	</li>
 			      	<?php
-						if (!isset($_SESSION['user'])) {
-							echo "<li class=\"title_brand\" ><a class=\"title_brand\" href=\"login.php\">Login</a></li>";
+						if (!isset($_SESSION['user'])) { 
+					?>
+					<li class="title_brand" ><a class="title_brand" href="login.php">Login</a></li>
+					<?php
 						} else {
-							echo "<li class=\"dropdown title_brand\" >
-									<a href=\"#\" class=\"title_brand dropbtn\">" . $_SESSION['user'] . "</a>
-									<div class=\"dropdown-content\">
-										<a href=\"user_profile_view.php\">View Profile</a>
-										<a href=\"user_profile_update.php\">Edit Profile</a>
-										<a href=\"logout.php\">Log out</a>
-									</div>
-								</li>";
+					?>
+					<li class="dropdown title_brand">
+                        <a href="#" class="dropbtn title_brand"><?= $_SESSION['user'] ?></a>
+                        <div class="dropdown-content">
+                            <a href="user_profile_view.php">View Profile</a>
+                            <a href="user_profile_update.php">Edit Profile</a>
+                            <a href="logout.php">Log out</a>
+                        </div>
+                    </li>
+					<?php
 						}
 					?>
 			    </ul>
+				</div>
 		  	</div>
 		</nav>
 
@@ -88,35 +113,35 @@ if (isset($_GET['submit'])){
 			    		<br>
 			    		<div>
 			    			<p><b>Year</b></p>
-			    			<p><a href="#">2021</a></p>
-				      		<p><a href="#">2020</a></p>	
-				      		<p><a href="#">2017</a></p>
-				      		<p><a href="#">Custom Year</a></p>
+			    			<p><a href="search_result.php?user_search=<?=$key?>&date=2021&submit=">2021</a></p>
+				      		<p><a href="search_result.php?user_search=<?=$key?>&date=2020&submit=">2020</a></p>	
+				      		<p><a href="search_result.php?user_search=<?=$key?>&date=<?=$year?>&submit="><?=$year?></a></p>
+				      		<!-- <p><a href="#">Custom Year</a></p> -->
 			    		</div>
 			    		<hr>
 			    		<div>
 			    			<p><b>Research Category</b></p>
-			    			<p><a href="#">National</a></p>
-				      		<p><a href="#">Region</a></p>	
-				      		<p><a href="#">Schools Division</a></p>
-				      		<p><a href="#">District</a></p>
-				      		<p><a href="#">School</a></p>
+			    			<p><a href="search_result.php?user_search=<?=$key?>&categ=National&submit=">National</a></p>
+				      		<p><a href="search_result.php?user_search=<?=$key?>&categ=Regional&submit=">Region</a></p>	
+				      		<p><a href="search_result.php?user_search=<?=$key?>&categ=<?="Division"?>&submit=">Schools Division</a></p>
+				      		<p><a href="search_result.php?user_search=<?=$key?>&categ=District&submit=">District</a></p>
+				      		<p><a href="search_result.php?user_search=<?=$key?>&categ=School&submit=">School</a></p>
 				      		<br>
-				      		<p><a href="#">Action Research</a></p>
-				      		<p><a href="#">Basic Research</a></p>
+				      		<p><a href="search_result.php?user_search=<?=$key?>&types=<?="Action Research"?>&submit=">Action Research</a></p>
+				      		<p><a href="search_result.php?user_search=<?=$key?>&types=<?="Basic Research"?>&submit=">Basic Research</a></p>
 			    		</div>
 			    		<hr>
 			    		<div>
 			    			<p><b>Research Agenda</b></p>
-			    			<p><a href="#">Teaching & Learning</a></p>
-				      		<p><a href="#">Child Protection</a></p>	
-				      		<p><a href="#">Human Resource Development</a></p>
-				      		<p><a href="#">Governance</a></p>
+			    			<p><a href="search_result.php?user_search=<?=$key?>&agenda=<?="Teaching and Learning"?>&submit=">Teaching & Learning</a></p>
+				      		<p><a href="search_result.php?user_search=<?=$key?>&agenda=<?="Child Protection"?>&submit=">Child Protection</a></p>	
+				      		<p><a href="search_result.php?user_search=<?=$key?>&agenda=<?="Human Resource Development"?>&submit=">Human Resource Development</a></p>
+				      		<p><a href="search_result.php?user_search=<?=$key?>&agenda=<?="Governance"?>&submit=">Governance</a></p>
 				      		<br>
-				      		<p><a href="#">DRRM</a></p>
-				      		<p><a href="#">Gender Development</a></p>	
-				      		<p><a href="#">Inclusive Education</a></p>
-				      		<p><a href="#">Others</a></p>
+				      		<p><a href="search_result.php?user_search=<?=$key?>&agenda=<?="DRRM"?>&submit=">DRRM</a></p>
+				      		<p><a href="search_result.php?user_search=<?=$key?>&agenda=<?="Gender Development"?>&submit=">Gender Development</a></p>	
+				      		<p><a href="search_result.php?user_search=<?=$key?>&agenda=<?="Inclusive Education"?>&submit=">Inclusive Education</a></p>
+				      		<p><a href="search_result.php?user_search=<?=$key?>&agenda=<?="Others"?>&submit=">Others</a></p>
 			    		</div>
 				      	
 			      	</div>
@@ -136,18 +161,18 @@ if (isset($_GET['submit'])){
 					</div>
 					<br><br><hr>
 					<?php 
-						$key = "";
-						
-						if (isset($_GET['submit'])){
-							$key 	= $_GET['user_search'];
-						}
+						$search_key = "%".$key."%";	
+						// if ($filters!=""){
+						// 	echo $filters;
+						// 	$query = "SELECT * FROM research_output AS ro INNER JOIN research_creation AS rc INNER JOIN research_journal AS rj INNER JOIN researcher as r ON rj.journal_id = ro.research_journal_id AND ro.research_id = rc.creation_research_id AND rc.creation_researcher_id = r.researcher_id WHERE ".$filters." OR (ro.research_keywords LIKE '$search_key' OR ro.research_title LIKE '$search_key' OR ro.research_abstract LIKE '$search_key' OR ro.research_office LIKE '$search_key')";
+								
+						// } 
+						$query = "SELECT * FROM research_output AS ro INNER JOIN research_creation AS rc INNER JOIN research_journal AS rj INNER JOIN researcher as r ON rj.journal_id = ro.research_journal_id AND ro.research_id = rc.creation_research_id AND rc.creation_researcher_id = r.researcher_id WHERE (ro.research_keywords LIKE '$search_key' OR ro.research_title LIKE '$search_key' OR ro.research_abstract LIKE '$search_key' OR ro.research_office LIKE '$search_key' OR rj.journal_title LIKE '$search_key' OR r.researcher_last_name LIKE '$search_key' OR r.researcher_first_name LIKE '$search_key')";
 
-						$search = "%".$key."%";
 						
-						$query = "SELECT * FROM research_output AS ro INNER JOIN research_creation AS rc INNER JOIN research_journal AS rj INNER JOIN researcher as r ON rj.journal_id = ro.research_journal_id AND ro.research_id = rc.creation_research_id AND rc.creation_researcher_id = r.researcher_id WHERE ro.research_keywords LIKE '$search'";
-
 						if ($result = $db->query($query)) {
 							while ($row = $result->fetch_assoc()) {
+								if ((empty($filters)) OR($row['research_agenda']==$agenda OR $row['research_type']==$types OR $row['research_category']==$categ OR date('Y',strtotime($row['research_date_publish']))==$date)){
 															
 					?>
 					<div class="">
@@ -163,7 +188,25 @@ if (isset($_GET['submit'])){
 					</div>
 
 					
+					 <?php
+							// } else {
+
+					?> 
+					<!--
+					<div class="">
+						<p class="h4 text-justify"><b><a href="research_view.php?rid=<?=$row['research_id']?>"> <?=strtoupper($row['research_title'])?> </a></b></p>
+						<p class="h5 text-justify" style="color: maroon">
+							<?=$row['researcher_first_name'][0].".".$row['researcher_middle_name'][0].". ".$row['researcher_last_name']?> - <?=ucwords(strtolower($row['journal_title'])).", ".date('Y',strtotime($row['journal_date_publish']))?> 
+						</p>
+						<p class="h6 text-justify">
+							<?=substr($row['research_abstract'], 0, 270)."....."?>
+						</p>
+						<p>&nbsp;</p>
+						<br>
+					</div> -->
+
 					<?php
+							}
 						}
 					} else {
 						echo "<p> No results found.</p>";

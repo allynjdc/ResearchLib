@@ -151,7 +151,7 @@ if (isset($_POST['submit'])){
 					       	<p class="text-justify">Insert the Front Page Photo:
 					      		<input id="journ_photo" type="file" class="" name="journ_photo" accept="image/*, .pdf, .doc, .txt" required>
 					      	</p>
-					       	<p class="text-justify">Journal Final Copy:
+					       	<p class="text-justify"> Journal Final Copy:
 					      		<input id="journ_file" type="file" class="" name="journ_file" accept="image/*, .pdf, .doc, .txt" required>
 					      	</p>
 						    <input type = "submit" name = "submit" value = "Add Journal">
@@ -165,9 +165,7 @@ if (isset($_POST['submit'])){
 
 		<!-- Footer -->
 		<div class="footer text-center">
-			<p>&nbsp;</p> 
-		    <p class="">All rights reserved &copy; 2021</p>
-		    <p>&nbsp;</p>
+		    <p class=""> <br> All rights reserved &copy; 2021</p>
 		</div>
 
 	</body>
