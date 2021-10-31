@@ -91,6 +91,7 @@ session_start();
 			    	<!-- FETCHING JOURNAL DATA -->
 			    	<?php 
 						$jid = intval($_GET['id']);
+						$filename = "";
 						$defaultImg = "default_journal_photo.png";
 						$query = "SELECT * FROM research_journal WHERE journal_id = '$jid'";
 						if ($result = $db->query($query)){
@@ -99,6 +100,7 @@ session_start();
 								$mDate = strtotime($row['journal_date_publish']);
 								$months = array("null","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
 								$jDate = strtoupper($months[date('m',$mDate)])." ".date('Y',$mDate);
+								$filename = $row['journal_filename'];
 
 					?>
 
@@ -206,43 +208,50 @@ session_start();
 						<div>
 							<p class="author_name h4" style="color: maroon;"> <b> Articles </b></p> 
 						</div>
+
+						<?php
+
+						$query = "SELECT * FROM research_output AS ro INNER JOIN research_creation AS rc INNER JOIN research_journal AS rj INNER JOIN researcher as r ON rj.journal_id = ro.research_journal_id AND ro.research_id = rc.creation_research_id AND rc.creation_researcher_id = r.researcher_id WHERE rj.journal_id = '$jid'";
+						
+						if ($result = $db->query($query)) {
+							while ($row = $result->fetch_assoc()) {
+								$rdate = strtotime($row['journal_date_publish']);
+								$months = array("null","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
+
+						?>
 						
 						<div class="col-sm-12">
-							<p class="h5 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </b></a></p>
-							<p class="h6 text-justify" style="color: maroon">Allyn Joy Calcaben, Tagum National Trade School</p>
-							<p class="h6 text-justify"> Date Published: November 2021</p>
+							<p class="h5 text-justify"><b><a href="research_view.php?rid=<?=$row['research_id']?>"> <?=strtoupper($row['research_title'])?> </b></a></p>
+							<p class="h6 text-justify" style="color: maroon"><?=ucwords(strtolower($row['researcher_first_name']))." ".strtoupper($row['researcher_middle_name'][0]).". ".ucwords(strtolower($row['researcher_last_name'])).", ".ucwords(strtolower($row['researcher_office']))?></p>
+							<p class="h6 text-justify"> Date Published: <?=strtoupper($months[date('m',$rdate)])." ".date('Y',$rdate)?></p>
 							<p></p>
 							<br>
 						</div>
 
-						<div class="col-sm-12">
-							<p class="h5 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </b></a></p>
-							<p class="h6 text-justify" style="color: maroon">Allyn Joy Calcaben, Tagum National Trade School</p>
-							<p class="h6 text-justify"> Date Published: November 2021</p>
-							<p></p>
-							<br>
-						</div>						
+						<?php
+							}
+						} else {
+							echo "<p> No conducted Research yet.</p>";
+						}
+						?>
 						
-						<div class="col-sm-12">
-							<p class="h5 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </b></a></p>
-							<p class="h6 text-justify" style="color: maroon">Allyn Joy Calcaben, Tagum National Trade School</p>
-							<p class="h6 text-justify"> Date Published: November 2021</p>
-							<p></p>
-							<br>
-						</div>
-
-						<div class="col-sm-12">
-							<p class="h5 text-justify"><b><a href="research_view.php">DIGITAL LIBRARY: A WEB-BASED SYSTEM IN HANDLING RESEARCH OUTPUTS </b></a></p>
-							<p class="h6 text-justify" style="color: maroon">Allyn Joy Calcaben, Tagum National Trade School</p>
-							<p class="h6 text-justify"> Date Published: November 2021</p>
-							<p></p>
-							<br>
-						</div>
 
 					</div>
 
-					<?php
+					<?php 
+							if(isset($_SESSION['user'])){
+					?>
 
+					<div class="align-items-center">
+						<br>
+						<iframe src="../resources/journals/<?=$filename?>" width="100%" height="700px">
+    					</iframe>
+    					<br> <br>
+					</div>
+
+					<?php
+							}
+					
 						}
 					} else {
 						echo "<p> No uploaded journal yet.</p>";

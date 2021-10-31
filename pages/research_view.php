@@ -20,6 +20,7 @@ session_start();
 
 		<link rel="stylesheet" type="text/css" href="../css/body_css.css">
 		<link rel="stylesheet" type="text/css" href="../css/footer_css.css">
+		<link rel="stylesheet" type="text/css" href="../css/nav_css.css">
 		
 	</head>
 	<body class="bg-light">
@@ -27,7 +28,7 @@ session_start();
 		<!-- Navigation -->
 		<nav class="navbar navbar-inverse" > <!-- navbar-default style="background-color: #D5EBF6"-->
 		  	<div class="container-fluid col-md-10 col-md-offset-1">
-			    <div class="navbar-header col-sm-6">
+			    <div class="navbar-header col-md-6">
 			      	<a class="navbar-brand nav_title_a col-sm-12" href="<?=(!isset($_SESSION['user']))? "index.php" : "homepage.php"?>">
 			      		<span class="col-sm-1"><img   src="../images/logo1.png" height="30px" width="50px"></span>
 			      		<!-- <p class="title_brand_nav text-center"> -->
@@ -52,24 +53,34 @@ session_start();
 			      	</li>
 			      	<li><a href="#">Page 2</a></li>
 			    </ul> -->
+			    <div>
 			    <ul class="nav title_brand navbar-nav navbar-right">
-			    	<li class="title_brand" ><a class="title_brand" href="memorandum.php">Memorandums</a></li>
-			    	<li class="title_brand" ><a class="title_brand" href="journals.php">Journals</a></li>
+			    	<li class="title_brand" >
+			    		<a class="title_brand" href="memorandum.php">Memorandums</a>
+			    	</li>
+			    	<li class="title_brand" >
+			    		<a class="title_brand" href="journals.php">Journals</a>
+			    	</li>
 			      	<?php
-						if (!isset($_SESSION['user'])) {
-							echo "<li class=\"title_brand\" ><a class=\"title_brand\" href=\"login.php\">Login</a></li>";
+						if (!isset($_SESSION['user'])) { 
+					?>
+					<li class="title_brand" ><a class="title_brand" href="login.php">Login</a></li>
+					<?php
 						} else {
-							echo "<li class=\"dropdown title_brand\" >
-									<a href=\"#\" class=\"title_brand dropbtn\">" . $_SESSION['user'] . "</a>
-									<div class=\"dropdown-content\">
-										<a href=\"user_profile_view.php\">View Profile</a>
-										<a href=\"user_profile_update.php\">Edit Profile</a>
-										<a href=\"logout.php\">Log out</a>
-									</div>
-								</li>";
+					?>
+					<li class="dropdown title_brand">
+                        <a href="#" class="dropbtn title_brand"><?= $_SESSION['user'] ?></a>
+                        <div class="dropdown-content">
+                            <a href="user_profile_view.php">View Profile</a>
+                            <a href="user_profile_update.php">Edit Profile</a>
+                            <a href="logout.php">Log out</a>
+                        </div>
+                    </li>
+					<?php
 						}
 					?>
 			    </ul>
+				</div>
 		  	</div>
 		</nav>
 
@@ -152,12 +163,18 @@ session_start();
 							<?=$row['research_abstract']?>
 						</p>
 					</div>
+					<?php 
+						if(isset($_SESSION['user'])){
+					?>
 					<div class="align-items-center">
 						<br>
 						<iframe src="../resources/research/<?=$row['research_filename']?>" width="100%" height="700px">
     					</iframe>
     					<br> <br>
 					</div>
+					<?php
+						}
+					?>
 					<div>
 						<p class="h4" style="color: maroon;"> <b> Cite this:</b></p>
 						<div>
