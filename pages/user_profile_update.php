@@ -155,7 +155,6 @@ if (isset($_POST['submit'])){
                         <p id="edit_user_status_msg"></p>
                         <input type="submit" name="submit" value="Update Profile">
                     </form>
-
 			    </div>
 
                 <?php 
@@ -176,7 +175,6 @@ if (isset($_POST['submit'])){
         <div class="footer text-center">
             <p>&nbsp;</p> 
             <p class="">All rights reserved &copy; 2021</p>
-            <p>&nbsp;</p>
         </div>
 
 	</body>

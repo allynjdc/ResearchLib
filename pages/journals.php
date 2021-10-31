@@ -92,13 +92,14 @@ session_start();
 					<?php 
 						$query = "SELECT * FROM research_journal ORDER BY journal_date_publish DESC";
 						if ($result = $db->query($query)){
+							$defaultImg = "default_journal_photo.png";
 							while ($row = $result->fetch_assoc()){
 								$jid = $row['journal_id'];
 								$jtitle = $row['journal_title'];
 								$jvol = $row['journal_volume'];
 								$jissue = $row['journal_issue'];
 								$mDate = strtotime($row['journal_date_publish']);
-								$jphoto = $row['journal_photo'];
+								$jphoto = empty($row['journal_photo']) ? $defaultImg : $row['journal_photo'];
 								$jLoc = "../images/journals/".$jphoto;
 
 								$months = array("null","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");

@@ -77,11 +77,11 @@ if (!$_SESSION['user']) {
 	                    	</div>
 	                    	<br> -->
 
-							<form action="/action_page.php">
+							<form action="search_result.php" method="GET" enctype="multipart/form-data">
 	    						<div class="input-group" >
-	     							<input type="text" class="form-control" placeholder="Search" name="search" style="height: 40px;">
+	     							<input type="text" class="form-control" placeholder="Search Researches" name="user_search" id="user_search" style="height: 40px;">
 	      							<div class="input-group-btn" >
-	       								<button class="btn btn-default" type="submit" style="height: 40px;"><i class="glyphicon glyphicon-search">&nbsp;</i></button>
+	       								<button class="btn btn-default" type="submit" name = "submit" style="height: 40px;"><i class="glyphicon glyphicon-search">&nbsp;</i></button>
 	      							</div>
 	    						</div>
 	 						</form>
@@ -92,37 +92,38 @@ if (!$_SESSION['user']) {
 							<?php if ($_SESSION['usertype'] && $_SESSION['usertype'] == '1') { ?>
 								<a class="col-sm-3 center-div" href="user_list.php">
 									<img src="../images/icon_users.png"  width="120" height="120">
-									<br><br> USERS
+									<br> USERS
 								</a>
 							<?php } ?>
 
 		                    <a class="col-sm-3 center-div" href="researcher_list.php">
 		                    	<img src="../images/icon_researchers.png" width="120" height="120">
-		                    	<br><br> RESEARCHERS
+		                    	<br> RESEARCHERS
 		                    </a>
 						</div>
 		                <br><br><br><br><br><br><br><br><br><br>
 						<div class="center-div">
 							<a class="col-sm-3 center-div" href="user_research_status.php">
 								<img src="../images/icon_research.png" width="120" height="120">
-		                    	<br><br> RESEARCHES
+		                    	<br> RESEARCHES
 							</a>
 		                    <a class="col-sm-3 center-div" href="user_journal_list.php">
 		                    	<img src="../images/icon_journals.png" width="120" height="120">
-		                    	<br><br> JOURNAL
+		                    	<br> JOURNALS
 		                    </a>
 		                    <a class="col-sm-3 center-div" href="user_memorandum_list.php">
 		                    	<img src="../images/icon_memos.png" width="120" height="120">
-		                    	<br><br> MEMORANDUMS
+		                    	<br> MEMORANDUMS
 		                    </a>
 						</div>
-						<br><br><br><br><br><br><br><br><br><br><br>
-
+						<br><br><br><br><br><br><br><br><br><br>
                     </div>
-                    
 			    </div>
-				
-		  </div>
+				<div>
+					<p>&nbsp;</p>
+					<p>&nbsp;</p>
+				</div>
+		    </div>
 		</div>
 
 
