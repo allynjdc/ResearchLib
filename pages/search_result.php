@@ -18,12 +18,8 @@ if (isset($_GET['submit'])){
 
 $filters = $date."".$categ."".$types."".$agenda;
 
-// $filters = (($date!="")? "ro.research_date LIKE %".$date."% ": "");
-// $filters = (($categ!="")? (($filters != "")? $filters . ", OR ": "") . "ro.research_category LIKE %".$categ."% ": "");
-// $filters = (($types!="")? (($filters != "")? $filters . ", OR ": "") . "ro.research_type LIKE %".$types."% ": "");
-// $filters = (($agenda!="")?(($filters != "")? $filters . ", OR ": "") . "ro.research_agenda LIKE %".$agenda."%": "");
-
-echo $filters;
+$cyear = date("Y-m-d", strtotime("-5 years"));
+$year = date('Y',strtotime($cyear));
 ?>
 
 <DOCTYPE! html>
@@ -119,7 +115,7 @@ echo $filters;
 			    			<p><b>Year</b></p>
 			    			<p><a href="search_result.php?user_search=<?=$key?>&date=2021&submit=">2021</a></p>
 				      		<p><a href="search_result.php?user_search=<?=$key?>&date=2020&submit=">2020</a></p>	
-				      		<p><a href="search_result.php?user_search=<?=$key?>&date=2017&submit=">2017</a></p>
+				      		<p><a href="search_result.php?user_search=<?=$key?>&date=<?=$year?>&submit="><?=$year?></a></p>
 				      		<!-- <p><a href="#">Custom Year</a></p> -->
 			    		</div>
 			    		<hr>
