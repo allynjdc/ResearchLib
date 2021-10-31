@@ -74,21 +74,21 @@ if (!$_SESSION['user']) {
                     	<form>
 						    <div class="input-group">
 						      	<span class="input-group-addon">Memorandum Code</span>
-						      	<input id="Memo_code" type="text" class="form-control" name="Memo_code" placeholder="DM 000, s. 2021">
+						      	<input id="Memo_code" type="text" class="form-control" name="Memo_code" placeholder="DM 000, s. 2021" required>
 						    </div>
 						    <br>
 						    <div class="input-group">
 						      	<span class="input-group-addon">Subject</span>
-						      	<input id="title" type="text" class="form-control" name="title" placeholder="Memorandum Title">
+						      	<input id="title" type="text" class="form-control" name="title" placeholder="Memorandum Title" required>
 						    </div>
 						    <br>
 						    <div class="input-group">
 						      	<span class="input-group-addon">Date Signed</span>
-						      	<input id="signed_date" type="date" class="form-control" name="signed_date" placeholder="Additional Info" min="2001-01-01" max="2099-12-31">
+						      	<input id="signed_date" type="date" class="form-control" name="signed_date" placeholder="Additional Info" min="2001-01-01" max="2099-12-31" required>
 						    </div>
 						    <br>
 						       	<p class="text-justify">Insert the File:</p>
-						      	<input id="memo" type="file" class="" name="memo" accept="image/*, .pdf, .doc, .txt">
+						      	<input id="memo" type="file" class="" name="memo" accept="image/*, .pdf, .doc, .txt" required>
 						    <br>
 						    <button class="btn-success" type="submit" >Upload</button>
 	  					</form>

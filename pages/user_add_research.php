@@ -149,7 +149,7 @@ if (isset($_POST['submit'])){
                     		<input id="research_user_id" type="hidden" class="form-control" name="research_user_id" value="<?=$_SESSION['userid']?>">
 						    <div class="input-group">
 						      	<span class="input-group-addon">Title</span>
-						      	<input id="research_title" type="text" class="form-control" name="research_title" placeholder="Research Title">
+						      	<input id="research_title" type="text" class="form-control" name="research_title" placeholder="Research Title" required>
 						    </div>
 						    <br>
 							<fieldset class="scheduler-border">
@@ -185,12 +185,12 @@ if (isset($_POST['submit'])){
 
                             <div class="input-group">
 						      	<span class="input-group-addon">School / Office</span>
-						      	<input id="research_office" type="text" class="form-control" name="research_office" placeholder="ex. Tagum National Trade School">
+						      	<input id="research_office" type="text" class="form-control" name="research_office" placeholder="ex. Tagum National Trade School" required>
 						    </div>
 						    <br>
 						    <div class="input-group">
 						      	<span class="input-group-addon">Research Category</span>
-                                <select name="research_category" id="research_category" class="form-control">
+                                <select name="research_category" id="research_category" class="form-control" required>
                                     <option value="National"> National </option>
                                     <option value="Regional"> Regional </option>
                                     <option value="Schools Division"> Schools Division </option>
@@ -201,7 +201,7 @@ if (isset($_POST['submit'])){
                             <br/>
                             <div class="input-group">
 						      	<span class="input-group-addon">Research Type</span>
-                                <select name="research_type" id="research_type" class="form-control">
+                                <select name="research_type" id="research_type" class="form-control" required>
                                     <option value="Action Research"> Action Research </option>
                                     <option value="Basic Research"> Basic Research </option>
                                 </select>
@@ -209,7 +209,7 @@ if (isset($_POST['submit'])){
                             </br>
                             <div class="input-group">
 						      	<span class="input-group-addon">Research Agenda</span>
-                                <select name="research_agenda" id="research_agenda" class="form-control">
+                                <select name="research_agenda" id="research_agenda" class="form-control" required>
                                     <option value="Teaching and Learning"> Teaching and Learning </option>
                                     <option value="Child Protection"> Child Protection </option>
                                     <option value="Human Resource Development"> Human Resource Development </option>
@@ -228,7 +228,7 @@ if (isset($_POST['submit'])){
                             <br/>
                             <div class="input-group" >
 						      	<span class="input-group-addon">DOI</span>
-						      	<input id="research_doi" type="text" class="form-control" name="research_doi" placeholder="00.0000/0000000000000-0">
+						      	<input id="research_doi" type="text" class="form-control" name="research_doi" placeholder="00.0000/0000000000000-0" required>
 						    </div>
 						    <br/>
 						    
@@ -251,7 +251,7 @@ if (isset($_POST['submit'])){
                             <br/>
                             <div class="input-group" >
 						      	<span class="input-group-addon">Pages</span>
-						      	<input id="research_journal_pages" type="text" class="form-control" name="research_journal_pages" placeholder="xx-xx">
+						      	<input id="research_journal_pages" type="text" class="form-control" name="research_journal_pages" placeholder="xx-xx" required>
 						    </div>
                             <br/>
                             <div class="input-group" >
@@ -266,7 +266,7 @@ if (isset($_POST['submit'])){
                             <br/>
                             <div class="input-group">
 						      	<span class="input-group-addon" style="background-color: #ffb19e;">Research Status</span>
-                                <select name="research_status" id="research_status" class="form-control">
+                                <select name="research_status" id="research_status" class="form-control" required>
                                     <option value="Conducted"> Conducted </option>
                                     <option value="Submitted"> Submitted </option>
                                     <option value="Disseminated"> Disseminated </option>
@@ -276,7 +276,7 @@ if (isset($_POST['submit'])){
 						    <br>
 
 						    	<p class="text-justify">Insert the Research File:</p>
-						      	<input id="research_file" type="file" class="" name="research_file" accept="image/*, .pdf, .doc, .txt">
+						      	<input id="research_file" type="file" class="" name="research_file" accept="image/*, .pdf, .doc, .txt" required>
 						    <br>
 						    <input type="submit" name="submit" value="Add Research">
 	  					</form>

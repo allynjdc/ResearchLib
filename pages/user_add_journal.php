@@ -149,7 +149,7 @@ if (isset($_POST['submit'])){
 						    </div>
 						    <br>
 					       	<p class="text-justify">Insert the Front Page Photo:
-					      		<input id="journ_photo" type="file" class="" name="journ_photo" accept="image/*, .pdf, .doc, .txt" required>
+					      		<input id="journ_photo" type="file" class="" name="journ_photo" accept="image/*, .pdf, .doc, .txt" >
 					      	</p>
 					       	<p class="text-justify"> Journal Final Copy:
 					      		<input id="journ_file" type="file" class="" name="journ_file" accept="image/*, .pdf, .doc, .txt" required>
