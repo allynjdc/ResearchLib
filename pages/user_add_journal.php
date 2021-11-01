@@ -110,22 +110,27 @@ if (isset($_POST['submit'])){
                     		<input id="journ_user" type="hidden" value="<?= $_SESSION['userid'] ?>" name="journ_user">
 						    <div class="input-group">
 						      	<span class="input-group-addon">Journal Title</span>
-						      	<input id="journ_title" type="text" class="form-control" name="journ_title" placeholder="title" required>
+						      	<input id="journ_title" type="text" class="form-control" name="journ_title" placeholder="Title" required>
 						    </div>
 						    <br>
-						    <div class="input-group">
+						    <!-- <div class="input-group">
 						      	<span class="input-group-addon">Journal Description</span>
-						      	<input id="journ_desc" type="text" class="form-control" name="journ_desc" placeholder="tell us about the Journal" required>
+						      	<input id="journ_desc" type="text" class="form-control" name="journ_desc" placeholder="Tell us about the Journal" required>
+						    </div> -->
+						    <div class="input-group" >
+						      	<span class="input-group-addon">Journal Description</span>
+						      	<textarea id="journ_desc" name="journ_desc" rows="2"  class="md-textarea form-control"></textarea>
+						      	<!-- cols="76" -->
 						    </div>
 						    <br>
 						    <div class="input-group">
 						      	<span class="input-group-addon">Volume</span>
-						      	<input id="journ_vol" type="number" class="form-control" name="journ_vol" placeholder="1" min="1" max="50" required>
+						      	<input id="journ_vol" type="number" class="form-control" name="journ_vol" placeholder="1" min="1" max="5000" required>
 						    </div>
 						    <br>
 						    <div class="input-group">
 						      	<span class="input-group-addon">Issue</span>
-						      	<input id="journ_issue" type="number" class="form-control" name="journ_issue" placeholder="1" min="1" max="50" required>
+						      	<input id="journ_issue" type="number" class="form-control" name="journ_issue" placeholder="1" min="1" max="5000" required>
 						    </div>
 						    <br>
 						    <div class="input-group">
@@ -140,7 +145,7 @@ if (isset($_POST['submit'])){
 						    <br>
 						    <div class="input-group">
 						      	<span class="input-group-addon">Publisher</span>
-						      	<input id="journ_publisher" type="text" class="form-control" name="journ_publisher" placeholder="Additional Info" required>
+						      	<input id="journ_publisher" type="text" class="form-control" name="journ_publisher" placeholder="Publisher Name" required>
 						    </div>
 						    <br>
 						    <div class="input-group">
@@ -148,13 +153,15 @@ if (isset($_POST['submit'])){
 						      	<input id="journ_dev_team" type="text" class="form-control" name="journ_dev_team" placeholder="Member Name" required>
 						    </div>
 						    <br>
-					       	<p class="text-justify">Insert the Front Page Photo:
-					      		<input id="journ_photo" type="file" class="" name="journ_photo" accept="image/*, .pdf, .doc, .txt" >
+					       	<p class="text-justify"> <b class="col-sm-4"> Insert the Front Page Photo: </b> <input id="journ_photo" type="file" class="col-sm-6" name="journ_photo" accept="image/*, .pdf, .doc, .txt" >
 					      	</p>
-					       	<p class="text-justify"> Journal Final Copy:
-					      		<input id="journ_file" type="file" class="" name="journ_file" accept="image/*, .pdf, .doc, .txt" required>
+					      	<br>
+					       	<p class="text-justify"> <b class="col-sm-4"> Journal Final Copy: </b> <input id="journ_file" type="file" class=" col-sm-6" name="journ_file" accept="image/*, .pdf, .doc, .txt" required>
 					      	</p>
-						    <input type = "submit" name = "submit" value = "Add Journal">
+					      	<p class="col-sm-12">
+					      		<br>
+					      		<input type = "submit" name = "submit" value = "Add Journal">
+					      	</p>
 	  					</form>
                     </div>
 	                    
@@ -165,7 +172,7 @@ if (isset($_POST['submit'])){
 
 		<!-- Footer -->
 		<div class="footer text-center">
-		    <p class=""> <br> All rights reserved &copy; 2021</p>
+		    <p class=""> <br>All rights reserved &copy; 2021</p>
 		</div>
 
 	</body>

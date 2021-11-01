@@ -143,9 +143,16 @@ if ($db->query($query) === TRUE) {
 						      	<input id="journ_title" type="text" class="form-control" name="journ_title" placeholder="title" value="<?=$row['journal_title']?>">
 						    </div>
 						    <br>
-						    <div class="input-group">
+						    <!-- <div class="input-group">
 						      	<span class="input-group-addon">Journal Description</span>
-						      	<input id="journ_desc" type="text" class="form-control" name="journ_desc" placeholder="tell us about the Journal" value="<?=$row['journal_description']?>">
+						      	<input id="journ_desc" type="text" class="form-control" name="journ_desc" placeholder="tell us about the Journal" >
+						    </div> -->
+						    <div class="input-group" >
+						      	<span class="input-group-addon">Journal Description</span>
+						      	<textarea id="journ_desc" name="journ_desc" rows="2"  class="md-textarea form-control" value="">
+						      		<?=$row['journal_description']?>
+						      	</textarea>
+						      	<!-- cols="76" -->
 						    </div>
 						    <br>
 						    <div class="input-group">
@@ -178,15 +185,19 @@ if ($db->query($query) === TRUE) {
 						      	<input id="journ_dev_team" type="text" class="form-control" name="journ_dev_team" placeholder="Member Name" value="<?=$row['journal_editor_team']?>">
 						    </div>
 						    <br>
-					       	<p class="text-justify">Insert the Front Page Photo:
-					       		<input id="journ_old_photo" type="hidden" class="" name="journ_old_photo" accept="image/*, .pdf, .doc, .txt" value="<?=$row['journal_photo']?>">
-					      		<input id="journ_photo" type="file" class="" name="journ_photo" accept="image/*, .pdf, .doc, .txt" value="<?=$row['journal_photo']?>">
+						    <p class="text-justify"> <b class="col-sm-4"> Insert the Front Page Photo: </b> 
+						    	<input id="journ_old_photo" type="hidden" class="" name="journ_old_photo" accept="image/*, .pdf, .doc, .txt" value="<?=$row['journal_photo']?>">
+						    	<input id="journ_photo" type="file" class="col-sm-6" name="journ_photo" accept="image/*, .pdf, .doc, .txt" value="<?=$row['journal_photo']?>">
 					      	</p>
-					       	<p class="text-justify">Journal Final Copy:
+					      	<br>
+					       	<p class="text-justify"> <b class="col-sm-4"> Journal Final Copy: </b> 
 					       		<input id="journ_old_file" type="hidden" class="" name="journ_old_file" accept="image/*, .pdf, .doc, .txt" value="<?=$row['journal_filename']?>">
-					      		<input id="journ_file" type="file" class="" name="journ_file" accept="image/*, .pdf, .doc, .txt" value="<?=$row['journal_filename']?>">
+					       		<input id="journ_file" type="file" class=" col-sm-6" name="journ_file" accept="image/*, .pdf, .doc, .txt" value="<?=$row['journal_filename']?>" required>
 					      	</p>
-						    <input type="submit" name="submit" value="Update Journal">
+					      	<p class="col-sm-12">
+					      		<br>
+					      		<input type = "submit" name = "submit" value = "Add Journal">
+					      	</p>
 	  					</form>
                     </div>
 	                    

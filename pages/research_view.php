@@ -132,7 +132,7 @@ session_start();
 						<p> In book: <?=$jtitle?> (pp. <?=$jpages?>) </p>
 
 						<div> 
-							<p><span class="glyphicon glyphicon-folder-open">  </span>&nbsp;&nbsp;<?=$row['research_category']?></p> 
+							<p><span class="glyphicon glyphicon-folder-open"> </span>&nbsp;&nbsp;<?=$row['research_category']?></p> 
 							<p><span class="glyphicon glyphicon-book">  </span> &nbsp;&nbsp;<?=$row['research_type']?> </p>
 							<p><span class="glyphicon glyphicon-briefcase">  </span>&nbsp;&nbsp;<?=$row['research_agenda']?></p>
 						</div>

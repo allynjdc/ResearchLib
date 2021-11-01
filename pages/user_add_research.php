@@ -26,7 +26,7 @@ if (isset($_POST['submit'])){
 	$location 	= '../resources/research/'.$filename;
 
 	$query1 = "INSERT INTO research_output (research_id, research_title, research_office, research_category, research_type, research_agenda, research_date_publish, research_doi, research_journal_id, research_journal_pages, research_abstract, research_status, research_keywords, research_filename, research_filepath)
-            VALUES (NULL, '$title', '$office', '$category', '$type', '$agenda', '$date', '$doi', '2', '$pages', '$abstract', '$status', '$keywords', '$filename', '$location')";
+            VALUES (NULL, '$title', '$office', '$category', '$type', '$agenda', '$date', '$doi', '$journal', '$pages', '$abstract', '$status', '$keywords', '$filename', '$location')";
 
 	$query2 = "INSERT INTO research_creation (creation_researcher_id, creation_research_id) VALUES";
 	$values = [];

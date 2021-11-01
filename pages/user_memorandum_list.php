@@ -149,7 +149,7 @@ if (!$_SESSION['user']) {
 					-->
 					<!-- FETCHING MEMORANDUM -->
 					<?php 
-						$query = "SELECT * FROM memorandum ORDER BY memo_date";
+						$query = "SELECT * FROM memorandum ORDER BY memo_date DESC";
 						if ($result = $db->query($query)){
 							while ($row = $result->fetch_assoc()){
 								$memoNum = $row['memo_number'];
@@ -160,7 +160,7 @@ if (!$_SESSION['user']) {
 								$memoDir = $row['memo_filepath'];
 
 								$months = array("null","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
-								$memoDate = strtoupper($months[date('m',$mDate)])." ".date('d',$mDate).", ".date('Y',$mDate);
+								$memoDate = strtoupper($months[intval(date('m',$mDate))])." ".date('d',$mDate).", ".date('Y',$mDate);
 								// $memoDate = $mDate;
 
 								echo "

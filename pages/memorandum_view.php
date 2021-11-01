@@ -106,7 +106,7 @@ session_start();
 								$memoDir = $row['memo_filepath'];
 
 								$months = array("null","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
-								$memoDate = strtoupper($months[date('m',$mDate)])." ".date('d',$mDate).", ".date('Y',$mDate);
+								$memoDate = strtoupper($months[intval(date('m',$mDate))])." ".date('d',$mDate).", ".date('Y',$mDate);
 					?>
 						<div>
 							<p class="author_name h4" style="color: maroon;"> <b> <?=ucwords(strtolower($memoSubject))?></b> </p>

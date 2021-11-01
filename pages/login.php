@@ -124,8 +124,9 @@ if (isset($_SESSION['user'])) {
 		<!-- Footer -->
 		<div class="footer text-center">
 			<p>&nbsp;</p> 
+			<p>&nbsp;</p> 
+			<p>&nbsp;</p>
 		    <p class="">All rights reserved &copy; 2021</p>
-		    <p>&nbsp;</p>
 		</div>
 
 	</body>

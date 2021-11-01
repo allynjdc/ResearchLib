@@ -103,7 +103,7 @@ session_start();
 								$jLoc = "../images/journals/".$jphoto;
 
 								$months = array("null","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
-								$jDate = strtoupper($months[date('m',$mDate)])." ".date('Y',$mDate);
+								$jDate = strtoupper($months[intval(date('m',$mDate))])." ".date('Y',$mDate);
 								// $memoDate = $mDate;
 					?>
 

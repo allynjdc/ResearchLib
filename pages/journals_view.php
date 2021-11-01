@@ -99,7 +99,7 @@ session_start();
 							while ($row = $result->fetch_assoc()){
 								$mDate = strtotime($row['journal_date_publish']);
 								$months = array("null","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
-								$jDate = strtoupper($months[date('m',$mDate)])." ".date('Y',$mDate);
+								$jDate = strtoupper($months[intval(date('m',$mDate))])." ".date('Y',$mDate);
 								$filename = $row['journal_filename'];
 
 					?>
