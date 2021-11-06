@@ -127,7 +127,7 @@ session_start();
 
 					<div>
 						<br>
-						<p> <?=strtoupper($months[date('m',$rdate)])." ".date('Y',$rdate)?> </p>
+						<p> <?=strtoupper($months[intval(date('m',$rdate))])." ".date('Y',$rdate)?> </p>
 						<p>DOI: <?=$row['research_doi']?></p>
 						<p> In book: <?=$jtitle?> (pp. <?=$jpages?>) </p>
 
@@ -186,7 +186,7 @@ session_start();
 									// 	$mla = $mla."";
 									// }
 
-								$mla = $row['researcher_last_name'].", ".$row['researcher_first_name'].'. "'.$row['research_title'].'." <i>'.$row['journal_title']."</i>, vol. ".$row['journal_volume'].", no. ".$row['journal_issue'].", ".$months[date('m',$rdate)]." ".date('Y',$rdate).", pp. ".$row['research_journal_pages'].", doi: ".$row['research_doi'].".";
+								$mla = $row['researcher_last_name'].", ".$row['researcher_first_name'].'. "'.$row['research_title'].'." <i>'.$row['journal_title']."</i>, vol. ".$row['journal_volume'].", no. ".$row['journal_issue'].", ".$months[intval(date('m',$rdate))]." ".date('Y',$rdate).", pp. ".$row['research_journal_pages'].", doi: ".$row['research_doi'].".";
 
 								$apa = $row['researcher_last_name'].", ".$row['researcher_first_name'][0].'. ('.date('Y',$rdate)."). ".$row['research_title'].'. <i>'.$row['journal_title'].", ".$row['journal_volume']."</i>(".$row['journal_issue']."), ".$row['research_journal_pages'].". ".$row['research_doi'].".";
 
