@@ -20,6 +20,13 @@ $filters = $date."".$categ."".$types."".$agenda;
 
 $cyear = date("Y-m-d", strtotime("-5 years"));
 $year = date('Y',strtotime($cyear));
+
+// Highlight words in text
+function highlightWords($text, $keword) {
+	$text = preg_replace('#'. preg_quote($keword) . '#i', '<span style="background-color: #F9F902;">\\0</span>', $text);
+	return $text;
+}
+
 ?>
 
 <DOCTYPE! html>
@@ -172,42 +179,42 @@ $year = date('Y',strtotime($cyear));
 						
 						if ($result = $db->query($query)) {
 							while ($row = $result->fetch_assoc()) {
-								if ((empty($filters)) OR($row['research_agenda']==$agenda OR $row['research_type']==$types OR $row['research_category']==$categ OR date('Y',strtotime($row['research_date_publish']))==$date)){
+								if ((empty($filters)) OR($row['research_agenda']==$agenda OR $row['research_type']==$types OR $row['research_category']==$categ OR date('Y',strtotime($row['research_date_publish']))==$date)) {
 															
 					?>
 					<div class="">
-						<p class="h4 text-justify"><b><a href="research_view.php?rid=<?=$row['research_id']?>"> <?=strtoupper($row['research_title'])?> </a></b></p>
+						<p class="h4 text-justify">
+							<b>
+								<a href="research_view.php?rid=<?=$row['research_id']?>">
+								<?php
+									$capitalize_title = strtoupper($row['research_title']);
+									$research_title_to_display = !empty($key) ? highlightWords($capitalize_title, $key) : $capitalize_title;
+									echo $research_title_to_display;
+								?>
+								</a>
+							</b>
+						</p>
 						<p class="h5 text-justify" style="color: maroon">
-							<?=$row['researcher_first_name'][0].".".$row['researcher_middle_name'][0].". ".$row['researcher_last_name']?> - <?=ucwords(strtolower($row['journal_title'])).", ".date('Y',strtotime($row['journal_date_publish']))?> 
+							<?php
+								$sub_text = $row['researcher_first_name'][0].".".$row['researcher_middle_name'][0].". ".$row['researcher_last_name']." - ".ucwords(strtolower($row['journal_title'])).", ".date('Y',strtotime($row['journal_date_publish']));
+								$text_to_display = !empty($key) ? highlightWords($sub_text, $key) : $sub_text;
+								echo $text_to_display;
+							?>
 						</p>
 						<p class="h6 text-justify">
-							<?=substr($row['research_abstract'], 0, 270)."....."?>
+							<?php
+								$abstract_text = substr($row['research_abstract'], 0, 270).".....";
+								$abstract_to_display = !empty($key) ? highlightWords($abstract_text, $key) : $abstract_text;
+								echo $abstract_to_display;
+							?>
 						</p>
 						<p>&nbsp;</p>
 						<br>
 					</div>
 
-					
-					 <?php
-							// } else {
-
-					?> 
-					<!--
-					<div class="">
-						<p class="h4 text-justify"><b><a href="research_view.php?rid=<?=$row['research_id']?>"> <?=strtoupper($row['research_title'])?> </a></b></p>
-						<p class="h5 text-justify" style="color: maroon">
-							<?=$row['researcher_first_name'][0].".".$row['researcher_middle_name'][0].". ".$row['researcher_last_name']?> - <?=ucwords(strtolower($row['journal_title'])).", ".date('Y',strtotime($row['journal_date_publish']))?> 
-						</p>
-						<p class="h6 text-justify">
-							<?=substr($row['research_abstract'], 0, 270)."....."?>
-						</p>
-						<p>&nbsp;</p>
-						<br>
-					</div> -->
-
 					<?php
-							}
-						}
+							} // end of inner if condition
+						} // end of while loop
 					} else {
 						echo "<p> No results found.</p>";
 					}
