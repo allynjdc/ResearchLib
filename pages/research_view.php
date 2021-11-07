@@ -102,23 +102,41 @@ session_start();
 			    	<!-- FETCHING RESEARCH DATA -->
 			    	<?php 
 			    		$id = intval($_GET['rid']);
-						$query = "SELECT * FROM research_output AS ro INNER JOIN research_creation AS rc INNER JOIN research_journal AS rj INNER JOIN researcher as r ON rj.journal_id = ro.research_journal_id AND ro.research_id = rc.creation_research_id AND rc.creation_researcher_id = r.researcher_id WHERE ro.research_id = '$id'";
+						//$query = "SELECT * FROM research_output AS ro INNER JOIN research_creation AS rc INNER JOIN research_journal AS rj INNER JOIN researcher as r ON rj.journal_id = ro.research_journal_id AND ro.research_id = rc.creation_research_id AND rc.creation_researcher_id = r.researcher_id WHERE ro.research_id = '$id'";
 
-						// echo "hello ".$id;
+						$query = "SELECT * 
+								FROM research_output AS ro
+								INNER JOIN research_journal AS rj
+								ON rj.journal_id = ro.research_journal_id
+								WHERE ro.research_id = '$id'";
 
-						if ($result = $db->query($query)){
-							// echo "result";
-							while ($row = $result->fetch_assoc()){
-
+						if ($result = $db->query($query)) {
+							while ($row = $result->fetch_assoc()) {  // Technically, this will only loop once
 								$jtitle = ucwords(strtolower($row['journal_title']));
 								$jpages = $row['research_journal_pages'];
 								$rdate = strtotime($row['journal_date_publish']);
 								$months = array("null","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
 
-								// echo "hey ";
+								// Get the list of authors of this research
+								$queryAuthors = "SELECT * FROM researcher AS rs INNER JOIN research_creation As rc ON rs.researcher_id = rc.creation_researcher_id WHERE rc.creation_research_id = $id";
+								$data_authors = [];
+								if ($resultAuthor = $db->query($queryAuthors)) {
+									while ($rowAuthor = $resultAuthor->fetch_assoc()) {
+										$fields = [];
+										$fields['fullname'] = strtoupper($rowAuthor['researcher_first_name']." ".$rowAuthor['researcher_middle_name'][0].". ".$rowAuthor['researcher_last_name']);
+										$fields['fname'] = ucwords(strtolower($rowAuthor['researcher_first_name']));
+										$fields['lname'] = ucwords(strtolower($rowAuthor['researcher_last_name']));
+										$fields['profilepic'] = $rowAuthor['researcher_profile_picture'];
+										$fields['office'] = ucwords(strtolower($rowAuthor['researcher_office']));
 
+										$data_authors[] = $fields; // fields added to $data_author array
+									}
+								} else {
+									echo $db->error;
+								}
+								//var_dump($data_authors);
 					?>
-			    		      	
+
 					<div>
 						<p class="author_name h3" style="color: maroon;"> 
 							<b> <?=strtoupper($row['research_title'])?> </b>
@@ -139,20 +157,26 @@ session_start();
 						
 						<div>
 							<br>
-							<p class="h4" style="color: maroon;"><b>   Author: </b></p>
-							<div class="" style=" height: 50px">
-								<div class="col-sm-1" >
-									<img class="  img-circle " src="../images/profile_pictures/<?=$row['researcher_profile_picture']?>" alt="<?=$row['researcher_last_name']?>" width="50px" height="50px">
+							<p class="h4" style="color: maroon;"><b><?= count($data_authors) > 1 ? 'Authors:' : 'Author:' ?></b></p>
+							<?php
+							foreach($data_authors as $author) {
+							?>
+								<div class="" style=" height: 50px;">
+									<div class="col-sm-1" >
+										<img class="  img-circle " src="../images/profile_pictures/<?=$author['profilepic']?>" alt="<?=$author['lname']?>" width="50px" height="50px">
+									</div>
+									
+									<div class="col-sm-11 text-left" >
+										<p> 
+											<b class="author_name" style="color: maroon;"> <?=$author['fullname']?> 
+											</b> 
+											<br> <?=$author['office']?>
+										</p>
+									</div>
 								</div>
-								
-								<div class="col-sm-11 text-left" >
-									<p> 
-										<b class="author_name" style="color: maroon;"> <?=$row['researcher_first_name']." ".$row['researcher_middle_name'][0].". ".$row['researcher_last_name']?> 
-										</b> 
-										<br> <?=$row['researcher_office']?>
-									</p>
-								</div>
-							</div>
+							<?php
+							} // End of foreach loop (for authors)
+							?>
 						</div>
 
 					</div>
@@ -163,18 +187,20 @@ session_start();
 							<?=$row['research_abstract']?>
 						</p>
 					</div>
+	
 					<?php 
-						if(isset($_SESSION['user'])){
+					if(isset($_SESSION['user'])) {
 					?>
-					<div class="align-items-center">
-						<br>
-						<iframe src="../resources/research/<?=$row['research_filename']?>" width="100%" height="700px">
-    					</iframe>
-    					<br> <br>
-					</div>
+						<div class="align-items-center">
+							<br>
+							<iframe src="../resources/research/<?=$row['research_filename']?>" width="100%" height="700px">
+							</iframe>
+							<br> <br>
+						</div>
 					<?php
-						}
+					} // End of if statement (isset)
 					?>
+
 					<div>
 						<p class="h4" style="color: maroon;"> <br> <b> Cite this:</b></p>
 						<div>
@@ -185,12 +211,35 @@ session_start();
 									// } else {
 									// 	$mla = $mla."";
 									// }
+								
+								$mla_authors = "Unknown";
+								$apa_authors = "Unknown";
+								$chicago_authors = "Unknown";
+								
+								if (count($data_authors) == 1) {
 
-								$mla = $row['researcher_last_name'].", ".$row['researcher_first_name'].'. "'.$row['research_title'].'." <i>'.$row['journal_title']."</i>, vol. ".$row['journal_volume'].", no. ".$row['journal_issue'].", ".$months[intval(date('m',$rdate))]." ".date('Y',$rdate).", pp. ".$row['research_journal_pages'].", doi: ".$row['research_doi'].".";
+									$mla_authors = $data_authors[0]['lname'].", ".$data_authors[0]['fname'];
+									$apa_authors = $data_authors[0]['lname'].", ".$data_authors[0]['fname'][0];
+									$chicago_authors = $data_authors[0]['lname']." ".$data_authors[0]['fname'];
+					
+								} else if (count($data_authors) == 2) {
 
-								$apa = $row['researcher_last_name'].", ".$row['researcher_first_name'][0].'. ('.date('Y',$rdate)."). ".$row['research_title'].'. <i>'.$row['journal_title'].", ".$row['journal_volume']."</i>(".$row['journal_issue']."), ".$row['research_journal_pages'].". ".$row['research_doi'].".";
+									$mla_authors = $data_authors[0]['lname'].", ".$data_authors[0]['fname']." and ".$data_authors[1]['lname'].", ".$data_authors[1]['fname'];
+									$apa_authors = $data_authors[0]['lname'].", ".$data_authors[0]['fname'][0]." and ". $data_authors[1]['lname'].", ".$data_authors[1]['fname'][0];
+									$chicago_authors = $data_authors[0]['lname']." ".$data_authors[0]['fname']." and ". $data_authors[1]['lname']." ".$data_authors[1]['fname'];
+					
+								} else if (count($data_authors) >= 3) {
 
-								$chicago = $row['researcher_first_name']." ".$row['researcher_last_name'].', "'.$row['research_title'].'," <i>'.$row['journal_title']."</i> ".$row['journal_volume'].", no. ".$row['journal_issue']." (".date('Y',$rdate)."): ".$row['research_journal_pages'].", ".$row['research_doi'].".";;
+									$mla_authors = $data_authors[0]['lname'].", ".$data_authors[0]['fname']." et al";
+									$apa_authors = $data_authors[0]['lname'].", ".$data_authors[0]['fname'][0]." et al";
+									$chicago_authors = $data_authors[0]['lname']." ".$data_authors[0]['fname']." et al";
+								}
+
+								$mla = $mla_authors.'. "'.$row['research_title'].'." <i>'.$row['journal_title']."</i>, vol. ".$row['journal_volume'].", no. ".$row['journal_issue'].", ".$months[intval(date('m',$rdate))]." ".date('Y',$rdate).", pp. ".$row['research_journal_pages'].", doi: ".$row['research_doi'].".";
+
+								$apa = $apa_authors.'. ('.date('Y',$rdate)."). ".$row['research_title'].'. <i>'.$row['journal_title'].", ".$row['journal_volume']."</i>(".$row['journal_issue']."), ".$row['research_journal_pages'].". ".$row['research_doi'].".";
+
+								$chicago = $chicago_authors.', "'.$row['research_title'].'," <i>'.$row['journal_title']."</i> ".$row['journal_volume'].", no. ".$row['journal_issue']." (".date('Y',$rdate)."): ".$row['research_journal_pages'].", ".$row['research_doi'].".";
 
 							?>
 							<p class="col-md-2" style="color: maroon;"><b>MLA</b></p>
@@ -215,7 +264,7 @@ session_start();
 						<p>&nbsp;</p>
 
 						<?php
-							}
+							} // End of while loop
 						} else {
 							echo "<p> No conducted Research yet.</p>";
 						}
