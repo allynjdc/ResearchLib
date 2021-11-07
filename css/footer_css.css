@@ -1,14 +1,15 @@
 .footer {
-   position: absolute;
+   /*position: absolute;
    bottom: 0;
-   width: 100%;
-   height: 50px;
+   width: 100%;*/
+   /*height: 50px;*/
+   /*height: 2.5rem;*/
    /*background-color: maroon;
    color: white;
    */
- /* background: #42A5F5;
-  color: white;*/
-  /*padding: 20px;*/
-  /*grid-row-start: 2;
-  grid-row-end: 3;*/
+   /* background: #42A5F5;
+   color: white;*/
+   /*padding: 20px;*/
+   /*grid-row-start: 2;
+   grid-row-end: 3;*/
 }

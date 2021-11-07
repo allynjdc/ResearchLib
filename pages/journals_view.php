@@ -223,7 +223,7 @@ session_start();
 						<div class="col-sm-12">
 							<p class="h5 text-justify"><b><a href="research_view.php?rid=<?=$row['research_id']?>"> <?=strtoupper($row['research_title'])?> </b></a></p>
 							<p class="h6 text-justify" style="color: maroon"><?=ucwords(strtolower($row['researcher_first_name']))." ".strtoupper($row['researcher_middle_name'][0]).". ".ucwords(strtolower($row['researcher_last_name'])).", ".ucwords(strtolower($row['researcher_office']))?></p>
-							<p class="h6 text-justify"> Date Published: <?=strtoupper($months[date('m',$rdate)])." ".date('Y',$rdate)?></p>
+							<p class="h6 text-justify"> Date Published: <?=strtoupper($months[intval(date('m',$rdate))])." ".date('Y',$rdate)?></p>
 							<p></p>
 							<br>
 						</div>

@@ -75,7 +75,7 @@ session_start();
 		</nav>
 
 		<!-- MAIN TEMPLATE FOR THE CONTENT -->
-		<div class="container-fluid ">    
+		<div class="container-fluid">    
 		  	<div class="row content">
 
 			    <div class="col-sm-3 sidenav" >
@@ -137,7 +137,7 @@ session_start();
 						?>
 					
 
-					<div class="text-right">
+					<!-- <div class="text-right">
 						<ul class="pagination pagination-sm ">
 						    <li><a href="#">Previous</a></li>
 						    <li><a href="#">1</a></li>
@@ -147,7 +147,7 @@ session_start();
 						    <li><a href="#">5</a></li>
 						    <li><a href="#">Next</a></li>
   						</ul>
-					</div>
+					</div> -->
 
 				</div>
 						

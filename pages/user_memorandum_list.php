@@ -240,7 +240,7 @@ if (!$_SESSION['user']) {
 					?>
 					
 
-					<div class="text-right">
+					<!-- <div class="text-right">
 						<ul class="pagination pagination-sm ">
 						    <li><a href="#">Previous</a></li>
 						    <li><a href="#">1</a></li>
@@ -250,7 +250,7 @@ if (!$_SESSION['user']) {
 						    <li><a href="#">5</a></li>
 						    <li><a href="#">Next</a></li>
   						</ul>
-					</div>
+					</div> -->
 
 				</div>
 						

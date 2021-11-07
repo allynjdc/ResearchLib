@@ -35,7 +35,7 @@ if (isset($_SESSION['user'])) {
 			}
 		</style>
 	</head>
-	<body class="bg-light" style="background-image: url('../images/bg.png'); background-position: center; background-repeat: no-repeat; background-size: cover;">
+	<body class="bg-light" style="background-image: url('../images/bgs.png'); background-position: center; background-repeat: no-repeat; background-size: cover;">
 		<!-- Navigation -->
 		<nav class="navbar navbar-inverse" > <!-- navbar-default style="background-color: #D5EBF6"-->
 		  	<div class="container-fluid col-md-10 col-md-offset-1">
@@ -123,8 +123,8 @@ if (isset($_SESSION['user'])) {
 
 		<!-- Footer -->
 		<div class="footer text-center">
-			<p>&nbsp;</p> 
-			<p>&nbsp;</p> 
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
 			<p>&nbsp;</p>
 		    <p class="">All rights reserved &copy; 2021</p>
 		</div>
