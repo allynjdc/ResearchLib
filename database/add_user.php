@@ -16,8 +16,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = "depedtagum"; // default password for new user
     $filename = $decoded['filename'];
 
-    $query = "INSERT INTO user (user_id, user_username, user_password, user_first_name, user_middle_name, user_last_name, user_email_address, user_designation, user_office, user_type, user_pwd_state, user_profile_picture)
-            VALUES (NULL, '$username', MD5('$password'), '$firstname', '$middlename', '$lastname', '$email', '$desination', '$office', '0', '0', '$filename')";
+    $query = "INSERT INTO user (user_id, user_username, user_password, user_first_name, user_middle_name, user_last_name, user_email_address, user_designation, user_office, user_type, user_pwd_state, user_active_state, user_profile_picture)
+            VALUES (NULL, '$username', MD5('$password'), '$firstname', '$middlename', '$lastname', '$email', '$desination', '$office', '0', '0', '1', '$filename')";
 
     if ($db->query($query) === TRUE) echo "OK";
     else echo "NOK";
