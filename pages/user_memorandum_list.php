@@ -178,7 +178,7 @@ if (!$_SESSION['user']) {
 												update
 											</a> 
 											&nbsp;&nbsp;|&nbsp;&nbsp; 
-											<a href=\" \" style=\"color: red;\">remove</a>
+											<a href=\"#RemoveMemoModal\" data-toggle=\"modal\" data-target=\"#RemoveMemoModal".$row['memo_id']."\" data-whatever=\"RemoveMemo\" style=\"color: red;\">remove</a>
 										</p>
 									</div>
 									<br>
@@ -228,6 +228,28 @@ if (!$_SESSION['user']) {
 							      		</div>
 							    	</div>
 							  	</div>
+							</div>
+
+							<!-- Modal(s) for Remove Memorandums -->
+							<div class="modal fade text-justify col-sm-12" id="RemoveMemoModal<?=$row['memo_id']?>" tabindex="-1" role="dialog" aria-labelledby="RemoveMemoModalLabel" aria-hidden="true">
+								<div class="modal-dialog" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title h3 col-sm-10" id="RemoveMemoModalLabel">Delete Memorandum</h5>
+											<button type="button col-sm-2 text-right" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
+											<h4> Are you sure you want to delete the Memorandum (<b><?= ucwords(strtolower($row['memo_subject'])) ?></b>)? <h4>
+										</div>
+										<div class="modal-footer">
+											<p id="remove_memo_status_msg_<?=$row['memo_id']?>"></p>
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+											<button type="button" class="btn btn-danger" onclick="removeMemo(<?=$row['memo_id']?>)">Delete</button>
+										</div>
+									</div>
+								</div>
 							</div>
 
 
@@ -374,6 +396,27 @@ if (!$_SESSION['user']) {
 				}
 			};
 			xmlhttp.open("POST", "../database/update_researcher.php", true);
+			xmlhttp.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+			xmlhttp.send(JSON.stringify(data));
+		}
+
+		function removeMemo(memo_id) {
+
+			document.getElementById('remove_memo_status_msg_' + memo_id).innerHTML = "";
+	
+			var data = {'memo_id': memo_id };
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if ((this.readyState == 4) && (this.status == 200)) {
+					if (this.responseText == "OK") {
+						document.getElementById('RemoveMemoModal' + memo_id).style.display = 'none';
+						location.reload();
+					} else {
+						document.getElementById('remove_memo_status_msg_' + memo_id).innerHTML = "Unable to remove memorandum." + this.responseText;
+					}
+				}
+			};
+			xmlhttp.open("POST", "../database/remove_memorandum.php", true);
 			xmlhttp.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
 			xmlhttp.send(JSON.stringify(data));
 		}

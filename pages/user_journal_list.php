@@ -150,11 +150,34 @@ if (!$_SESSION['user']) {
 									update
 								</a> 
 								&nbsp;&nbsp;|&nbsp;&nbsp; 
-								<a href="" style="color: red;">remove</a>
+								<a href="#RemoveJournalModal" data-toggle="modal" data-target="#RemoveJournalModal<?=$row['journal_id']?>" data-whatever="RemoveJournal" style="color: red;">remove</a>
 							</p>
 						</div>
 					</div>
 					<div>&nbsp;</div>
+
+					<!-- Modal(s) for Remove Journals -->
+					<div class="modal fade text-justify col-sm-12" id="RemoveJournalModal<?=$row['journal_id']?>" tabindex="-1" role="dialog" aria-labelledby="RemoveJournalModalLabel" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title h3 col-sm-10" id="RemoveJournalModalLabel">Delete Journal</h5>
+									<button type="button col-sm-2 text-right" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<h4> Are you sure you want to delete the Journal (<b><?= ucwords(strtolower($row['journal_title'])) ?></b>)? <h4>
+								</div>
+								<div class="modal-footer">
+									<p id="remove_journal_status_msg_<?=$row['journal_id']?>"></p>
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+									<button type="button" class="btn btn-danger" onclick="removeJournal(<?=$row['journal_id']?>)">Delete</button>
+								</div>
+							</div>
+						</div>
+					</div>
+
 
 					<?php
 
@@ -198,4 +221,29 @@ if (!$_SESSION['user']) {
 		</div>
 
 	</body>
+
+	<script>
+		function removeJournal(journal_id) {
+
+			document.getElementById('remove_journal_status_msg_' + journal_id).innerHTML = "";
+	
+			var data = {'journal_id': journal_id };
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if ((this.readyState == 4) && (this.status == 200)) {
+					if (this.responseText == "OK") {
+						document.getElementById('RemoveJournalModal' + journal_id).style.display = 'none';
+						location.reload();
+					} else {
+						document.getElementById('remove_journal_status_msg_' + journal_id).innerHTML = "Unable to remove journal." + this.responseText;
+					}
+				}
+			};
+			xmlhttp.open("POST", "../database/remove_journal.php", true);
+			xmlhttp.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+			xmlhttp.send(JSON.stringify(data));
+		}
+	</script>
+
+
 </html>

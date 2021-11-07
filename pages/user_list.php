@@ -176,7 +176,7 @@ if (!$_SESSION['user']) {
 												&nbsp;&nbsp;|&nbsp;&nbsp; 
 												<a href=\"#ResetUserModal\" data-toggle=\"modal\" data-target=\"#ResetUserModal".$row['user_id']."\" data-whatever=\"ResetUser\">reset password</a>
 												&nbsp;&nbsp;|&nbsp;&nbsp; 
-												<a href=\"#RemoveUserModal\" data-toggle=\"modal\" data-target=\"#RemoveUserModal".$row['user_id']."\" data-whatever=\"RemoveUser\">remove</a>
+												<a href=\"#RemoveUserModal\" data-toggle=\"modal\" data-target=\"#RemoveUserModal".$row['user_id']."\" data-whatever=\"RemoveUser\" style=\"color: red;\">remove</a>
 											</div>
 										</div>
 									</a>
@@ -285,7 +285,7 @@ if (!$_SESSION['user']) {
 										</button>
 									</div>
 									<div class="modal-body">
-										<h4> Are you sure you want to delete the user (<b><?= $row['user_first_name']." ".$row['user_last_name'] ?></b>)? <h4>
+										<h4> Are you sure you want to delete the user (<b><?= ucwords(strtolower($row['user_first_name']))." ".ucwords(strtolower($row['user_last_name'])) ?></b>)? <h4>
 									</div>
 									<div class="modal-footer">
 										<p id="remove_user_status_msg_<?=$row['user_id']?>"></p>

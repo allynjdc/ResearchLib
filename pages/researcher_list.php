@@ -230,7 +230,7 @@ if (!$_SESSION['user']) {
 												<div class=\"col-sm-4 text-right h5\" style=\" \">
 													<a href=\"#UpdateResearcherModal\" data-toggle=\"modal\" data-target=\"#UpdateResearcherModal".$row['researcher_id']."\" data-whatever=\"UpdateResearcher\">update</a> 
 													&nbsp;&nbsp;|&nbsp;&nbsp; 
-													<a href=\" \">remove</a>
+													<a href=\"#RemoveResearcherModal\" data-toggle=\"modal\" data-target=\"#RemoveResearcherModal".$row['researcher_id']."\" data-whatever=\"RemoveResearcher\" style=\"color: red;\">remove</a>
 												</div>
 											</div>
 										</a>
@@ -297,6 +297,30 @@ if (!$_SESSION['user']) {
 						    	</div>
 				  			</div>
 						</div>
+
+						<!-- Modal(s) for Remove Researchers -->
+						<div class="modal fade text-justify col-sm-12" id="RemoveResearcherModal<?=$row['researcher_id']?>" tabindex="-1" role="dialog" aria-labelledby="RemoveResearcherModalLabel" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title h3 col-sm-10" id="RemoveResearcherModalLabel">Delete Researcher</h5>
+										<button type="button col-sm-2 text-right" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<h4> Are you sure you want to delete the researcher (<b><?= ucwords(strtolower($row['researcher_first_name']))." ".ucwords(strtolower($row['researcher_last_name'])) ?></b>)? <h4>
+									</div>
+									<div class="modal-footer">
+										<p id="remove_researcher_status_msg_<?=$row['researcher_id']?>"></p>
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+										<button type="button" class="btn btn-danger" onclick="removeResearcher(<?=$row['researcher_id']?>)">Delete</button>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
 
 
 				      	<?php 
@@ -418,6 +442,26 @@ if (!$_SESSION['user']) {
 				}
 			};
 			xmlhttp.open("POST", "../database/update_researcher.php", true);
+			xmlhttp.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+			xmlhttp.send(JSON.stringify(data));
+		}
+		function removeResearcher(researcherId) {
+
+			document.getElementById('remove_researcher_status_msg_' + researcherId).innerHTML = "";
+	
+			var data = {'researcherid': researcherId };
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if ((this.readyState == 4) && (this.status == 200)) {
+					if (this.responseText == "OK") {
+						document.getElementById('RemoveResearcherModal' + researcherId).style.display = 'none';
+						location.reload();
+					} else {
+						document.getElementById('remove_researcher_status_msg_' + researcherId).innerHTML = "Unable to remove researcher." + this.responseText;
+					}
+				}
+			};
+			xmlhttp.open("POST", "../database/remove_researcher.php", true);
 			xmlhttp.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
 			xmlhttp.send(JSON.stringify(data));
 		}
