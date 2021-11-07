@@ -160,21 +160,31 @@ if (!$_SESSION['user']) {
 							while ($row = $result->fetch_assoc()) {
 								$userFullname = $row['user_first_name']." ".$row['user_middle_name'][0].". ".$row['user_last_name'];
 								$userImage = empty($row['user_profile_picture']) ? $defaultImg : $row['user_profile_picture'];
-
+								$isUserActive = ($row['user_active_state'] == "1");
+								$accStatusLabel = $isUserActive ? "<span class=\"label label-success\">active</span>" : "<span class=\"label label-default\">inactive</span>";
+								$activateBtn = "";
+								if ($isUserActive) {
+									$activateBtn = "<a href=\"#ActivateUserModal\" data-toggle=\"modal\" data-target=\"#ActivateUserModal".$row['user_id']."\" data-whatever=\"ActivateUser\"style=\"color: gray;\">deactivate</a>";
+								} else {
+									$activateBtn = "<a href=\"#ActivateUserModal\" data-toggle=\"modal\" data-target=\"#ActivateUserModal".$row['user_id']."\" data-whatever=\"ActivateUser\" style=\"color: green;\">activate</a>";
+								}
+				
 								echo "<div class=\"col-sm-12 text-justify\" >
 									<a href=\"user_profile_view.php?userid=".$row['user_id']."\">
 										<div class=\"col-sm-12\">
 											<div class=\"col-sm-1\" >
 												<img class=\"  img-circle \" src=\"".$profileDir.$userImage."\" onerror=\"this.src='".$profileDir.$defaultImg."'\" alt=\"profile\" width=\"70px\" height=\"70px\">
 											</div>
-											<div class=\"col-sm-7 \" style=\" \">
-												<p class=\"h4\" style=\"\">".$userFullname."</p>
+											<div class=\"col-sm-6 \" style=\" \">
+												<p class=\"h4\" style=\"\">".$userFullname."&nbsp;&nbsp;".$accStatusLabel."</p>
 												<p class=\"h6\">".$row['user_designation']."<br>". $row['user_office']." <br> </p>	
 											</div>
-											<div class=\"col-sm-4 text-right h5\" style=\"\">
+											<div class=\"col-sm-5 text-right h5\" style=\"\">
 												<a href=\"#UpdateUserModal\" data-toggle=\"modal\" data-target=\"#UpdateUserModal".$row['user_id']."\" data-whatever=\"UpdateUser\">update</a> 
 												&nbsp;&nbsp;|&nbsp;&nbsp; 
 												<a href=\"#ResetUserModal\" data-toggle=\"modal\" data-target=\"#ResetUserModal".$row['user_id']."\" data-whatever=\"ResetUser\">reset password</a>
+												&nbsp;&nbsp;|&nbsp;&nbsp;
+												".$activateBtn."
 												&nbsp;&nbsp;|&nbsp;&nbsp; 
 												<a href=\"#RemoveUserModal\" data-toggle=\"modal\" data-target=\"#RemoveUserModal".$row['user_id']."\" data-whatever=\"RemoveUser\" style=\"color: red;\">remove</a>
 											</div>
@@ -272,7 +282,34 @@ if (!$_SESSION['user']) {
 								</div>
 							</div>
 						</div>
-						
+						<!-- Modal(s) for Actiate/Deactivate User -->
+						<div class="modal fade text-justify col-sm-12" id="ActivateUserModal<?=$row['user_id']?>" tabindex="-1" role="dialog" aria-labelledby="ActivateUserModalLabel" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h5 class="modal-title h3 col-sm-10" id="ActivateUserModalLabel"><?= ($row['user_active_state'] == "1") ? "Deactivate User" : "Activate User" ?></h5>
+										<button type="button col-sm-2 text-right" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body">
+										<?php $action = ($row['user_active_state'] == "1") ? "deactivate" : "activate" ?>
+										<h4> Are you sure you want to <?=$action?> the account of user (<b><?= ucwords(strtolower($row['user_first_name']))." ".ucwords(strtolower($row['user_last_name'])) ?></b>)? <h4>
+									</div>
+									<div class="modal-footer">
+										<p id="activate_user_status_msg_<?=$row['user_id']?>"></p>
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+										<?php
+											if ($row['user_active_state'] == "1") {
+												echo "<button type=\"button\" class=\"btn btn-danger\" onclick=\"activateUser(".$row['user_id'].", false)\">Deactivate</button>";
+											} else { 
+												echo "<button type=\"button\" class=\"btn btn-success\" onclick=\"activateUser(".$row['user_id'].", true)\">Activate</button>";
+											}
+										?>
+									</div>
+								</div>
+							</div>
+						</div>
 
 						<!-- Modal(s) for Remove User -->
 						<div class="modal fade text-justify col-sm-12" id="RemoveUserModal<?=$row['user_id']?>" tabindex="-1" role="dialog" aria-labelledby="RemoveUserModalLabel" aria-hidden="true">
@@ -421,6 +458,30 @@ if (!$_SESSION['user']) {
 				}
 			};
 			xmlhttp.open("POST", "../database/password_update.php", true);
+			xmlhttp.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
+			xmlhttp.send(JSON.stringify(data));
+		}
+		function activateUser(userId, isToActivate) {
+			console.log(userId);
+			console.log(isToActivate);
+			document.getElementById('activate_user_status_msg_' + userId).innerHTML = "";
+	
+			var action = isToActivate ? 1 : 0;
+			var data = {'userid': userId, 'activate' : action };
+
+			var xmlhttp = new XMLHttpRequest();
+			xmlhttp.onreadystatechange = function() {
+				if ((this.readyState == 4) && (this.status == 200)) {
+					if (this.responseText == "OK") {
+						document.getElementById('ActivateUserModal' + userId).style.display = 'none';
+						location.reload();
+					} else {
+						var errMsg = isToActivate ? "Unable to activate the user account." : "Unable to deactivate the user account.";
+						document.getElementById('activate_user_status_msg_' + userId).innerHTML = errMsg + this.responseText;
+					}
+				}
+			};
+			xmlhttp.open("POST", "../database/update_account_state.php", true);
 			xmlhttp.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
 			xmlhttp.send(JSON.stringify(data));
 		}
