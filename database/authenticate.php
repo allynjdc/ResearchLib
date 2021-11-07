@@ -15,13 +15,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $data = [];
     $row = $result->fetch_assoc();
     if ($row) {
-        $_SESSION['user'] = $row['user_username'];
-        $_SESSION['userid'] = $row['user_id'];
-        $_SESSION['usertype'] = $row['user_type'];
+        if ($row['user_active_state'] == 1) {  // Check if the user account is still active
+            $_SESSION['user'] = $row['user_username'];
+            $_SESSION['userid'] = $row['user_id'];
+            $_SESSION['usertype'] = $row['user_type'];
 
-        $data['success'] = 1;
-        $data['pwdState'] = $row['user_pwd_state'];
-        $data['errMsg'] = '';
+            $data['success'] = 1;
+            $data['pwdState'] = $row['user_pwd_state'];
+            $data['errMsg'] = '';
+        } else {
+            $data['success'] = 0;
+            $data['pwdState'] = '';
+            $data['errMsg'] = 'Your account has been deactivated. Please contact the admin for more information.';
+        }
     } else {
         $data['success'] = 0;
         $data['pwdState'] = '';
