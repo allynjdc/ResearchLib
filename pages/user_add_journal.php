@@ -16,7 +16,7 @@ if (isset($_POST['submit'])){
 	$issn = $db->real_escape_string($_POST['journ_issn']);
 	$pub = $_POST['journ_publisher'];
 	$jdate = $_POST['journ_date'];
-	$dev = $_POST['journ_dev_team'];
+	$dev = "Unknown Development Team"; //$_POST['journ_dev_team'];
 	$photoname = $_FILES['journ_photo']['name'];
 	$location1 = "../images/journals/".$photoname;
 	$filename = $_FILES['journ_file']['name'];
@@ -61,6 +61,34 @@ if (isset($_POST['submit'])){
 		<link rel="stylesheet" type="text/css" href="../css/body_css.css">
         <link rel="stylesheet" type="text/css" href="../css/footer_css.css">
         <link rel="stylesheet" type="text/css" href="../css/nav_css.css">
+
+		<!-- TODO: Move this style to the .css file -->
+		<style>
+			fieldset.scheduler-border {
+				border: solid 1px #DDD !important;
+				padding: 0 10px 10px 10px;
+				border-bottom: none;
+			}
+
+			legend.scheduler-border {
+				width: auto !important;
+				text-align: left;
+				border: none;
+				font-size: 14px;
+			}
+			.remove-from-list {
+				float:right;
+				display:inline-block;
+				padding:2px 5px;
+			}
+			.remove-from-list:hover {
+				float:right;
+				display:inline-block;
+				padding:2px 5px;
+				color: red;
+				cursor: pointer;
+			}
+		</style>
 		
 	</head>
 	<body class="bg-light">
@@ -148,11 +176,86 @@ if (isset($_POST['submit'])){
 						      	<input id="journ_publisher" type="text" class="form-control" name="journ_publisher" placeholder="Publisher Name" required>
 						    </div>
 						    <br>
+							<!--
 						    <div class="input-group">
 						      	<span class="input-group-addon">Development Team Member</span>
 						      	<input id="journ_dev_team" type="text" class="form-control" name="journ_dev_team" placeholder="Member Name" required>
 						    </div>
-						    <br>
+							-->
+							<fieldset class="scheduler-border">
+								<legend class="scheduler-border"><b>Development Team</b></legend>
+		
+								<div class="input-group">
+									<span class="input-group-addon">Editor-in-Chief</span>
+						      		<input id="dev_team_editor_in_chief" type="text" class="form-control" name="dev_team_editor_in_chief" placeholder="Editor-in-Chief Name" required>
+								</div>
+								<br/>
+								<div class="input-group">
+									<span class="input-group-addon">Executive Editor</span>
+						      		<input id="dev_team_exec_editor" type="text" class="form-control" name="dev_team_exec_editor" placeholder="Executive Editor Name" required>
+								</div>
+								<br/>
+								<div class="input-group">
+									<span class="input-group-addon">Publications Manager</span>
+						      		<input id="dev_team_pub_manager" type="text" class="form-control" name="dev_team_pub_manager" placeholder="Publication Manager Name" required>
+								</div>
+								<br/>
+								<div class="input-group">
+									<div class="control-label col-sm-3">Technical Editors:</div>
+									<div class="col-sm-9">
+						      			<input type="text" class="form-control" name="dev_team_tech_editor[]" placeholder="Technical Editor Name" required>
+									</div>
+									<div class="col-sm-offset-3 col-sm-9">
+						      			<input type="text" class="form-control" name="dev_team_tech_editor[]" placeholder="Technical Editor Name">
+									</div>
+									<div class="col-sm-offset-3 col-sm-9">
+						      			<input type="text" class="form-control" name="dev_team_tech_editor[]" placeholder="Technical Editor Name">
+									</div>
+								</div>
+								<br/>
+								<div class="input-group">
+									<div class="control-label col-sm-3">Copy Editors:</div>
+									<div class="col-sm-9">
+						      			<input type="text" class="form-control" name="dev_team_copy_editor[]" placeholder="Copy Editor Name" required>
+									</div>
+									<div class="col-sm-offset-3 col-sm-9">
+						      			<input type="text" class="form-control" name="dev_team_copy_editor[]" placeholder="Copy Editor Name">
+									</div>
+									<div class="col-sm-offset-3 col-sm-9">
+						      			<input type="text" class="form-control" name="dev_team_copy_editor[]" placeholder="Copy Editor Name">
+									</div>
+								</div>
+								<br/>
+								<div class="input-group">
+									<div class="control-label col-sm-3">Layout Artists:</div>
+									<div class="col-sm-9">
+						      			<input type="text" class="form-control" name="dev_team_layout_artist[]" placeholder="Layout Artist Name" required>
+									</div>
+									<div class="col-sm-offset-3 col-sm-9">
+						      			<input type="text" class="form-control" name="dev_team_layout_artist[]" placeholder="Layout Artist Name">
+									</div>
+								</div>
+								<br/>
+								<div class="input-group">
+									<div class="control-label col-sm-3">Editorial Consultants:</div>
+									<div class="col-sm-9">
+						      			<input type="text" class="form-control" name="dev_team_consultants[]" placeholder="Editorial Consultant Name" required>
+									</div>
+									<div class="col-sm-offset-3 col-sm-9">
+						      			<input type="text" class="form-control" name="dev_team_consultants[]" placeholder="Editorial Consultant Name">
+									</div>
+									<div class="col-sm-offset-3 col-sm-9">
+						      			<input type="text" class="form-control" name="dev_team_consultants[]" placeholder="Editorial Consultant Name">
+									</div>
+								</div>
+								<br/>
+								<div class="input-group">
+									<span class="input-group-addon">Research Production</span>
+						      		<input id="dev_team_research_production" type="text" class="form-control" name="dev_team_research_production" placeholder="Research Production Name" required>
+								</div>
+							</fieldset>
+							<br/>
+						    <br/>
 					       	<p class="text-justify"> <b class="col-sm-4"> Insert the Front Page Photo: </b> <input id="journ_photo" type="file" class="col-sm-6" name="journ_photo" accept="image/*, .pdf, .doc, .txt" >
 					      	</p>
 					      	<br>
@@ -171,7 +274,7 @@ if (isset($_POST['submit'])){
 
 
 		<!-- Footer -->
-		<div class="footer text-center">
+		<div class="text-center">
 		    <p class=""> <br>All rights reserved &copy; 2021</p>
 		</div>
 
