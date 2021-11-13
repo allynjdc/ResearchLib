@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 01, 2021 at 06:01 PM
--- Server version: 10.1.26-MariaDB
--- PHP Version: 7.1.9
+-- Generation Time: Nov 13, 2021 at 04:46 PM
+-- Server version: 10.4.20-MariaDB
+-- PHP Version: 8.0.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -21,6 +20,45 @@ SET time_zone = "+00:00";
 --
 -- Database: `research_elib_db`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dev_role`
+--
+
+CREATE TABLE `dev_role` (
+  `dev_role_id` int(255) NOT NULL,
+  `dev_role_name` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `dev_role`
+--
+
+INSERT INTO `dev_role` (`dev_role_id`, `dev_role_name`) VALUES
+(1, 'Editor-in-Chief'),
+(2, 'Executive Editor'),
+(3, 'Publications Manager'),
+(4, 'Technical Editor'),
+(5, 'Copy Editor'),
+(6, 'Layout Artist'),
+(7, 'Editorial Consultant');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `dev_team`
+--
+
+CREATE TABLE `dev_team` (
+  `dev_id` int(225) NOT NULL,
+  `dev_journal_id` int(255) NOT NULL,
+  `dev_first_name` varchar(1024) NOT NULL,
+  `dev_middle_name` varchar(1024) NOT NULL,
+  `dev_last_name` varchar(1024) NOT NULL,
+  `dev_role_id` int(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -208,13 +246,28 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `user_username`, `user_password`, `user_first_name`, `user_middle_name`, `user_last_name`, `user_email_address`, `user_designation`, `user_office`, `user_type`, `user_pwd_state`, `user_active_state`, `user_profile_picture`) VALUES
-(1, 'ajautor', 'a6f2df33c90bf193238b14f611e0e44f', 'Allyn Joy', 'Calcaben', 'Autor', 'allynjoy.calcaben@deped.gov.ph', 'Special Science Teacher I', 'Tagum National Trade School', 1, 1, 0, 'blob.png'),
-(2, 'jautor', 'a6f2df33c90bf193238b14f611e0e44f', 'Jemwel', 'Oghoc', 'Autor', 'joautor@up.edu.ph', 'Teacher III', 'Tagum City National High School', 0, 1, 0, ''),
-(3, 'kitidul', 'd41d8cd98f00b204e9800998ecf8427e', 'Christine', 'Uriarte', 'Idul', 'christine.idul001@deped.gov.ph', 'Master Teacher I', 'Magugpo Pilot Central Elementary School', 0, 1, 0, '_Y7A8174.JPG');
+(1, 'ajautor', 'a6f2df33c90bf193238b14f611e0e44f', 'Allyn Joy', 'Calcaben', 'Autor', 'allynjoy.calcaben@deped.gov.ph', 'Special Science Teacher I', 'Tagum National Trade School', 1, 1, 1, 'blob.png'),
+(2, 'jautor', 'a6f2df33c90bf193238b14f611e0e44f', 'Jemwel', 'Oghoc', 'Autor', 'joautor@up.edu.ph', 'Teacher III', 'Tagum City National High School', 0, 0, 1, ''),
+(3, 'kitidul', 'd41d8cd98f00b204e9800998ecf8427e', 'Christine', 'Uriarte', 'Idul', 'christine.idul001@deped.gov.ph', 'Master Teacher I', 'Magugpo Pilot Central Elementary School', 0, 1, 1, '_Y7A8174.JPG'),
+(4, 'jdcruz', 'a6f2df33c90bf193238b14f611e0e44f', 'Juan', 'Dela', 'Cruz', 'juandelacruz@gmail.com', 'Teacher I', 'Philippine Science High School', 0, 0, 1, '');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `dev_role`
+--
+ALTER TABLE `dev_role`
+  ADD PRIMARY KEY (`dev_role_id`);
+
+--
+-- Indexes for table `dev_team`
+--
+ALTER TABLE `dev_team`
+  ADD PRIMARY KEY (`dev_id`),
+  ADD KEY `dev_journal_id` (`dev_journal_id`),
+  ADD KEY `dev_role_id` (`dev_role_id`);
 
 --
 -- Indexes for table `memorandum`
@@ -262,6 +315,12 @@ ALTER TABLE `user`
 --
 
 --
+-- AUTO_INCREMENT for table `dev_team`
+--
+ALTER TABLE `dev_team`
+  MODIFY `dev_id` int(225) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `memorandum`
 --
 ALTER TABLE `memorandum`
@@ -289,11 +348,18 @@ ALTER TABLE `research_output`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `user_id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `dev_team`
+--
+ALTER TABLE `dev_team`
+  ADD CONSTRAINT `dev_journal_id` FOREIGN KEY (`dev_journal_id`) REFERENCES `research_journal` (`journal_id`),
+  ADD CONSTRAINT `dev_role_id` FOREIGN KEY (`dev_role_id`) REFERENCES `dev_role` (`dev_role_id`);
 
 --
 -- Constraints for table `memorandum`
