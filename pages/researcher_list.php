@@ -170,36 +170,22 @@ if (!$_SESSION['user']) {
 						<br>
 						
 						<!-- For Fetching ---> 
-						
-						<!-- <div class="col-sm-12 text-justify" >
-							<a href="user_profile_researcher.php"> 
-								<div class="col-sm-12">
-									<div class="col-sm-1" >
-										<img class="  img-circle " src="../images/calcaben.png" alt="Calcaben" width="70px" height="70px">
-									</div>
-									<div class="col-sm-7 " style=" ">
-										<p class="h4" style=""> 
-											ALLYN JOY D. CALCABEN
-										</p>
-										<p class="h6">
-											Special Science Teacher I 
-											<br>
-											Tagum National Trade Schoool 
-											<br>
-										</p>	
-									</div>
-									<div class="col-sm-4 text-right h5" style="">
-										<a href="#UpdateResearcherModal" data-toggle="modal" data-target="#UpdateResearcherModal" data-whatever="UpdateResearcher">update</a> 
-										&nbsp;&nbsp;|&nbsp;&nbsp; 
-										<a href="">remove</a>
-									</div>
-								</div>
-							</a>
-							<p> &nbsp;</p>
-						</div> -->
-
 						<?php
-						$query = "SELECT * FROM researcher ORDER BY researcher_first_name";
+
+						// Get current page number
+						$pageno = (isset($_GET["pageno"])) ? $_GET["pageno"] : 1; // Default is page 1
+						
+						// Formula for pagination
+						$no_of_records_per_page = 10;
+						$offset = ($pageno - 1) * $no_of_records_per_page;
+
+						// Get total number of pages
+						$total_pages_query = "SELECT COUNT(*) FROM researcher";
+						$result_count = $db->query($total_pages_query);
+						$total_rows = mysqli_fetch_array($result_count)[0];
+						$total_pages = ceil($total_rows / $no_of_records_per_page);
+
+						$query = "SELECT * FROM researcher ORDER BY researcher_first_name LIMIT $offset, $no_of_records_per_page";
 						if ($result = $db->query($query)) {
 							$profileDir = "../images/profile_pictures/";
 							$defaultImg = "default_profile_picture.jpg";
@@ -325,7 +311,7 @@ if (!$_SESSION['user']) {
 
 				      	<?php 
 
-				      		}
+				      		} // end of while-loop
 
 						} else {
 							echo "<p> No users yet.</p>";
@@ -333,8 +319,62 @@ if (!$_SESSION['user']) {
 
 						?>
 					</div>
-			    </div>
+					<div class="text-right">
+						<ul class="pagination pagination-sm ">
+							<?php
+							if ($total_pages > 1) { // No need to do a pagination if there's only one page
+				
+								$max_displayed_page = 5; // NOTE: This should be an odd number;
+								$current_page = $pageno;
+								$min_page = 1;
+								$max_page = $total_pages;
 
+								// Previous button
+								if ($current_page <= 1) {
+									echo "<li class='disabled'><a href='#'>Previous</a></li>";
+								} else {
+									echo "<li><a href='?pageno=".($current_page - 1)."'>Previous</a></li>";
+								}
+
+								// Numbered buttons
+								// Setup which page numbers to display
+								$lower_page = $min_page;
+								$upper_page = $max_page;
+								if ($total_pages > $max_displayed_page) {
+				
+									$lower_page = $current_page - floor($max_displayed_page / 2); // Assuming $max_displayed_page is an odd number
+									$upper_page = $current_page + floor($max_displayed_page / 2); // Assuming $max_displayed_page is an odd number
+
+									if ($lower_page < $min_page) {
+										$lower_page = $min_page;
+										$upper_page = $lower_page + ($max_displayed_page - 1);
+									}
+
+									if ($upper_page > $max_page) {
+										$upper_page = $max_page;
+										$lower_page = $upper_page - ($max_displayed_page - 1);
+									}
+								}
+								// Display the numbered buttons
+								for ($page_num = $lower_page; $page_num <= $upper_page; ++$page_num) {
+									if ($current_page == $page_num) {
+										echo "<li class='active'><a href='#'>".$page_num."</a></li>";
+									} else {
+										echo "<li><a href='?pageno=".$page_num."'>".$page_num."</a></li>";
+									}
+								}
+
+								// Next button
+								if ($current_page >= $total_pages) {
+									echo "<li class='disabled'><a href='#'>Next</a></li>";
+								} else {
+									echo "<li><a href='?pageno=".($current_page + 1)."'>Next</a></li>";
+								}
+							}
+							?>
+						</ul>
+					</div>
+			    </div>
 
 			    <!-- RIGHT SIDE NAVIGATION -->
 			    <div class="col-sm-2 sidenav">
@@ -386,8 +426,8 @@ if (!$_SESSION['user']) {
 			// Filename is empty in case the user didn't upload any picture or when there's an error during file upload.
 			var isUploadFile = (document.getElementById('researcher_photo').files.length != 0);
 			if(!isUploadFile || firstName == "" || lastName == "" || email == "" || office == "" || designation == ""){
-				document.getElementById('add_memo_status_msg').style.color = 'red';
-				document.getElementById('add_memo_status_msg').innerHTML = "Provide all the needed information. Please try again."+this.responseText;
+				document.getElementById('add_researcher_status_msg').style.color = 'red';
+				document.getElementById('add_researcher_status_msg').innerHTML = "Provide all the needed information. Please try again."+this.responseText;
 				return ;
 			}			
 
