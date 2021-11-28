@@ -269,7 +269,7 @@ if (!$_SESSION['user']) {
 					</div>
 			    </div>
 				<?php
-				$query = "SELECT * FROM user ORDER BY user_first_name";
+				$query = "SELECT * FROM user ORDER BY user_first_name LIMIT $offset, $no_of_records_per_page";
 				if ($result = $db->query($query)) {
 					while ($row = $result->fetch_assoc()) { ?>
 
