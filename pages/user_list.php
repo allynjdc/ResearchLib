@@ -156,7 +156,7 @@ if (!$_SESSION['user']) {
 						$pageno = (isset($_GET["pageno"])) ? $_GET["pageno"] : 1; // Default is page 1
 						
 						// Formula for pagination
-						$no_of_records_per_page = 5;
+						$no_of_records_per_page = 10;
 						$offset = ($pageno - 1) * $no_of_records_per_page;
 
 						// Get total number of pages
@@ -222,7 +222,7 @@ if (!$_SESSION['user']) {
 						    <li><a href="#">Next</a></li> -->
 
 							<?php
-								$max_displayed_page = 10;
+								$max_displayed_page = 5;
 								$current_page = $pageno;
 								
 								if ($total_pages <= $max_displayed_page) {
