@@ -152,6 +152,7 @@ if (!$_SESSION['user']) {
 						<br>
 						<!-- For Fetching ---> 
 						<?php
+
 						// Get current page number
 						$pageno = (isset($_GET["pageno"])) ? $_GET["pageno"] : 1; // Default is page 1
 						
@@ -213,44 +214,56 @@ if (!$_SESSION['user']) {
 					</div>
 					<div class="text-right">
 						<ul class="pagination pagination-sm ">
-						    <!-- <li class="disabled" ><a href="#">Previous</a></li>
-						    <li class="active" ><a href="#">1</a></li>
-						    <li><a href="#">2</a></li>
-						    <li><a href="#">3</a></li>
-						    <li><a href="#">4</a></li>
-						    <li><a href="#">5</a></li>
-						    <li><a href="#">Next</a></li> -->
-
 							<?php
-								$max_displayed_page = 5;
+							if ($total_pages > 1) { // No need to do a pagination if there's only one page
+				
+								$max_displayed_page = 5; // NOTE: This should be an odd number;
 								$current_page = $pageno;
-								
-								if ($total_pages <= $max_displayed_page) {
-							
-									//  Previous button
-									if ($current_page <= 1) {
-										echo "<li class='disabled'><a href='#'>Previous</a></li>";
-									} else {
-										echo "<li><a href='?pageno=".($current_page - 1)."'>Previous</a></li>";
+								$min_page = 1;
+								$max_page = $total_pages;
+
+								// Previous button
+								if ($current_page <= 1) {
+									echo "<li class='disabled'><a href='#'>Previous</a></li>";
+								} else {
+									echo "<li><a href='?pageno=".($current_page - 1)."'>Previous</a></li>";
+								}
+
+								// Numbered buttons
+								// Setup which page numbers to display
+								$lower_page = $min_page;
+								$upper_page = $max_page;
+								if ($total_pages > $max_displayed_page) {
+				
+									$lower_page = $current_page - floor($max_displayed_page / 2); // Assuming $max_displayed_page is an odd number
+									$upper_page = $current_page + floor($max_displayed_page / 2); // Assuming $max_displayed_page is an odd number
+
+									if ($lower_page < $min_page) {
+										$lower_page = $min_page;
+										$upper_page = $lower_page + ($max_displayed_page - 1);
 									}
 
-									// Numbered buttons
-									for ($page_num = 1; $page_num <= $total_pages; ++$page_num) {
-										if ($current_page == $page_num) {
-											echo "<li class='active'><a href='#'>".$page_num."</a></li>";
-										} else {
-											echo "<li><a href='?pageno=".$page_num."'>".$page_num."</a></li>";
-										}
+									if ($upper_page > $max_page) {
+										$upper_page = $max_page;
+										$lower_page = $upper_page - ($max_displayed_page - 1);
 									}
-
-									// Next button
-									if ($current_page >= $total_pages) {
-										echo "<li class='disabled'><a href='#'>Next</a></li>";
+								}
+								// Display the numbered buttons
+								for ($page_num = $lower_page; $page_num <= $upper_page; ++$page_num) {
+									if ($current_page == $page_num) {
+										echo "<li class='active'><a href='#'>".$page_num."</a></li>";
 									} else {
-										echo "<li><a href='?pageno=".($current_page + 1)."'>Next</a></li>";
+										echo "<li><a href='?pageno=".$page_num."'>".$page_num."</a></li>";
 									}
 								}
 
+								// Next button
+								if ($current_page >= $total_pages) {
+									echo "<li class='disabled'><a href='#'>Next</a></li>";
+								} else {
+									echo "<li><a href='?pageno=".($current_page + 1)."'>Next</a></li>";
+								}
+							}
 							?>
   						</ul>
 					</div>
