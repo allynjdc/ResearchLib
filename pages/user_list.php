@@ -152,7 +152,20 @@ if (!$_SESSION['user']) {
 						<br>
 						<!-- For Fetching ---> 
 						<?php
-						$query = "SELECT * FROM user ORDER BY user_first_name";
+						// Get current page number
+						$pageno = (isset($_GET["pageno"])) ? $_GET["pageno"] : 1; // Default is page 1
+						
+						// Formula for pagination
+						$no_of_records_per_page = 5;
+						$offset = ($pageno - 1) * $no_of_records_per_page;
+
+						// Get total number of pages
+						$total_pages_query = "SELECT COUNT(*) FROM user";
+						$result_count = $db->query($total_pages_query);
+						$total_rows = mysqli_fetch_array($result_count)[0];
+						$total_pages = ceil($total_rows / $no_of_records_per_page);
+
+						$query = "SELECT * FROM user ORDER BY user_first_name LIMIT $offset, $no_of_records_per_page";
 						if ($result = $db->query($query)) {
 							$profileDir = "../images/profile_pictures/";
 							$defaultImg = "default_profile_picture.jpg";
@@ -197,6 +210,49 @@ if (!$_SESSION['user']) {
 							echo "<p> No users yet.</p>";
 						}
 						?>
+					</div>
+					<div class="text-right">
+						<ul class="pagination pagination-sm ">
+						    <!-- <li class="disabled" ><a href="#">Previous</a></li>
+						    <li class="active" ><a href="#">1</a></li>
+						    <li><a href="#">2</a></li>
+						    <li><a href="#">3</a></li>
+						    <li><a href="#">4</a></li>
+						    <li><a href="#">5</a></li>
+						    <li><a href="#">Next</a></li> -->
+
+							<?php
+								$max_displayed_page = 10;
+								$current_page = $pageno;
+								
+								if ($total_pages <= $max_displayed_page) {
+							
+									//  Previous button
+									if ($current_page <= 1) {
+										echo "<li class='disabled'><a href='#'>Previous</a></li>";
+									} else {
+										echo "<li><a href='?pageno=".($current_page - 1)."'>Previous</a></li>";
+									}
+
+									// Numbered buttons
+									for ($page_num = 1; $page_num <= $total_pages; ++$page_num) {
+										if ($current_page == $page_num) {
+											echo "<li class='active'><a href='#'>".$page_num."</a></li>";
+										} else {
+											echo "<li><a href='?pageno=".$page_num."'>".$page_num."</a></li>";
+										}
+									}
+
+									// Next button
+									if ($current_page >= $total_pages) {
+										echo "<li class='disabled'><a href='#'>Next</a></li>";
+									} else {
+										echo "<li><a href='?pageno=".($current_page + 1)."'>Next</a></li>";
+									}
+								}
+
+							?>
+  						</ul>
 					</div>
 			    </div>
 				<?php
