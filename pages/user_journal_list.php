@@ -112,7 +112,21 @@ if (!$_SESSION['user']) {
 
 					<!-- FETCHING MEMORANDUM -->
 					<?php 
-						$query = "SELECT * FROM research_journal ORDER BY journal_date_publish DESC";
+
+						// Get current page number
+						$pageno = (isset($_GET["pageno"])) ? $_GET["pageno"] : 1; // Default is page 1
+						
+						// Formula for pagination
+						$no_of_records_per_page = 10;
+						$offset = ($pageno - 1) * $no_of_records_per_page;
+
+						// Get total number of pages
+						$total_pages_query = "SELECT COUNT(*) FROM research_journal";
+						$result_count = $db->query($total_pages_query);
+						$total_rows = mysqli_fetch_array($result_count)[0];
+						$total_pages = ceil($total_rows / $no_of_records_per_page);
+
+						$query = "SELECT * FROM research_journal ORDER BY journal_date_publish DESC LIMIT $offset, $no_of_records_per_page";
 						if ($result = $db->query($query)){
 							$defaultImg = "default_journal_photo.png";
 							while ($row = $result->fetch_assoc()){
@@ -193,17 +207,61 @@ if (!$_SESSION['user']) {
 						<p>&nbsp;</p>
 					</div>
 					
-					<!-- <div class="text-right">
+					<div class="text-right">
 						<ul class="pagination pagination-sm ">
-						    <li><a href="#">Previous</a></li>
-						    <li><a href="#">1</a></li>
-						    <li><a href="#">2</a></li>
-						    <li><a href="#">3</a></li>
-						    <li><a href="#">4</a></li>
-						    <li><a href="#">5</a></li>
-						    <li><a href="#">Next</a></li>
+							<?php
+							if ($total_pages > 1) { // No need to do a pagination if there's only one page
+				
+								$max_displayed_page = 5; // NOTE: This should be an odd number;
+								$current_page = $pageno;
+								$min_page = 1;
+								$max_page = $total_pages;
+
+								// Previous button
+								if ($current_page <= 1) {
+									echo "<li class='disabled'><a href='#'>Previous</a></li>";
+								} else {
+									echo "<li><a href='?pageno=".($current_page - 1)."'>Previous</a></li>";
+								}
+
+								// Numbered buttons
+								// Setup which page numbers to display
+								$lower_page = $min_page;
+								$upper_page = $max_page;
+								if ($total_pages > $max_displayed_page) {
+				
+									$lower_page = $current_page - floor($max_displayed_page / 2); // Assuming $max_displayed_page is an odd number
+									$upper_page = $current_page + floor($max_displayed_page / 2); // Assuming $max_displayed_page is an odd number
+
+									if ($lower_page < $min_page) {
+										$lower_page = $min_page;
+										$upper_page = $lower_page + ($max_displayed_page - 1);
+									}
+
+									if ($upper_page > $max_page) {
+										$upper_page = $max_page;
+										$lower_page = $upper_page - ($max_displayed_page - 1);
+									}
+								}
+								// Display the numbered buttons
+								for ($page_num = $lower_page; $page_num <= $upper_page; ++$page_num) {
+									if ($current_page == $page_num) {
+										echo "<li class='active'><a href='#'>".$page_num."</a></li>";
+									} else {
+										echo "<li><a href='?pageno=".$page_num."'>".$page_num."</a></li>";
+									}
+								}
+
+								// Next button
+								if ($current_page >= $total_pages) {
+									echo "<li class='disabled'><a href='#'>Next</a></li>";
+								} else {
+									echo "<li><a href='?pageno=".($current_page + 1)."'>Next</a></li>";
+								}
+							}
+							?>
   						</ul>
-					</div> -->
+					</div>
 
 				</div>
 						
