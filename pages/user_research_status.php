@@ -112,7 +112,7 @@ if (!$_SESSION['user']) {
 
 										$query = "SELECT * FROM research_output AS ro 
 												INNER JOIN research_journal AS rj ON ro.research_journal_id = rj.journal_id
-												WHERE ro.research_status = '$status'";
+												WHERE ro.research_status = '$status' LIMIT $offset, $no_of_records_per_page";
 										if ($result = $db->query($query)){
 											// echo "result";
 											while ($row = $result->fetch_assoc()){
