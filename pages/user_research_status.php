@@ -80,13 +80,14 @@ if (!$_SESSION['user']) {
 					
 						<div>
 							<ul class="nav nav-tabs">
-							    <li class="active"><a data-toggle="tab" href="#conducted">Conducted</a></li>
-							    <li><a data-toggle="tab" href="#submitted">Submitted</a></li>
-							    <li><a data-toggle="tab" href="#disseminated">Disseminated</a></li>
-							    <li><a data-toggle="tab" href="#used">Used</a></li>
+								<!-- Default is the "conducted" tab -->
+							    <li class="<?= !isset($_GET["tab"]) || $_GET["tab"] == "conducted" ? "active" : "" ?>"><a data-toggle="tab" href="#conducted">Conducted</a></li>
+							    <li class="<?= isset($_GET["tab"]) && $_GET["tab"] == "submitted" ? "active" : "" ?>"><a data-toggle="tab" href="#submitted">Submitted</a></li>
+							    <li class="<?= isset($_GET["tab"]) && $_GET["tab"] == "disseminated" ? "active" : "" ?>"><a data-toggle="tab" href="#disseminated">Disseminated</a></li>
+							    <li class="<?= isset($_GET["tab"]) && $_GET["tab"] == "used" ? "active" : "" ?>"><a data-toggle="tab" href="#used">Used</a></li>
 	  						</ul>
 							<div class="tab-content">
-							    <div id="conducted" class="tab-pane fade in active">
+							    <div id="conducted" class="tab-pane fade <?php if (!isset($_GET["tab"]) || $_GET["tab"] == "conducted") echo "in active" ?>">
 							      	<h3 class="title_brand_nav">Research Conducted</h3>
 							      	<br>
 
@@ -98,7 +99,7 @@ if (!$_SESSION['user']) {
 										$pageno = (isset($_GET["conductedpageno"])) ? $_GET["conductedpageno"] : 1; // Default is page 1
 										
 										// Formula for pagination
-										$no_of_records_per_page = 5;
+										$no_of_records_per_page = 10;
 										$offset = ($pageno - 1) * $no_of_records_per_page;
 
 										// Get total number of pages
@@ -198,7 +199,7 @@ if (!$_SESSION['user']) {
 												if ($current_page <= 1) {
 													echo "<li class='disabled'><a href='#'>Previous</a></li>";
 												} else {
-													echo "<li><a href='?conductedpageno=".($current_page - 1)."'>Previous</a></li>";
+													echo "<li><a href='?tab=conducted&conductedpageno=".($current_page - 1)."'>Previous</a></li>";
 												}
 
 												// Numbered buttons
@@ -225,7 +226,7 @@ if (!$_SESSION['user']) {
 													if ($current_page == $page_num) {
 														echo "<li class='active'><a href='#'>".$page_num."</a></li>";
 													} else {
-														echo "<li><a href='?conductedpageno=".$page_num."'>".$page_num."</a></li>";
+														echo "<li><a href='?tab=conducted&conductedpageno=".$page_num."'>".$page_num."</a></li>";
 													}
 												}
 
@@ -233,7 +234,7 @@ if (!$_SESSION['user']) {
 												if ($current_page >= $total_pages) {
 													echo "<li class='disabled'><a href='#'>Next</a></li>";
 												} else {
-													echo "<li><a href='?conductedpageno=".($current_page + 1)."'>Next</a></li>";
+													echo "<li><a href='?tab=conducted&conductedpageno=".($current_page + 1)."'>Next</a></li>";
 												}
 											}
 											?>
@@ -241,7 +242,7 @@ if (!$_SESSION['user']) {
 									</div>
 							    </div>
 
-							    <div id="submitted" class="tab-pane fade">
+							    <div id="submitted" class="tab-pane fade <?php if (isset($_GET["tab"]) && $_GET["tab"] == "submitted") echo "in active" ?>">
 							      	<h3 class="title_brand_nav">Research Submitted</h3>
 							      	<br>
 							      	
@@ -253,7 +254,7 @@ if (!$_SESSION['user']) {
 										$pageno = (isset($_GET["submittedpageno"])) ? $_GET["submittedpageno"] : 1; // Default is page 1
 										
 										// Formula for pagination
-										$no_of_records_per_page = 5;
+										$no_of_records_per_page = 10;
 										$offset = ($pageno - 1) * $no_of_records_per_page;
 
 										// Get total number of pages
@@ -353,7 +354,7 @@ if (!$_SESSION['user']) {
 												if ($current_page <= 1) {
 													echo "<li class='disabled'><a href='#'>Previous</a></li>";
 												} else {
-													echo "<li><a href='?submittedpageno=".($current_page - 1)."'>Previous</a></li>";
+													echo "<li><a href='?tab=submitted&submittedpageno=".($current_page - 1)."'>Previous</a></li>";
 												}
 
 												// Numbered buttons
@@ -380,7 +381,7 @@ if (!$_SESSION['user']) {
 													if ($current_page == $page_num) {
 														echo "<li class='active'><a href='#'>".$page_num."</a></li>";
 													} else {
-														echo "<li><a href='?submittedpageno=".$page_num."'>".$page_num."</a></li>";
+														echo "<li><a href='?tab=submitted&submittedpageno=".$page_num."'>".$page_num."</a></li>";
 													}
 												}
 
@@ -388,7 +389,7 @@ if (!$_SESSION['user']) {
 												if ($current_page >= $total_pages) {
 													echo "<li class='disabled'><a href='#'>Next</a></li>";
 												} else {
-													echo "<li><a href='?submittedpageno=".($current_page + 1)."'>Next</a></li>";
+													echo "<li><a href='?tab=submitted&submittedpageno=".($current_page + 1)."'>Next</a></li>";
 												}
 											}
 											?>
