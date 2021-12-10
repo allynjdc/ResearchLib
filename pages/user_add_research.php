@@ -166,8 +166,8 @@ if (isset($_POST['submit'])){
 								<ul class="list-group list-group-flush" id="researcher_list_display" style="display:none;"></ul>
 				
 								<div class="input-group">
-									<select name="researchers" id="researchers_selection" class="form-control">
-										<option value="" selected disabled hidden>-- select a researcher --</option> <!-- defuault option -->
+									<select name="researchers" id="researchers_selection" class="form-control" onchange="addResearcherName()">
+										<option value="" selected disabled hidden>-- select a researcher --</option> <!-- default option -->
 										<?php
 											$query = "SELECT * FROM researcher ORDER BY researcher_first_name";
 											if ($result = $db->query($query)) {
