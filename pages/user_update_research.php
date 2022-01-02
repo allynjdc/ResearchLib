@@ -31,7 +31,7 @@ if (isset($_POST['submit'])){
 	$location2 = "../resources/research/".$filename;
 
 	$query = "UPDATE research_output 
-			  SET research_title = '$title', research_office = '$office', research_category = '$category', research_type = '$type', research_agenda = '$agenda', research_date_publish = '$date', research_doi = '$doi', research_journal_id = '2', research_journal_pages = '$pages', research_abstract = '$abstract', research_status = '$status', research_keywords = '$keywords', research_filename = '$filename', research_filepath = '$location'
+			  SET research_title = '$title', research_office = '$office', research_category = '$category', research_type = '$type', research_agenda = '$agenda', research_date_publish = '$date', research_doi = '$doi', research_journal_id = '$journal', research_journal_pages = '$pages', research_abstract = '$abstract', research_status = '$status', research_keywords = '$keywords', research_filename = '$filename', research_filepath = '$location'
 			  WHERE research_id = '$r_id' ";
 
     if ($db->query($query) === TRUE) {
@@ -209,11 +209,32 @@ if (isset($_POST['submit'])){
 						    </div>
 						    <br/>
 						    
+                            <!-- 
                             <div class="input-group" >
 						      	<span class="input-group-addon">Journal Title</span>
 						      	<input id="research_journal_title" type="text" class="form-control" name="research_journal_title" placeholder="Title of Journal" value="<?=$row['journal_title']?>">
 						    </div>
-                            <br/>
+                            <br/> 
+                        	-->
+
+                            <div class="input-group" >
+						      	<span class="input-group-addon">Journal Title</span>
+								<select name="research_journal_title" id="research_journal_title" class="form-control" required>
+									<option value="" disabled selected>-- select a journal --</option>
+									<?php
+										$query = "SELECT * FROM research_journal ORDER BY journal_title";
+										if ($result = $db->query($query)) {
+											while ($row = $result->fetch_assoc()) {
+												echo "<option value=\"".$row['journal_id']."\">". $row['journal_title']."</option>";
+											}
+										} else {
+											echo "<option value=''>Error</option>";
+										}
+									?>
+								</select>
+						    </div>
+						    <br>
+
                             <!-- <div class="input-group">
 						      	<span class="input-group-addon">Volume</span>
 						      	<input id="journ_vol" type="number" class="form-control" name="journ_vol" placeholder="1" min="1" max="50">
