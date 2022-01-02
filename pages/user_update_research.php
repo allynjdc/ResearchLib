@@ -8,9 +8,9 @@ if (!$_SESSION['user']) {
 
 if (isset($_POST['submit'])){
 
-	$r_id 		= $_POST['research_id'];
+	$research_id = $_POST['research_id'];
 	$title 		= $_POST['research_title'];
-	$reseacher 	= $_POST['researcher_name'];
+	$researchers = $_POST['researcher_id'];
 	$office 	= $_POST['research_office'];
 	$category 	= $_POST['research_category'];
 	$type 		= $_POST['research_type'];
@@ -27,11 +27,23 @@ if (isset($_POST['submit'])){
 	$filename = empty($new_filename) ? $old_filename : $new_filename;
 	$location = "../resources/research/".$filename;
 
-	$query = "UPDATE research_output 
+	$query1 = "UPDATE research_output 
 			  SET research_title = '$title', research_office = '$office', research_category = '$category', research_type = '$type', research_agenda = '$agenda', research_date_publish = '$date', research_doi = '$doi', research_journal_id = '$journal', research_journal_pages = '$pages', research_abstract = '$abstract', research_status = '$status', research_keywords = '$keywords', research_filename = '$filename', research_filepath = '$location'
-			  WHERE research_id = '$r_id' ";
+			  WHERE research_id = '$research_id' ";
+	
+	// For the research_creation table, we are going to remove all the records of the reseach output to be updated. And then, just insert the new ones.
+	// Reasons: This will handle cases where the old reseach has lesser number of researchers compared to new the list of researcher and vice-versa.
+	$query2 = "DELETE FROM research_creation WHERE creation_research_id = '$research_id'"; // At this point, there should be at least 1 researcher to be deleted
+	$query3 = "INSERT INTO research_creation (creation_researcher_id, creation_research_id) VALUES";
+	$values = [];
+	var_dump($researchers);
+	foreach($researchers as $researcher) {
+		$values[] = "($researcher, $research_id)";
+	}
+	$query3 .= join(',', $values);
 
-    if ($db->query($query) === TRUE) {
+
+    if (($db->query($query1) === TRUE) && ($db->query($query2) === TRUE) && ($db->query($query3) == TRUE)) {
 		$IsNeedToUpload = !empty($new_filename); // $new_filename should not be empty if the user tries to upload a new file
 		if (!$IsNeedToUpload) {
 			header("Location:user_research_status.php"); // No file to be upload here so we can just redirect the user to the research status page.
@@ -185,13 +197,15 @@ if (isset($_POST['submit'])){
 						    </div>
 						    <br>
 
+
 							<fieldset class="scheduler-border">
 								<legend class="scheduler-border">Researchers</legend>
+
+								<?php $html_hidden_inputs = ""; // HTML code for hidden input tags. This is similar to user_add_research page ?>
 
 								<!-- This list displays the researchers/authors of the research. -->
 								<ul class="list-group list-group-flush" id="researcher_list_display">
 									<?php
-										$html_hidden_inputs = "";
 										$query = "SELECT * 
 												FROM research_creation AS rc 
 												INNER JOIN researcher AS r
@@ -208,14 +222,14 @@ if (isset($_POST['submit'])){
 												echo "<li class='list-group-item' id='researcher_list_".$rrow['researcher_id']."'>"
 														.$fullName."<span class='remove-from-list pointer' onclick='removeSelection(".$rrow['researcher_id'].")'>&#10006;</span>
 													</li>";
-												$html_hidden_inputs .= "<input hidden type='text' name='researcher_id[] id='researcher_input_".$rrow['researcher_id']."' value='".$rrow['researcher_id']."' />";
+												$html_hidden_inputs .= "<input hidden type='text' name='researcher_id[]' id='researcher_input_".$rrow['researcher_id']."' value='".$rrow['researcher_id']."' /> </br>";
 											}
 										}
 									?>
 								</ul>
-								
+
 								<?php echo $html_hidden_inputs; ?>
-				
+
 								<div class="input-group">
 									<!-- A list of all researchers -->
 									<select name="researchers" id="researchers_selection" class="form-control" onchange="addResearcherName()">
@@ -351,6 +365,7 @@ if (isset($_POST['submit'])){
 						      	<input id="research_file" type="file" class="" name="research_file" value="<?=$row['research_filename']?>" accept="image/*, .pdf, .doc, .txt">
 						    <br>
 						    <input type = "submit" name = "submit" value = "Update Research">
+
 	  					</form>
 
 	  					<?php
@@ -395,7 +410,7 @@ if (isset($_POST['submit'])){
 			listItemToDelete.parentNode.removeChild(listItemToDelete);
 
 			// Remove the hidden input
-			var inputToDelete = document.getElementById("reseacher_input_" + researcherId);
+			var inputToDelete = document.getElementById("researcher_input_" + researcherId);
 			inputToDelete.parentNode.removeChild(inputToDelete);
 
 			// Show the list if there are still items left. Otherwise, hide.
