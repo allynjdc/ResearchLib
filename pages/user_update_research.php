@@ -275,7 +275,7 @@ if (isset($_POST['submit'])){
 						    	<input id="reasearch_old_file" type="hidden" class="" name="research_old_file" accept="image/*, .pdf, .doc, .txt" value="<?=$row['research_filename']?>">
 						      	<input id="research_file" type="file" class="" name="research_file" value="<?=$row['research_filename']?>" accept="image/*, .pdf, .doc, .txt">
 						    <br>
-						    <input type = "submit" name = "submit" value = "Add Research">
+						    <input type = "submit" name = "submit" value = "Update Research">
 	  					</form>
 
 	  					<?php

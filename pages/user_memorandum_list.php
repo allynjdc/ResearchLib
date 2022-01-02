@@ -96,7 +96,7 @@ if (!$_SESSION['user']) {
 									    <input id="Memo_user" type="hidden" value="<?= $_SESSION['userid'] ?>" name="Memo_user">
 									    <div class="input-group">
 									      	<span class="input-group-addon">Memorandum number</span>
-									      	<input id="Memo_num" type="number" min="1" max="1000" class="form-control" name="Memo_num" placeholder="DM 000" required>
+									      	<input id="Memo_num" type="number" min="1" max="1000" class="form-control" name="Memo_num" placeholder="'000' for Unnumbered Memorandum" required>
 									    </div>
 									    <br>
 									    <input id="Memo_series" type="hidden" min="2010" max="2100" class="form-control" name="Memo_series" value="<?= date("Y") ?>" required>
@@ -178,7 +178,7 @@ if (!$_SESSION['user']) {
 
 								echo "
 									<div style=\"padding:2%; border: solid #e3dede 1px; border-radius:1%;\">
-						    			<p class=\"h4 text-justify\"><b><a href=\"memorandum_view.php?memoid=".$row['memo_id']."\">".$memoDate." DM ".$memoNum.", S. ".$memoSeries." - ".strtoupper($memoSubject)." </b></a></p>
+						    			<p class=\"h4 text-justify\"><b><a href=\"memorandum_view.php?memoid=".$row['memo_id']."\">".$memoDate.( intval($memoNum) == 000? "" : " DM ".$memoNum.", S. ".$memoSeries)." - ".strtoupper($memoSubject)." </b></a></p>
 									
 										<p class=\"h5 text-justify\">
 											".ucwords(strtolower($memoSubject))."
@@ -214,7 +214,7 @@ if (!$_SESSION['user']) {
 											    <input id="UPDATE_Memo_user_<?=$row['memo_id']?>" type="hidden" value="<?=$row['memo_user_id']?>" name="Memo_user">
 											    <div class="input-group">
 											      	<span class="input-group-addon">Memorandum number</span>
-											      	<input id="UPDATE_Memo_num_<?=$row['memo_id']?>" type="number" min="1" max="1000" class="form-control" name="Memo_num" value="<?=$row['memo_number']?>">
+											      	<input id="UPDATE_Memo_num_<?=$row['memo_id']?>" type="number" min="1" max="1000" class="form-control" name="Memo_num" value="<?=$row['memo_number']?>" placeholder="'000' for Unnumbered Memorandum">
 											    </div>
 											    <br>
 											    <input id="UPDATE_Memo_series_<?=$row['memo_id']?>" type="hidden" min="2010" max="2100" class="form-control" name="Memo_series" value="<?=$row['memo_series']?>">
@@ -451,7 +451,7 @@ if (!$_SESSION['user']) {
 					}
 				}
 			};
-			xmlhttp.open("POST", "../database/update_researcher.php", true);
+			xmlhttp.open("POST", "../database/update_memo.php", true);
 			xmlhttp.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
 			xmlhttp.send(JSON.stringify(data));
 		}
