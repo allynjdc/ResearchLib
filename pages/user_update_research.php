@@ -70,6 +70,36 @@ if (isset($_POST['submit'])){
 		<link rel="stylesheet" type="text/css" href="../css/body_css.css">
 		<link rel="stylesheet" type="text/css" href="../css/footer_css.css">
         <link rel="stylesheet" type="text/css" href="../css/nav_css.css">
+
+		<!--TODO: Move this styles to external css -->
+		<!--This styles are used in researcher list -->
+		<style>
+			fieldset.scheduler-border {
+				border: solid 1px #DDD !important;
+				padding: 0 10px 10px 10px;
+				border-bottom: none;
+			}
+
+			legend.scheduler-border {
+				width: auto !important;
+				text-align: left;
+				border: none;
+				font-size: 14px;
+			}
+			.remove-from-list {
+				float:right;
+				display:inline-block;
+				padding:2px 5px;
+			}
+			.remove-from-list:hover {
+				float:right;
+				display:inline-block;
+				padding:2px 5px;
+				color: red;
+				cursor: pointer;
+			}
+			
+		</style>
 		
 	</head>
 	<body class="bg-light">
@@ -132,10 +162,6 @@ if (isset($_POST['submit'])){
 				    		$id = intval($_GET['rid']);
 							$query = "SELECT * FROM research_output AS ro INNER JOIN research_creation AS rc INNER JOIN research_journal AS rj INNER JOIN researcher as r ON rj.journal_id = ro.research_journal_id AND ro.research_id = rc.creation_research_id AND rc.creation_researcher_id = r.researcher_id WHERE ro.research_id = '$id'";
 
-
-
-							// echo "hello ".$id;
-
 							if ($result = $db->query($query)){
 								// echo "result";
 								while ($row = $result->fetch_assoc()){
@@ -150,7 +176,7 @@ if (isset($_POST['submit'])){
 
 						?>
 
-                    	<form target="_SELF" method="POST" enctype="multipart/form-data">
+                    	<form id="update_researcher_form" target="_SELF" method="POST" enctype="multipart/form-data">
 						    <input id="research_id" type="hidden" class="form-control" name="research_id" value="<?=$row['research_id']?>">
 						    <input id="research_user_id" type="hidden" class="form-control" name="research_user_id" value="<?=$_SESSION['userid']?>">
 						    <div class="input-group">
@@ -158,10 +184,62 @@ if (isset($_POST['submit'])){
 						      	<input id="research_title" type="text" class="form-control" name="research_title" value="<?=$row['research_title']?>">
 						    </div>
 						    <br>
-						    <div class="input-group" >
-						      	<span class="input-group-addon">Researchers</span>
-						      	<input id="researcher_name" type="text" class="form-control" name="researcher_name" value="<?=$row['researcher_first_name']." ".$row['researcher_middle_name'][0].". ".$row['researcher_last_name']?> ">
-						    </div>
+
+							<fieldset class="scheduler-border">
+								<legend class="scheduler-border">Researchers</legend>
+
+								<!-- This list displays the researchers/authors of the research. -->
+								<ul class="list-group list-group-flush" id="researcher_list_display">
+									<?php
+										$html_hidden_inputs = "";
+										$query = "SELECT * 
+												FROM research_creation AS rc 
+												INNER JOIN researcher AS r
+												ON rc.creation_researcher_id = r.researcher_id
+												WHERE rc.creation_research_id = '$id'
+												ORDER BY r.researcher_first_name";
+
+										if ($result = $db->query($query)) {
+											while ($rrow = $result->fetch_assoc()) {
+												$firstName = strtolower($rrow['researcher_first_name']);
+												$middleInitial = $rrow['researcher_middle_name'][0];
+												$lastName =  strtolower($rrow['researcher_last_name']);
+												$fullName = ucwords($firstName." ".$middleInitial.". ".$lastName);
+												echo "<li class='list-group-item' id='researcher_list_".$rrow['researcher_id']."'>"
+														.$fullName."<span class='remove-from-list pointer' onclick='removeSelection(".$rrow['researcher_id'].")'>&#10006;</span>
+													</li>";
+												$html_hidden_inputs .= "<input hidden type='text' name='researcher_id[] id='researcher_input_".$rrow['researcher_id']."' value='".$rrow['researcher_id']."' />";
+											}
+										}
+									?>
+								</ul>
+								
+								<?php echo $html_hidden_inputs; ?>
+				
+								<div class="input-group">
+									<!-- A list of all researchers -->
+									<select name="researchers" id="researchers_selection" class="form-control" onchange="addResearcherName()">
+										<option value="" selected disabled hidden>-- select a researcher --</option> <!-- default option -->
+										<?php
+											$query = "SELECT * FROM researcher ORDER BY researcher_first_name";
+											if ($result = $db->query($query)) {
+												while ($rlrow = $result->fetch_assoc()) {
+													$firstName = strtolower($rlrow['researcher_first_name']);
+													$middleInitial = $rlrow['researcher_middle_name'][0];
+													$lastName =  strtolower($rlrow['researcher_last_name']);
+													$fullName = ucwords($firstName." ".$middleInitial.". ".$lastName);
+													echo "<option value=\"".$rlrow['researcher_id']."\">".$fullName."</option>";
+												}
+											} else {
+												echo "<option value=''>Error</option>";
+											}
+										?>
+									</select>
+									<div class="input-group-btn">
+										<button type="button" id="add_name_btn" onclick="addResearcherName()" class="btn btn-default">+ Add </button>
+									</div>
+								</div>
+							</fieldset>
                             <br/>
                             <div class="input-group">
 						      	<span class="input-group-addon">School / Office</span>
@@ -309,4 +387,62 @@ if (isset($_POST['submit'])){
 		</div>
 
 	</body>
+	<script>
+		function removeSelection(researcherId)
+		{
+			// Remove from the list
+			var listItemToDelete = document.getElementById("researcher_list_" + researcherId);
+			listItemToDelete.parentNode.removeChild(listItemToDelete);
+
+			// Remove the hidden input
+			var inputToDelete = document.getElementById("reseacher_input_" + researcherId);
+			inputToDelete.parentNode.removeChild(inputToDelete);
+
+			// Show the list if there are still items left. Otherwise, hide.
+			var researcherList = document.getElementById("researcher_list_display");
+			var displayList = researcherList.children.length !== 0 ? 'block' : 'none';
+			researcherList.style.display = displayList;
+		}
+
+		function addResearcherName() {
+			var selectedResearcher = document.getElementById("researchers_selection");
+			var index = selectedResearcher.selectedIndex;
+			if (selectedResearcher.value == "") { 			// Require the user to select a researcher
+				alert("Please select a researcher to add");
+				return;
+			}
+	
+			// Create a list element: 
+			var listItemNode = document.createElement("li");
+			listItemNode.setAttribute("class", "list-group-item");
+			listItemNode.setAttribute("id", "researcher_list_" + selectedResearcher.value);
+			var listText = document.createTextNode(selectedResearcher.options[index].text);
+			var closeBtnNode = document.createElement("span");
+			closeBtnNode.setAttribute("class", "remove-from-list pointer");
+			closeBtnNode.setAttribute("onclick", "removeSelection(" + selectedResearcher.value + ")" );
+			closeBtnNode.innerHTML = "&#10006;";  // The "x" character
+			listItemNode.appendChild(listText);
+			listItemNode.appendChild(closeBtnNode);
+
+			// Add the new list item to the list so we can display it
+			document.getElementById("researcher_list_display").appendChild(listItemNode);
+			document.getElementById("researcher_list_display").setAttribute("style", "display: block;");
+
+			// Create hidden input element where the value is the researcher id
+			var inputNode = document.createElement("input");
+			inputNode.setAttribute("type", "text");
+			inputNode.setAttribute("hidden", true);
+			inputNode.setAttribute("name", "researcher_id[]");
+			inputNode.setAttribute("id", "reseacher_input_" + selectedResearcher.value);
+			inputNode.setAttribute("value", selectedResearcher.value);
+
+			// Add the new hidden input the form
+			document.getElementById("update_researcher_form").appendChild(inputNode);
+
+			 // Reset the selection to empty after adding new researcher name
+			selectedResearcher.value = "";
+
+			// ToDo: Avoid duplicate researcher name by disabling the options that are already selected in the selected tag
+		}
+	</script>
 </html>
