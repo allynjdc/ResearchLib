@@ -22,8 +22,13 @@ if (isset($_POST['submit'])){
 	$status 	= $_POST['research_status'];
 	$abstract 	= $db->real_escape_string($_POST['research_abstract']);
 	$keywords 	= $db->real_escape_string($_POST['research_keywords']);
-	$filename	= $_FILES['research_file']['name'];
-	$location 	= '../resources/research/'.$filename;
+	// $filename	= $_FILES['research_file']['name'];
+	// $location 	= '../resources/research/'.$filename;
+
+	$old_filename = $_POST['research_old_file'];
+	$new_filename = $_FILES['research_file']['name'];
+	$filename = empty($new_filename) ? $old_filename : $new_filename;
+	$location2 = "../resources/research/".$filename;
 
 	$query = "UPDATE research_output 
 			  SET research_title = '$title', research_office = '$office', research_category = '$category', research_type = '$type', research_agenda = '$agenda', research_date_publish = '$date', research_doi = '$doi', research_journal_id = '2', research_journal_pages = '$pages', research_abstract = '$abstract', research_status = '$status', research_keywords = '$keywords', research_filename = '$filename', research_filepath = '$location'
@@ -246,6 +251,7 @@ if (isset($_POST['submit'])){
 						    <br>
 
 						    	<p class="text-justify">Insert the Research File:</p>
+						    	<input id="reasearch_old_file" type="hidden" class="" name="research_old_file" accept="image/*, .pdf, .doc, .txt" value="<?=$row['research_filename']?>">
 						      	<input id="research_file" type="file" class="" name="research_file" value="<?=$row['research_filename']?>" accept="image/*, .pdf, .doc, .txt">
 						    <br>
 						    <input type = "submit" name = "submit" value = "Add Research">

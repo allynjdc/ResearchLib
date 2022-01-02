@@ -149,7 +149,7 @@ session_start();
 							<br>
 							<div class="col-md-12" style="">
 								<div class="col-sm-3" >
-									<img class="img-circle " src="../images/calcaben.png" alt="Calcaben" width="50px" height="50px">
+									<img class="img-circle " src="../images/default_profile_picture.jpg" alt="Calcaben" width="50px" height="50px">
 								</div>
 								
 								<div class="col-sm-9 text-left dev_team" style="line-height: 50px; height: 50px; display: flex; align-items: center; " >
@@ -163,7 +163,7 @@ session_start();
 							<br>
 							<div class="col-md-12" style="">
 								<div class="col-sm-3" >
-									<img class="img-circle " src="../images/calcaben.png" alt="Calcaben" width="50px" height="50px">
+									<img class="img-circle " src="../images/default_profile_picture.jpg" alt="Calcaben" width="50px" height="50px">
 								</div>
 								
 								<div class="col-sm-9 text-left  " style="line-height: 50px; height: 50px; display: flex; align-items: center; " >
@@ -177,7 +177,7 @@ session_start();
 							<br>
 							<div class="col-md-12" style="">
 								<div class="col-sm-3" >
-									<img class="img-circle " src="../images/calcaben.png" alt="Calcaben" width="50px" height="50px">
+									<img class="img-circle " src="../images/default_profile_picture.jpg" alt="Calcaben" width="50px" height="50px">
 								</div>
 								
 								<div class="col-sm-9 text-left  " style="line-height: 50px; height: 50px; display: flex; align-items: center; " >
@@ -191,7 +191,7 @@ session_start();
 							<br>
 							<div class="col-md-12" style="">
 								<div class="col-sm-3" >
-									<img class="img-circle " src="../images/calcaben.png" alt="Calcaben" width="50px" height="50px">
+									<img class="img-circle " src="../images/default_profile_picture.jpg" alt="Calcaben" width="50px" height="50px">
 								</div>
 								
 								<div class="col-sm-9 text-left  " style="line-height: 50px; height: 50px; display: flex; align-items: center; " >
