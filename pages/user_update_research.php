@@ -22,24 +22,26 @@ if (isset($_POST['submit'])){
 	$status 	= $_POST['research_status'];
 	$abstract 	= $db->real_escape_string($_POST['research_abstract']);
 	$keywords 	= $db->real_escape_string($_POST['research_keywords']);
-	// $filename	= $_FILES['research_file']['name'];
-	// $location 	= '../resources/research/'.$filename;
-
 	$old_filename = $_POST['research_old_file'];
 	$new_filename = $_FILES['research_file']['name'];
 	$filename = empty($new_filename) ? $old_filename : $new_filename;
-	$location2 = "../resources/research/".$filename;
+	$location = "../resources/research/".$filename;
 
 	$query = "UPDATE research_output 
 			  SET research_title = '$title', research_office = '$office', research_category = '$category', research_type = '$type', research_agenda = '$agenda', research_date_publish = '$date', research_doi = '$doi', research_journal_id = '$journal', research_journal_pages = '$pages', research_abstract = '$abstract', research_status = '$status', research_keywords = '$keywords', research_filename = '$filename', research_filepath = '$location'
 			  WHERE research_id = '$r_id' ";
 
     if ($db->query($query) === TRUE) {
-		// Save the upload file to the local filesystem
-		if (move_uploaded_file($_FILES['research_file']['tmp_name'], $location)) {
-			header("Location:user_research_status.php");    
+		$IsNeedToUpload = !empty($new_filename); // $new_filename should not be empty if the user tries to upload a new file
+		if (!$IsNeedToUpload) {
+			header("Location:user_research_status.php"); // No file to be upload here so we can just redirect the user to the research status page.
 		} else {
-		    echo "NOK";
+			// Save the upload file to the local filesystem
+			if (move_uploaded_file($_FILES['research_file']['tmp_name'], $location)) {
+				header("Location:user_research_status.php");
+			} else {
+				echo "NOK";
+			}
 		}
 
     } else {
@@ -139,6 +141,7 @@ if (isset($_POST['submit'])){
 								while ($row = $result->fetch_assoc()){
 
 									$jtitle = ucwords(strtolower($row['journal_title']));
+									$jSelected = $row['journal_id'];
 									$jpages = $row['research_journal_pages'];
 									$rdate = strtotime($row['journal_date_publish']);
 									$months = array("null","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
@@ -208,27 +211,21 @@ if (isset($_POST['submit'])){
 						      	<input id="research_doi" type="text" class="form-control" name="research_doi" value="<?=$row['research_doi']?>">
 						    </div>
 						    <br/>
-						    
-                            <!-- 
-                            <div class="input-group" >
-						      	<span class="input-group-addon">Journal Title</span>
-						      	<input id="research_journal_title" type="text" class="form-control" name="research_journal_title" placeholder="Title of Journal" value="<?=$row['journal_title']?>">
-						    </div>
-                            <br/> 
-                        	-->
 
                             <div class="input-group" >
 						      	<span class="input-group-addon">Journal Title</span>
 								<select name="research_journal_title" id="research_journal_title" class="form-control" required>
-									<option value="" disabled selected>-- select a journal --</option>
+									<option value="" disabled>-- select a journal --</option>
 									<?php
+										// Need to fetch a list of journals, then put them on selection list.
 										$query = "SELECT * FROM research_journal ORDER BY journal_title";
 										if ($result = $db->query($query)) {
-											while ($row = $result->fetch_assoc()) {
-												echo "<option value=\"".$row['journal_id']."\">". $row['journal_title']."</option>";
+											while ($jrow = $result->fetch_assoc()) {
+												$selectedAtrribute = ($jrow['journal_id'] == $row['journal_id']) ? "selected" : ""; // The current journal should be selected
+												echo "<option value=\"".$jrow['journal_id']."\" ".$selectedAtrribute.">". $jrow['journal_title']."</option>";
 											}
 										} else {
-											echo "<option value=''>Error</option>";
+											echo "<option value='' selected>Error</option>";
 										}
 									?>
 								</select>
