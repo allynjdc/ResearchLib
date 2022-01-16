@@ -110,7 +110,6 @@ if (isset($_POST['submit'])){
 				color: red;
 				cursor: pointer;
 			}
-			
 		</style>
 		
 	</head>
@@ -358,11 +357,17 @@ if (isset($_POST['submit'])){
                                     <option value="Used" <?=($row['research_status']=="Used")? "selected" : ""?> > Used </option>
                                 </select>
 						    </div>
-						    <br>
 
-						    	<p class="text-justify">Insert the Research File:</p>
-						    	<input id="reasearch_old_file" type="hidden" class="" name="research_old_file" accept="image/*, .pdf, .doc, .txt" value="<?=$row['research_filename']?>">
-						      	<input id="research_file" type="file" class="" name="research_file" value="<?=$row['research_filename']?>" accept="image/*, .pdf, .doc, .txt">
+						    <br>
+						    <div class="input-group">
+								<input type="checkbox" id="file_checkbox" onclick="toggleFileContainer()">
+								<span> Update Research File:</span>
+							</div>
+							<div id="file_container" style="display:none">
+								<input id="reasearch_old_file" type="hidden" class="" name="research_old_file" accept="image/*, .pdf, .doc, .txt" value="<?=$row['research_filename']?>">
+								<input id="research_file" type="file" class="" name="research_file" value="<?=$row['research_filename']?>" accept="image/*, .pdf, .doc, .txt">
+							</div>
+
 						    <br>
 						    <input type = "submit" name = "submit" value = "Update Research">
 
@@ -458,6 +463,18 @@ if (isset($_POST['submit'])){
 			selectedResearcher.value = "";
 
 			// ToDo: Avoid duplicate researcher name by disabling the options that are already selected in the selected tag
+		}
+		function toggleFileContainer() {
+			// Get the checkbox
+			var checkBox = document.getElementById("file_checkbox");
+			var fileContainer = document.getElementById("file_container");
+			var researchFile = document.getElementById("research_file");
+			var IsChecked = (checkBox.checked == true);
+			fileContainer.style.display = IsChecked ? "block" : "none"; // Toggle visibity of the file input tag container
+			researchFile.required = IsChecked; // Make sure the user uploads a file if the checkbox is checked
+			if (!IsChecked) {
+				researchFile.value = null; // Clear file selection if the checkbox in not checked.
+			}
 		}
 	</script>
 </html>
