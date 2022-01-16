@@ -176,6 +176,7 @@ function highlightWords($text, $keword) {
 						// } 
 						$query = "SELECT * FROM research_output AS ro INNER JOIN research_creation AS rc INNER JOIN research_journal AS rj INNER JOIN researcher as r ON rj.journal_id = ro.research_journal_id AND ro.research_id = rc.creation_research_id AND rc.creation_researcher_id = r.researcher_id WHERE (ro.research_keywords LIKE '$search_key' OR ro.research_title LIKE '$search_key' OR ro.research_abstract LIKE '$search_key' OR ro.research_office LIKE '$search_key' OR rj.journal_title LIKE '$search_key' OR r.researcher_last_name LIKE '$search_key' OR r.researcher_first_name LIKE '$search_key')";
 
+						$counter = 0;
 						
 						if ($result = $db->query($query)) {
 							while ($row = $result->fetch_assoc()) {
@@ -213,8 +214,14 @@ function highlightWords($text, $keword) {
 					</div>
 
 					<?php
+								$counter = $counter + 1;
 							} // end of inner if condition
 						} // end of while loop
+
+						if($counter == 0){
+							echo "<p> No results found.</p>";
+						}
+						
 					} else {
 						echo "<p> No results found.</p>";
 					}

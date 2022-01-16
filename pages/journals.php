@@ -104,6 +104,7 @@ session_start();
 						$total_pages = ceil($total_rows / $no_of_records_per_page);
 		
 						$query = "SELECT * FROM research_journal ORDER BY journal_date_publish DESC LIMIT $offset, $no_of_records_per_page";
+						$counter = 0;
 						if ($result = $db->query($query)){
 							$defaultImg = "default_journal_photo.png";
 							while ($row = $result->fetch_assoc()){
@@ -140,7 +141,10 @@ session_start();
 					<div>&nbsp;</div>
 
 					<?php
-
+							$counter = $counter + 1;
+						}
+						if($counter==0){
+							echo "<p> No uploaded journal yet.</p>";
 						}
 					} else {
 						echo "<p> No uploaded journal yet.</p>";

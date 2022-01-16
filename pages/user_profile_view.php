@@ -73,6 +73,7 @@ if (!$_SESSION['user']) {
 			    	
 			    	<?php 
 						$id = isset($_GET['userid'])!=""? intval($_GET['userid']) : intval($_SESSION['userid']);
+						$fname = ""; $mname = ""; $lname = "";
 						// echo $id;
 						// if(){}
 						$query = "SELECT * FROM user WHERE user_id = '$id'";
@@ -83,7 +84,10 @@ if (!$_SESSION['user']) {
 							while ($row = $result->fetch_assoc()){
 								// echo "row";
 								$userFullname = $row['user_first_name']." ".$row['user_middle_name'][0].". ".$row['user_last_name'];
-								$userImage = empty($row['user_profile_picture']) ? $defaultImg : $row['user_profile_picture'];								
+								$userImage = empty($row['user_profile_picture']) ? $defaultImg : $row['user_profile_picture'];	
+								$fname = ucwords(strtolower($row['user_first_name']));
+								$mname = ucwords(strtolower($row['user_middle_name']));
+								$lname = ucwords(strtolower($row['user_last_name']));							
 					?>
 
 			    	<br> <br>
@@ -123,7 +127,9 @@ if (!$_SESSION['user']) {
 				      	<div class="" style="left:10px">
 				      		<!-- FETCHING RESEARCH DATA -->
 					    	<?php 
-								$query = "SELECT * FROM research_output AS ro INNER JOIN research_creation AS rc INNER JOIN research_journal AS rj INNER JOIN researcher as r ON rj.journal_id = ro.research_journal_id AND ro.research_id = rc.creation_research_id AND rc.creation_researcher_id = r.researcher_id WHERE r.researcher_id = '$id'";
+								$query = "SELECT * FROM research_output AS ro INNER JOIN research_creation AS rc INNER JOIN research_journal AS rj INNER JOIN researcher as r ON rj.journal_id = ro.research_journal_id AND ro.research_id = rc.creation_research_id AND rc.creation_researcher_id = r.researcher_id WHERE r.researcher_first_name = '$fname' AND r.researcher_middle_name = '$mname' AND r.researcher_last_name = '$lname'";
+
+								$res = 0;
 
 								if ($result = $db->query($query)){
 									// echo "result";
@@ -143,10 +149,16 @@ if (!$_SESSION['user']) {
 							</div>
 
 							<?php
+										$res = $res + 1;
+									}
+
+									if ($res == 0) {
+										echo "<p> No conducted Research yet.</p>";
+									}
+
+								} else {
+									echo "<p> No conducted Research yet.</p>";
 								}
-							} else {
-								echo "<p> No conducted Research yet.</p>";
-							}
 							?>
 				      	</div>
 			      	</div>

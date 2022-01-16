@@ -212,7 +212,7 @@ session_start();
 						<?php
 
 						$query = "SELECT * FROM research_output AS ro INNER JOIN research_creation AS rc INNER JOIN research_journal AS rj INNER JOIN researcher as r ON rj.journal_id = ro.research_journal_id AND ro.research_id = rc.creation_research_id AND rc.creation_researcher_id = r.researcher_id WHERE rj.journal_id = '$jid'";
-						
+						$counter = 0;
 						if ($result = $db->query($query)) {
 							while ($row = $result->fetch_assoc()) {
 								$rdate = strtotime($row['journal_date_publish']);
@@ -229,6 +229,10 @@ session_start();
 						</div>
 
 						<?php
+								$counter = $counter + 1;
+							}
+							if($counter==0){
+								echo "<p> No conducted Research yet.</p>";
 							}
 						} else {
 							echo "<p> No conducted Research yet.</p>";

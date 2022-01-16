@@ -114,6 +114,7 @@ if (!$_SESSION['user']) {
 										$query = "SELECT * FROM research_output AS ro 
 												INNER JOIN research_journal AS rj ON ro.research_journal_id = rj.journal_id
 												WHERE ro.research_status = '$status' LIMIT $offset, $no_of_records_per_page";
+										$counter = 0;
 										if ($result = $db->query($query)){
 											// echo "result";
 											while ($row = $result->fetch_assoc()){
@@ -179,6 +180,10 @@ if (!$_SESSION['user']) {
 									</div>
 
 									<?php
+											$counter = $counter + 1;
+										}
+										if($counter == 0){
+											echo "<p> No uploaded Conducted Research yet.</p>";
 										}
 									} else {
 										echo "<p> No uploaded Conducted Research yet.</p>";
@@ -268,6 +273,7 @@ if (!$_SESSION['user']) {
 										$query = "SELECT * FROM research_output AS ro 
 												INNER JOIN research_journal AS rj ON ro.research_journal_id = rj.journal_id
 												WHERE ro.research_status = '$status' LIMIT $offset, $no_of_records_per_page";
+										$counter = 0;
 										if ($result = $db->query($query)){
 											// echo "result";
 											while ($row = $result->fetch_assoc()){
@@ -334,6 +340,10 @@ if (!$_SESSION['user']) {
 									</div>
 
 									<?php
+										$counter = $counter + 1;
+										}
+										if($counter == 0){
+											echo "<p> No uploaded Submitted Research yet.</p>";
 										}
 									} else {
 										echo "<p> No uploaded Submitted Research yet.</p>";
@@ -423,6 +433,7 @@ if (!$_SESSION['user']) {
 										$query = "SELECT * FROM research_output AS ro 
 												INNER JOIN research_journal AS rj ON ro.research_journal_id = rj.journal_id
 												WHERE ro.research_status = '$status' LIMIT $offset, $no_of_records_per_page";
+										$counter = 0;
 										if ($result = $db->query($query)){
 											// echo "result";
 											while ($row = $result->fetch_assoc()){
@@ -489,6 +500,10 @@ if (!$_SESSION['user']) {
 									</div>
 
 									<?php
+										$counter = $counter + 1;
+										}
+										if($counter == 0){
+											echo "<p> No uploaded Disseminated Research yet.</p>";
 										}
 									} else {
 										echo "<p> No uploaded Disseminated Research yet.</p>";
@@ -578,6 +593,7 @@ if (!$_SESSION['user']) {
 										$query = "SELECT * FROM research_output AS ro 
 												INNER JOIN research_journal AS rj ON ro.research_journal_id = rj.journal_id
 												WHERE ro.research_status = '$status' LIMIT $offset, $no_of_records_per_page";
+										$counter = 0;
 										if ($result = $db->query($query)){
 											// echo "result";
 											while ($row = $result->fetch_assoc()){
@@ -643,6 +659,10 @@ if (!$_SESSION['user']) {
 									</div>
 
 									<?php
+											$counter = $counter + 1;
+										}
+										if($counter == 0){
+											echo "<p> No uploaded Conducted Research yet.</p>";
 										}
 									} else {
 										echo "<p> No uploaded Used Research yet.</p>";

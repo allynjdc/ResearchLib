@@ -186,6 +186,7 @@ if (!$_SESSION['user']) {
 						$total_pages = ceil($total_rows / $no_of_records_per_page);
 
 						$query = "SELECT * FROM researcher ORDER BY researcher_first_name LIMIT $offset, $no_of_records_per_page";
+						$counter = 0;
 						if ($result = $db->query($query)) {
 							$profileDir = "../images/profile_pictures/";
 							$defaultImg = "default_profile_picture.jpg";
@@ -310,9 +311,11 @@ if (!$_SESSION['user']) {
 
 
 				      	<?php 
-
+				      			$counter = $counter + 1;
 				      		} // end of while-loop
-
+				      		if($counter == 0){
+				      			echo "<p> No users yet.</p>";
+				      		}
 						} else {
 							echo "<p> No users yet.</p>";
 						}

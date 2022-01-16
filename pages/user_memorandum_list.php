@@ -163,6 +163,7 @@ if (!$_SESSION['user']) {
 						$total_pages = ceil($total_rows / $no_of_records_per_page);
 
 						$query = "SELECT * FROM memorandum ORDER BY memo_date DESC LIMIT $offset, $no_of_records_per_page";
+						$counter = 0;
 						if ($result = $db->query($query)){
 							while ($row = $result->fetch_assoc()){
 								$memoNum = $row['memo_number'];
@@ -267,6 +268,10 @@ if (!$_SESSION['user']) {
 
 
 					<?php
+								$counter = $counter + 1;
+							}
+							if ($counter == 0) {
+								echo "<p> No uploaded memorandum yet.</p>";
 							}
 						} else {
 							echo "<p> No uploaded memorandum yet.</p>";

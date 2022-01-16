@@ -6,9 +6,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $in = file_get_contents('php://input');
     $decoded = json_decode($in, true);
-    $firstname = $decoded['fname'];
-    $middlename = $decoded['mname'];
-    $lastname = $decoded['lname'];
+    $firstname = ucwords(strtolower($decoded['fname']));
+    $middlename = ucwords(strtolower($decoded['mname']));
+    $lastname = ucwords(strtolower($decoded['lname']));
     $desination = $decoded['designation'];
     $office = $decoded['office'];
     $email = $decoded['email'];
