@@ -107,7 +107,7 @@ if (isset($_POST['submit'])){
                     
                     <form class="form-horizontal" action="" target="_SELF" method="POST" enctype="multipart/form-data">
                         <div class=col-sm-12>
-                            <img src="../images/profile_pictures/<?=$userImage?>" alt="<?=$userImage?>" width="150" height="150"/>
+                            <img class="img-circle center-block" src="../images/profile_pictures/<?=$userImage?>" alt="<?=$userFullname?>" width="200px" height="200px"> 
                             <div> &nbsp; </div>
                         </div>
                         <div class="form-group">
