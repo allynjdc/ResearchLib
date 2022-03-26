@@ -73,13 +73,13 @@ if (!$_SESSION['user']) {
                         <div class="form-group">
                             <label class="control-label col-sm-4" for="newpwd">New Password:</label>
                             <div class="col-sm-4">
-                            <input type="password" class="form-control" id="newpwd" name="newpwd" placeholder="Enter your new password">
+                            <input type="password" class="form-control" onkeyup="validatePasswords()" id="newpwd" name="newpwd" placeholder="Enter your new password" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-sm-4" for="confirmpwd">Confirm Password:</label>
                             <div class="col-sm-4">
-                            <input type="password" class="form-control" onkeyup="validatePasswords()" id="confirmpwd" name="newpwd" placeholder="Enter your new password to confirm">
+                            	<input type="password" class="form-control" onkeyup="validatePasswords()" id="confirmpwd" name="newpwd" placeholder="Enter your new password to confirm" required>
                             </div>
                         </div>
 						<input type="hidden" id="uname" name="uname" value="<?= $_SESSION['user'] ?>" />
@@ -105,24 +105,24 @@ if (!$_SESSION['user']) {
 			var newPassword = document.getElementById('newpwd').value;
 			var confirmPassword = document.getElementById('confirmpwd').value;
 
-			if (newPassword === confirmPassword) {
+			if ((newPassword === "") || (confirmPassword === "")) {
+				document.getElementById('update_status_msg').innerHTML = "New Password or Confirm Password must not be empty.";
+				document.getElementById('update_status_msg').style.color = "red";
+				return false;
+			} else if (newPassword === confirmPassword) {
 				document.getElementById('update_status_msg').innerHTML = "New Password and Confirm Password are now match.";
 				document.getElementById('update_status_msg').style.color = "green";
 				return true;
 			} else {
-				if ((newPassword != "") && (confirmPassword === "")) {
-					document.getElementById('update_status_msg').innerHTML = "";
-				} else {
-					document.getElementById('update_status_msg').innerHTML = "New Password and Confirm Password must be match.";
-					document.getElementById('update_status_msg').style.color = "red";
-				}
+				document.getElementById('update_status_msg').innerHTML = "New Password and Confirm Password must be match.";
+				document.getElementById('update_status_msg').style.color = "red";
 				return false;
 			}
 		}
 		function updatePassword(userId) {
 			document.getElementById('update_status_msg').innerHTML = ""; // Reset status message
 
-			if (!validatePasswords()) return; // Early exit when new and confirm passwords do not match.
+			if (!validatePasswords()) return; // Early exit when new and confirm passwords are not valid.
 		
 			//var username = document.getElementsByName('uname')[0].value;
 			var password = document.getElementById('newpwd').value;
