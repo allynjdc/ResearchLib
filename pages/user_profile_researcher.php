@@ -130,12 +130,29 @@ if (!$_SESSION['user']) {
 								if ($result = $db->query($query)){
 									// echo "result";
 									while ($row = $result->fetch_assoc()){
-
+										$currResearchId = $row['research_id'];
+										$queryAuthors = "SELECT researcher_first_name AS fname, researcher_middle_name AS mname, researcher_last_name AS lname
+													FROM researcher AS rs 
+													INNER JOIN research_creation As rc ON rs.researcher_id = rc.creation_researcher_id
+													WHERE rc.creation_research_id = $currResearchId";
+										$data_authors = [];
+										if ($resultAuthor = $db->query($queryAuthors)) {
+											while ($rowAuthor = $resultAuthor->fetch_assoc()) {
+												$data_authors[] = strtoupper($rowAuthor['fname'][0]).".".strtoupper($rowAuthor['mname'][0]).". ".ucwords(strtolower($rowAuthor['lname']));
+											}
+										} else {
+											echo $db->error;
+										} 
 							?>
 				      		<div class="">
 								<p class="h4 text-justify"><b><a href="research_view.php?rid=<?=$row['research_id']?>"> <?=strtoupper($row['research_title'])?> </a></b></p>
 								<p class="h5 text-justify" style="color: maroon">
-									<?=$row['researcher_first_name'][0].".".$row['researcher_middle_name'][0].". ".$row['researcher_last_name']?> - <?=ucwords(strtolower($row['journal_title'])).", ".date('Y',strtotime($row['journal_date_publish']))?> 
+									<?php
+										$authorList = (empty($data_authors)) ? "Unknown Author" : join(", ", $data_authors);
+										$journalTitle = ucwords(strtolower($row['journal_title']));
+										$datePublished = date('Y',strtotime($row['journal_date_publish']));
+										echo $authorList." - ".$journalTitle.", ".$datePublished;
+									?> 
 								</p>
 								<p class="h6 text-justify">
 									<?=substr($row['research_abstract'], 0, 270)."....."?>

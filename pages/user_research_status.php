@@ -131,7 +131,7 @@ if (!$_SESSION['user']) {
 													}
 												} else {
 													echo $db->error;
-												}
+												} 
 									?>
 
 							      	<div class="">
