@@ -184,13 +184,30 @@ function highlightWords($text, $keword) {
 
 						// Get total number of pages
 						$total_pages_query = "SELECT COUNT(*) FROM research_output AS ro 
-						INNER JOIN research_journal AS rj ON ro.research_journal_id = rj.journal_id
-						WHERE rj.journal_title LIKE '$search_key' OR ro.research_title LIKE '$search_key'";
+							INNER JOIN research_journal AS rj 
+							ON ro.research_journal_id = rj.journal_id
+							WHERE rj.journal_title LIKE '$search_key' OR 
+									ro.research_title LIKE '$search_key'";
+
 						$result_count = $db->query($total_pages_query);
 						$total_rows = mysqli_fetch_array($result_count)[0];
 						$total_pages = ceil($total_rows / $no_of_records_per_page);
 
-						$query = "SELECT * FROM research_output AS ro INNER JOIN research_creation AS rc INNER JOIN research_journal AS rj INNER JOIN researcher as r ON rj.journal_id = ro.research_journal_id AND ro.research_id = rc.creation_research_id AND rc.creation_researcher_id = r.researcher_id WHERE (ro.research_keywords LIKE '$search_key' OR ro.research_title LIKE '$search_key' OR ro.research_abstract LIKE '$search_key' OR ro.research_office LIKE '$search_key' OR rj.journal_title LIKE '$search_key' OR r.researcher_last_name LIKE '$search_key' OR r.researcher_first_name LIKE '$search_key') GROUP BY ro.research_title";
+						$query = "SELECT * FROM research_output AS ro 
+							INNER JOIN research_creation AS rc 
+							INNER JOIN research_journal AS rj 
+							INNER JOIN researcher as r 
+							ON rj.journal_id = ro.research_journal_id AND 
+								ro.research_id = rc.creation_research_id AND 
+								rc.creation_researcher_id = r.researcher_id 
+							WHERE (ro.research_keywords LIKE '$search_key' OR 
+								ro.research_title LIKE '$search_key' OR 
+								ro.research_abstract LIKE '$search_key' OR 
+								ro.research_office LIKE '$search_key' OR 
+								rj.journal_title LIKE '$search_key' OR 
+								r.researcher_last_name LIKE '$search_key' OR 
+								r.researcher_first_name LIKE '$search_key') 
+							GROUP BY ro.research_title";
 
 						$counter = 0;
 						
