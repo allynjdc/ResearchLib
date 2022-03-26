@@ -174,14 +174,44 @@ function highlightWords($text, $keword) {
 						// 	$query = "SELECT * FROM research_output AS ro INNER JOIN research_creation AS rc INNER JOIN research_journal AS rj INNER JOIN researcher as r ON rj.journal_id = ro.research_journal_id AND ro.research_id = rc.creation_research_id AND rc.creation_researcher_id = r.researcher_id WHERE ".$filters." OR (ro.research_keywords LIKE '$search_key' OR ro.research_title LIKE '$search_key' OR ro.research_abstract LIKE '$search_key' OR ro.research_office LIKE '$search_key')";
 								
 						// } 
-						$query = "SELECT * FROM research_output AS ro INNER JOIN research_creation AS rc INNER JOIN research_journal AS rj INNER JOIN researcher as r ON rj.journal_id = ro.research_journal_id AND ro.research_id = rc.creation_research_id AND rc.creation_researcher_id = r.researcher_id WHERE (ro.research_keywords LIKE '$search_key' OR ro.research_title LIKE '$search_key' OR ro.research_abstract LIKE '$search_key' OR ro.research_office LIKE '$search_key' OR rj.journal_title LIKE '$search_key' OR r.researcher_last_name LIKE '$search_key' OR r.researcher_first_name LIKE '$search_key')";
+
+						// Get current page number
+						$pageno = (isset($_GET["conductedpageno"])) ? $_GET["conductedpageno"] : 1; // Default is page 1
+						
+						// Formula for pagination
+						$no_of_records_per_page = 10;
+						$offset = ($pageno - 1) * $no_of_records_per_page;
+
+						// Get total number of pages
+						$total_pages_query = "SELECT COUNT(*) FROM research_output AS ro 
+						INNER JOIN research_journal AS rj ON ro.research_journal_id = rj.journal_id
+						WHERE rj.journal_title LIKE '$search_key' OR ro.research_title LIKE '$search_key'";
+						$result_count = $db->query($total_pages_query);
+						$total_rows = mysqli_fetch_array($result_count)[0];
+						$total_pages = ceil($total_rows / $no_of_records_per_page);
+
+						$query = "SELECT * FROM research_output AS ro INNER JOIN research_creation AS rc INNER JOIN research_journal AS rj INNER JOIN researcher as r ON rj.journal_id = ro.research_journal_id AND ro.research_id = rc.creation_research_id AND rc.creation_researcher_id = r.researcher_id WHERE (ro.research_keywords LIKE '$search_key' OR ro.research_title LIKE '$search_key' OR ro.research_abstract LIKE '$search_key' OR ro.research_office LIKE '$search_key' OR rj.journal_title LIKE '$search_key' OR r.researcher_last_name LIKE '$search_key' OR r.researcher_first_name LIKE '$search_key') GROUP BY ro.research_title";
 
 						$counter = 0;
 						
 						if ($result = $db->query($query)) {
 							while ($row = $result->fetch_assoc()) {
 								if ((empty($filters)) OR($row['research_agenda']==$agenda OR $row['research_type']==$types OR $row['research_category']==$categ OR date('Y',strtotime($row['research_date_publish']))==$date)) {
-															
+
+									$currResearchId = $row['research_id'];
+										$queryAuthors = "SELECT researcher_first_name AS fname, researcher_middle_name AS mname, researcher_last_name AS lname
+													FROM researcher AS rs 
+													INNER JOIN research_creation As rc ON rs.researcher_id = rc.creation_researcher_id
+													WHERE rc.creation_research_id = $currResearchId";
+										$data_authors = [];
+										if ($resultAuthor = $db->query($queryAuthors)) {
+											while ($rowAuthor = $resultAuthor->fetch_assoc()) {
+												$data_authors[] = strtoupper($rowAuthor['fname'][0]).".".strtoupper($rowAuthor['mname'][0]).". ".ucwords(strtolower($rowAuthor['lname']));
+											}
+										} else {
+											echo $db->error;
+										} 
+
 					?>
 					<div class="">
 						<p class="h4 text-justify">
@@ -197,10 +227,13 @@ function highlightWords($text, $keword) {
 						</p>
 						<p class="h5 text-justify" style="color: maroon">
 							<?php
-								$sub_text = $row['researcher_first_name'][0].".".$row['researcher_middle_name'][0].". ".$row['researcher_last_name']." - ".ucwords(strtolower($row['journal_title'])).", ".date('Y',strtotime($row['journal_date_publish']));
+								$authorList = (empty($data_authors)) ? "Unknown Author" : join(", ", $data_authors);
+								$journalTitle = ucwords(strtolower($row['journal_title']));
+								$datePublished = date('Y',strtotime($row['journal_date_publish']));
+								$sub_text = $authorList." - ".$journalTitle.", ".$datePublished;
 								$text_to_display = !empty($key) ? highlightWords($sub_text, $key) : $sub_text;
 								echo $text_to_display;
-							?>
+							?> 
 						</p>
 						<p class="h6 text-justify">
 							<?php
