@@ -1,4 +1,9 @@
 .footer {
+   background-color: #506d8a;
+   width: 100%;
+   height: auto;
+   text-align: justify;
+   color: white;
    /*position: absolute;
    bottom: 0;
    width: 100%;*/
@@ -12,4 +17,19 @@
    /*padding: 20px;*/
    /*grid-row-start: 2;
    grid-row-end: 3;*/
+}
+
+.footer p {
+   font-size: 9pt;
+}
+
+.footlink {
+   color: white;
+}
+
+.image_logo img {
+   height: auto;
+   width: 70%;
+   filter: grayscale(100%);
+   opacity: 0.3;
 }
