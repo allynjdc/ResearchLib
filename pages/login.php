@@ -102,17 +102,17 @@ if (isset($_SESSION['user'])) {
 						<form id="login" method="post">
 							<div class="input-group">
 								<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-								<input type="text" id="uname" name="uname" placeholder="Enter Username" class="form-control"/>
+								<input type="text" id="uname" name="uname" onkeypress="return enterKeyPress(event);" placeholder="Enter Username" class="form-control"/>
 							</div>
 							<br>
 							<div class="input-group">
 								<span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-								<input type="password" id="pwd" name="pwd" placeholder="Enter Password" class="form-control"/>
+								<input type="password" id="pwd" name="pwd" onkeypress="return enterKeyPress(event);" placeholder="Enter Password" class="form-control"/>
 							</div>
 							<br>
 							<div class="col-md-12 input-group" >
 								<button class="btn-primary" style="cursor: pointer; width: 100%; border-radius: 5px;" type="button" onclick="authAccount()">Login</button>
-							</div>						
+							</div>
 							
 						</form>
 						<p id="status_msg" style="color: red"></p>
@@ -160,6 +160,16 @@ if (isset($_SESSION['user'])) {
 		xmlhttp.open("POST", "../database/authenticate.php", true);
 		xmlhttp.setRequestHeader("Content-Type", "application/json; charset=UTF-8");
 		xmlhttp.send(JSON.stringify(data));
+	}
+
+	function enterKeyPress(ev) {
+		// Look for window.event in case event isn't passed in
+		ev = ev || window.event;
+		if (ev.keyCode == 13) {
+			authAccount();
+			return false;
+		}
+		return true;
 	}
 	</script>
 </html>
