@@ -40,7 +40,7 @@ session_start();
 			      	<div class="col-md-12" style="height: 450px;"></div>
 			      	<!-- <div class="col-md-1"></div> -->
 			      	
-					<div class="col-md-9 col-md-offset-1 form-row align-items-center" style="left:55px;">
+					<div class="col-md-9 col-md-offset-1 form-row align-items-center" style="left:55px; top:-30px;">
 						<form action="search_result.php" method="GET" enctype="multipart/form-data">
     						<div class="input-group" >
      							<input type="text" class="form-control" placeholder="Search Researches" name="user_search" id="user_search" style="height: 40px;">
