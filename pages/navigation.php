@@ -1,3 +1,21 @@
+<!-- 
+	*** README ***
+	This .php file is not an actual page but rather a part of the page.
+	We created this file so we don't need to manually edit all the pages if we want to update the navigation bar.
+	With this, we just need to update a single file.
+
+	Note:
+		For future html pages, please don't forget to include this file.
+
+	Usage:
+		<html>
+			..
+			<body>
+				< ?php @include=("navigation.php") ? >
+				...
+			</body>
+		</html>
+-->
 
 <nav class="navbar navbar-inverse" > <!-- navbar-default style="background-color: #D5EBF6"-->
   	<div class="container-fluid col-md-10 col-md-offset-1">
@@ -15,17 +33,7 @@
 	      		<!-- </p> -->
 	      	</a>
 	    </div>
-	    <!-- <ul class="nav navbar-nav">
-	      	<li class=""><a href="#">Home</a></li>
-	      	<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Page 1 <span class="caret"></span></a>
-	        	<ul class="dropdown-menu">
-	          		<li><a href="#">Page 1-1</a></li>
-	          		<li><a href="#">Page 1-2</a></li>
-	          		<li><a href="#">Page 1-3</a></li>
-	        	</ul>
-	      	</li>
-	      	<li><a href="#">Page 2</a></li>
-	    </ul> -->
+
 	    <div>
 	    <ul class="nav title_brand navbar-nav navbar-right">
 	    	<li class="title_brand" >

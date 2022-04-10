@@ -1,3 +1,21 @@
+<!-- 
+	*** README ***
+	This .php file is not an actual page but rather a part of the page.
+	We created this file so we don't need to manually edit all the pages if we want to update the footer.
+	With this, we just need to update a single file.
+
+	Note:
+		For future html pages, please don't forget to include this file.
+
+	Usage:
+		<html>
+			..
+			<body>
+				...
+				< ?php @include=("footer.php") ? >
+			</body>
+		</html>
+-->
 
 <!-- Footer -->
 <div class="footer col-md-12">
