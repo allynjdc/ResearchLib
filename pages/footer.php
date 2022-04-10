@@ -9,11 +9,11 @@
     	<img src="../images/deped_tagum.png">
     </div>
     <div class="col-md-2">
-    	<h5> REPUBLIC OF THE PHILIPPINES </h5>
+    	<h6> REPUBLIC OF THE PHILIPPINES </h5>
     	<p> All content is in the public domain unless otherwise stated. </p>
     </div>
     <div class="col-md-2">
-    	<h5>ABOUT GOVPH</h5>
+    	<h6>ABOUT GOVPH</h5>
     	<p> 
     		Learn more about the Philippine government, its structure, how government works and the people behind it.
     		<br><br>
@@ -22,7 +22,7 @@
     	</p>
     </div>
     <div class="col-md-2">
-    	<h5>GOVERNMENT LINKS</h5>
+    	<h6>GOVERNMENT LINKS</h5>
     	<p>
     		<a class="footlink" href="https://president.gov.ph/">Office of the President</a> <br>
     		<a class="footlink" href="https://ovp.gov.ph/">Office of the Vice President</a> <br>

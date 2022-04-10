@@ -197,6 +197,9 @@ if (isset($_POST['submit'])){
 									<div class="col-sm-offset-3 col-sm-9">
 						      			<input type="text" class="form-control" name="dev_team_copy_editor[]" placeholder="Copy Editor Name">
 									</div>
+									<div class="col-sm-offset-3 col-sm-9">
+						      			<input type="text" class="form-control" name="dev_team_copy_editor[]" placeholder="Copy Editor Name">
+									</div>
 								</div>
 								<br/>
 								<div class="input-group">
@@ -207,12 +210,18 @@ if (isset($_POST['submit'])){
 									<div class="col-sm-offset-3 col-sm-9">
 						      			<input type="text" class="form-control" name="dev_team_layout_artist[]" placeholder="Layout Artist Name">
 									</div>
+									<div class="col-sm-offset-3 col-sm-9">
+						      			<input type="text" class="form-control" name="dev_team_layout_artist[]" placeholder="Layout Artist Name">
+									</div>
 								</div>
 								<br/>
 								<div class="input-group">
 									<div class="control-label col-sm-3">Editorial Consultants:</div>
 									<div class="col-sm-9">
 						      			<input type="text" class="form-control" name="dev_team_consultants[]" placeholder="Editorial Consultant Name" required>
+									</div>
+									<div class="col-sm-offset-3 col-sm-9">
+						      			<input type="text" class="form-control" name="dev_team_consultants[]" placeholder="Editorial Consultant Name">
 									</div>
 									<div class="col-sm-offset-3 col-sm-9">
 						      			<input type="text" class="form-control" name="dev_team_consultants[]" placeholder="Editorial Consultant Name">

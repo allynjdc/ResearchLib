@@ -208,7 +208,7 @@ if (isset($_POST['submit'])){
                             <br/>
                             <div class="input-group" >
 						      	<span class="input-group-addon">DOI</span>
-						      	<input id="research_doi" type="text" class="form-control" name="research_doi" placeholder="00.0000/0000000000000-0" required>
+						      	<input id="research_doi" type="text" class="form-control" name="research_doi" placeholder="just type 0, if n/a" required>
 						    </div>
 						    <br/>
 						    

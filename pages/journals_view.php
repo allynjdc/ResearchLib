@@ -168,21 +168,73 @@ session_start();
 
 						<?php
 
-						$query = "SELECT * FROM research_output AS ro INNER JOIN research_creation AS rc INNER JOIN research_journal AS rj INNER JOIN researcher as r ON rj.journal_id = ro.research_journal_id AND ro.research_id = rc.creation_research_id AND rc.creation_researcher_id = r.researcher_id WHERE rj.journal_id = '$jid'";
+						$query = "SELECT * FROM research_output AS ro 
+							INNER JOIN research_creation AS rc 
+							INNER JOIN research_journal AS rj 
+							INNER JOIN researcher as r 
+							ON rj.journal_id = ro.research_journal_id AND 
+								ro.research_id = rc.creation_research_id AND 
+								rc.creation_researcher_id = r.researcher_id 
+							WHERE rj.journal_id = '$jid'
+							GROUP BY ro.research_title";
+
+						// $query = "SELECT * FROM research_output AS ro INNER JOIN research_creation AS rc INNER JOIN research_journal AS rj INNER JOIN researcher as r ON rj.journal_id = ro.research_journal_id AND ro.research_id = rc.creation_research_id AND rc.creation_researcher_id = r.researcher_id WHERE rj.journal_id = '$jid'";
+
 						$counter = 0;
 						if ($result = $db->query($query)) {
 							while ($row = $result->fetch_assoc()) {
+
+								$currResearchId = $row['research_id'];
+								$queryAuthors = "SELECT researcher_first_name AS fname, researcher_middle_name AS mname, researcher_last_name AS lname
+											FROM researcher AS rs 
+											INNER JOIN research_creation As rc ON rs.researcher_id = rc.creation_researcher_id
+											WHERE rc.creation_research_id = $currResearchId";
+								$data_authors = [];
+								if ($resultAuthor = $db->query($queryAuthors)) {
+									while ($rowAuthor = $resultAuthor->fetch_assoc()) {
+										$data_authors[] = strtoupper($rowAuthor['fname'][0]).".".strtoupper($rowAuthor['mname'][0]).". ".ucwords(strtolower($rowAuthor['lname']));
+									}
+								} else {
+									echo $db->error;
+								}
+
+
 								$rdate = strtotime($row['journal_date_publish']);
 								$months = array("null","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
 
 						?>
 						
-						<div class="col-sm-12">
+						<!-- <div class="col-sm-12">
 							<p class="h5 text-justify"><b><a href="research_view.php?rid=<?=$row['research_id']?>"> <?=strtoupper($row['research_title'])?> </b></a></p>
 							<p class="h6 text-justify" style="color: maroon"><?=ucwords(strtolower($row['researcher_first_name']))." ".strtoupper($row['researcher_middle_name'][0]).". ".ucwords(strtolower($row['researcher_last_name'])).", ".ucwords(strtolower($row['researcher_office']))?></p>
 							<p class="h6 text-justify"> Date Published: <?=strtoupper($months[intval(date('m',$rdate))])." ".date('Y',$rdate)?></p>
 							<p></p>
 							<br>
+						</div> -->
+
+						<div class="col-sm-12">
+							<p class="h5 text-justify">
+								<b>
+									<a href="research_view.php?rid=<?=$row['research_id']?>">
+									<?php
+										$capitalize_title = strtoupper($row['research_title']);
+										$research_title_to_display = !empty($key) ? highlightWords($capitalize_title, $key) : $capitalize_title;
+										echo $research_title_to_display;
+									?>
+									</a>
+								</b>
+							</p>
+							<p class="h6 text-justify" style="color: maroon">
+								<?php
+									$authorList = (empty($data_authors)) ? "Unknown Author" : join(", ", $data_authors);
+									$journalTitle = ucwords(strtolower($row['journal_title']));
+									$datePublished = date('Y',strtotime($row['journal_date_publish']));
+									$sub_text = $authorList." - ".$journalTitle.", ".$datePublished;
+									$text_to_display = !empty($key) ? highlightWords($sub_text, $key) : $sub_text;
+									echo $text_to_display;
+								?> 
+							</p>
+							<p></p>
 						</div>
 
 						<?php

@@ -164,7 +164,7 @@ if (!$_SESSION['user']) {
 														".ucwords(strtolower($userFullname))."
 													</p>
 													<p class=\"h6\">
-														".ucwords(strtolower($row['researcher_designation']))." 
+														".ucwords(strtoupper($row['researcher_designation']))." 
 														<br>
 														".ucwords(strtolower($row['researcher_office']))." 
 														<br>

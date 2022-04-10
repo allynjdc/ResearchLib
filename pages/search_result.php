@@ -74,15 +74,15 @@ function highlightWords($text, $keword) {
 			    			<p><a href="search_result.php?user_search=<?=$key?>&date=<?=$year?>&submit=">Since <?=$year?></a></p>
 				      		<p><a href="search_result.php?user_search=<?=$key?>&date=<?=$year1?>&submit=">Since <?=$year1?></a></p>	
 				      		<p><a href="search_result.php?user_search=<?=$key?>&date=<?=$year2?>&submit=">Since <?=$year2?></a></p>
-				      		<p onclick="custYear()"><a>Custom Year</a></p>
-				      		<p id="custyear"></p>
+				      		<!-- <p onclick="custYear()"><a>Custom Year</a></p>
+				      		<p id="custyear"></p> -->
 			    		</div>
 			    		<hr>
 			    		<div>
 			    			<p><b>Research Category</b></p>
 			    			<p><a href="search_result.php?user_search=<?=$key?>&categ=National&submit=">National</a></p>
 				      		<p><a href="search_result.php?user_search=<?=$key?>&categ=Regional&submit=">Region</a></p>	
-				      		<p><a href="search_result.php?user_search=<?=$key?>&categ=<?="Division"?>&submit=">Schools Division</a></p>
+				      		<p><a href="search_result.php?user_search=<?=$key?>&categ=<?="Schools Division"?>&submit=">Schools Division</a></p>
 				      		<p><a href="search_result.php?user_search=<?=$key?>&categ=District&submit=">District</a></p>
 				      		<p><a href="search_result.php?user_search=<?=$key?>&categ=School&submit=">School</a></p>
 				      		<br>
@@ -128,7 +128,7 @@ function highlightWords($text, $keword) {
 						// } 
 
 						// Get current page number
-						$pageno = (isset($_GET["conductedpageno"])) ? $_GET["conductedpageno"] : 1; // Default is page 1
+						$pageno = (isset($_GET["resultpageno"])) ? $_GET["resultpageno"] : 1; // Default is page 1
 						
 						// Formula for pagination
 						$no_of_records_per_page = 10;
@@ -160,26 +160,27 @@ function highlightWords($text, $keword) {
 								r.researcher_last_name LIKE '$search_key' OR 
 								r.researcher_first_name LIKE '$search_key') 
 							GROUP BY ro.research_title";
+							// LIMIT $offset, $no_of_records_per_page";
 
 						$counter = 0;
 						
 						if ($result = $db->query($query)) {
 							while ($row = $result->fetch_assoc()) {
-								if ((empty($filters)) OR($row['research_agenda']==$agenda OR $row['research_type']==$types OR $row['research_category']==$categ OR date('Y',strtotime($row['research_date_publish']))==$date)) {
+								if ((empty($filters)) OR ($row['research_agenda']==$agenda OR $row['research_type']==$types OR $row['research_category']==$categ OR date('Y',strtotime($row['research_date_publish']))==$date)) {
 
 									$currResearchId = $row['research_id'];
-										$queryAuthors = "SELECT researcher_first_name AS fname, researcher_middle_name AS mname, researcher_last_name AS lname
-													FROM researcher AS rs 
-													INNER JOIN research_creation As rc ON rs.researcher_id = rc.creation_researcher_id
-													WHERE rc.creation_research_id = $currResearchId";
-										$data_authors = [];
-										if ($resultAuthor = $db->query($queryAuthors)) {
-											while ($rowAuthor = $resultAuthor->fetch_assoc()) {
-												$data_authors[] = strtoupper($rowAuthor['fname'][0]).".".strtoupper($rowAuthor['mname'][0]).". ".ucwords(strtolower($rowAuthor['lname']));
-											}
-										} else {
-											echo $db->error;
-										} 
+									$queryAuthors = "SELECT researcher_first_name AS fname, researcher_middle_name AS mname, researcher_last_name AS lname
+												FROM researcher AS rs 
+												INNER JOIN research_creation As rc ON rs.researcher_id = rc.creation_researcher_id
+												WHERE rc.creation_research_id = $currResearchId";
+									$data_authors = [];
+									if ($resultAuthor = $db->query($queryAuthors)) {
+										while ($rowAuthor = $resultAuthor->fetch_assoc()) {
+											$data_authors[] = strtoupper($rowAuthor['fname'][0]).".".strtoupper($rowAuthor['mname'][0]).". ".ucwords(strtolower($rowAuthor['lname']));
+										}
+									} else {
+										echo $db->error;
+									} 
 
 					?>
 					<div class="">

@@ -72,7 +72,7 @@ if (!$_SESSION['user']) {
 			      		</p>
 			      		<p class="h5">
 			      			<!-- <?=ucwords(strtolower($row['researcher_email']))?> <br> -->
-			      			<?=ucwords(strtolower($row['researcher_designation']))?> <br>
+			      			<?=ucwords(strtoupper($row['researcher_designation']))?> <br>
 			      			<?=ucwords(strtolower($row['researcher_office']))?> <br>
 			      		</p>
 			      		<br>	

@@ -92,7 +92,9 @@ session_start();
 					<div>
 						<br>
 						<p> <?=strtoupper($months[intval(date('m',$rdate))])." ".date('Y',$rdate)?> </p>
-						<p>DOI: <?=$row['research_doi']?></p>
+						<?php if($row['research_doi']!=0){ ?>
+							<p>DOI: <?=$row['research_doi']?></p>
+						<?php } ?>
 						<p> In book: <?=$jtitle?> (pp. <?=$jpages?>) </p>
 
 						<div> 
