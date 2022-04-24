@@ -37,10 +37,16 @@
 	    <div>
 	    <ul class="nav title_brand navbar-nav navbar-right">
 	    	<li class="title_brand" >
+	    		<a class="title_brand" href="aboutus.php">About Us</a>
+	    	</li>
+	    	<li class="title_brand" >
 	    		<a class="title_brand" href="memorandum.php">Memorandums</a>
 	    	</li>
 	    	<li class="title_brand" >
 	    		<a class="title_brand" href="journals.php">Journals</a>
+	    	</li>
+	    	<li class="title_brand" >
+	    		<a class="title_brand" href="contactus.php">Contact Us</a>
 	    	</li>
 	      	<?php
 				if (!isset($_SESSION['user'])) { 
