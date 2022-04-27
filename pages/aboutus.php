@@ -1,9 +1,5 @@
 <?php
 session_start();
-
-if (!$_SESSION['user']) {
-	header("Location:index.php");   // Redirect to index page. User cannot view this page if he/she is not yet logged in.
-}
 ?>
 
 <DOCTYPE! html>
